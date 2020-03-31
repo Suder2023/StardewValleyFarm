@@ -1,0 +1,90 @@
+body{
+	/*font-size: 16px;*/
+	/*font-size: 32px;*/
+	/*font-size: 48px;*/
+	font-size: 64px;
+	margin: 0;
+}
+#Farm{
+	position: absolute;
+	z-index: 1;
+	width: 80em;
+	height: 65em;
+	background:url(imges/summer.png);
+	background-size:80em;
+}
+.Farm{
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.Farm-Div{
+	width: 1em;
+	height: 1em;
+}
+.Farm-Div img{
+	pointer-events: none;
+	position: relative;
+	z-index: 10;
+	width: 1em;
+	height: 1em;
+	display: block;
+}
+#Farm-Middle{
+	position: absolute;
+	z-index: 3;
+}
+#Farm-bottom{
+	position: absolute;
+	z-index: 2;
+	width: 80em;
+	height: 65em;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.greenhouse-1{
+	width: 7em !important;
+	height: 10em !important;
+	top: -9em;
+}
+.greenhouse-2{
+	width: 7em !important;
+	height: 8em !important;
+	top: -7em;
+}
+.House{
+	width: 9em !important;
+	height: 10em !important;
+	top: -8em;
+}
+.House-L{
+	width: 10em !important;
+	height: 10em !important;
+	top: -8em;
+	left: -1em;
+}
+.mailbox{
+	width: 1em !important;
+	height: 2em !important;
+	top: -1em;
+}
+#Btn{
+	width: 8em;
+	position: absolute;
+	z-index: 20;
+	left: 10em;
+	top: 10em;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+#Btn div{
+	background: #000;
+	width: 1em;
+	height: 2em;
+	color: #fff;
+}
