@@ -103,11 +103,12 @@ function MenuSwitch() {
 }
 var screenH = screen.height;
 var screenW = screen.width;
+document.body.style.width = screenW + "px";
+document.body.style.height = screenH + "px";
 console.log(screenH);
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 	// menu.style.height = screenH*4 + "px";
-	document.body.width = screenW + "px";
-	document.body.height = screenH + "px";
+	
 	// alert(1)
 }
 
