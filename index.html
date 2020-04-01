@@ -5,19 +5,41 @@
 	<title>星露谷物语布局模拟器</title>
 	<link rel="stylesheet" href="Valley.css">
 </head>
-<body>
+<body ondragstart="return false" id="body-4">
 	<div id="Btn">
-		<div onclick="Spring();">春</div>
-		<div onclick="Summer();">夏</div>
-		<div onclick="Autumn();">秋</div>
-		<div onclick="Winter();">冬</div>
+		<div onclick="Spring();">
+			<img src="imges/button/spring.png" alt="">
+		</div>
+		<div onclick="Summer();">
+			<img src="imges/button/summer.png" alt="">
+		</div>
+		<div onclick="Autumn();">
+			<img src="imges/button/autumn.png" alt="">
+		</div>
+		<div onclick="Winter();">
+			<img src="imges/button/winter.png" alt="">
+		</div>
 	</div>
-	<div id="Farm">
-		<div id="Farm-Top" class="Farm"></div>
-		<div id="Farm-Middle" class="Farm"></div>
-		<div id="Farm-bottom" class="Farm"></div>
+	<div id="menu">
+		<div id="arrow" onclick="MenuSwitch();">
+			<img src="imges/arrow-2.png" alt="" id="arrow1">
+		</div>
 	</div>
-	
+	<div id="Frame">
+		<div id="Frame-1"></div>
+		<div id="Frame-2"></div>
+		<div id="Frame-3"></div>
+		<div id="Frame-4"></div>
+		<div id="Farm">
+			<div id="Farm-Top" class="Farm"></div>
+			<div id="Farm-Middle" class="Farm"></div>
+			<div id="Farm-bottom" class="Farm"></div>
+		</div>
+		<div id="Frame-5"></div>
+		<div id="Frame-6"></div>
+		<div id="Frame-7"></div>
+		<div id="Frame-8"></div>
+	</div>
 </body>
 <script src="html2canvas.js"></script>
 <!-- <script src="data.js"></script> -->

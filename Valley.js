@@ -16,10 +16,11 @@ var FarmNum = Farm.querySelectorAll("div");
 	// 	// PhotoWarr.push(0);
 	}
 // }
-var FarmNum = Farm.querySelectorAll("div");
+var FarmNum = Farm.getElementsByClassName("Farm-Div");
 for(var i = 0; i < 5200; i++){
 	FarmNum[i].index = i;
 }
+// console.log(FarmNum);
 function createHtml1(){
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
@@ -47,40 +48,65 @@ Farm.addEventListener('click',function(e){
 // }
 
 
-FarmNum[1227].firstChild.src = "imges/Architecture/greenhouse-2.png" ;
-FarmNum[1227].firstChild.className = "greenhouse-2";
-FarmNum[1341].firstChild.src = "imges/Architecture/House-L.png" ;
-FarmNum[1341].firstChild.className = "House-L";
-FarmNum[1350].firstChild.src = "imges/Architecture/mailbox.png" ;
-FarmNum[1350].firstChild.className = "mailbox";
+FarmNum[1225].firstChild.src = "imges/Architecture/greenhouse-2.png" ;
+FarmNum[1225].firstChild.className = "greenhouse-2";
+FarmNum[1339].firstChild.src = "imges/Architecture/House-L.png" ;
+FarmNum[1339].firstChild.className = "House-L";
+FarmNum[1348].firstChild.src = "imges/Architecture/mailbox.png" ;
+FarmNum[1348].firstChild.className = "mailbox";
 
 function Spring() {
-	Farm.style.background = "url(imges/Spring.png)";
+	Farm.style.background = "url(imges/spring.png)";
 	Farm.style.backgroundSize = "80em";
 }
 function Summer() {
-	Farm.style.background = "url(imges/Summer.png)";
+	Farm.style.background = "url(imges/summer.png)";
 	Farm.style.backgroundSize = "80em";
 }
 function Autumn() {
-	Farm.style.background = "url(imges/Autumn.png)";
+	Farm.style.background = "url(imges/autumn.png)";
 	Farm.style.backgroundSize = "80em";
 }
 function Winter() {
-	Farm.style.background = "url(imges/Winter.png)";
+	Farm.style.background = "url(imges/winter.png)";
 	Farm.style.backgroundSize = "80em";
 }
+var Frame = document.getElementById("Frame");
+var Frame2 = document.getElementById("Frame-2");
+var Frame4 = document.getElementById("Frame-4");
+var Frame5 = document.getElementById("Frame-5");
+var Frame7 = document.getElementById("Frame-7");
+var FrameW = Farm.offsetWidth;
+var FrameH = Farm.offsetHeight;
+console.log(FrameW);
+console.log(FrameH);
+Frame.style.width = FrameW + 32 + "px";
+Frame.style.height = FrameH + 32 + "px";
+Frame2.style.width = FrameW + 32 - 40 + "px";
+Frame4.style.height = FrameH + "px";
+Frame5.style.height = FrameH + "px";
+Frame7.style.width = FrameW - 8 + "px";
 
 
-
-
-
-
-
-
-
-
-
+var menu = document.getElementById("menu");
+function MenuSwitch() {
+	var arrow1 = document.getElementById("arrow1");
+	if (menu.style.left == "0px" || menu.style.left == 0) {
+		menu.style.left = "-320px";
+		arrow1.src = "imges/arrow-1.png";
+	}else{
+		menu.style.left = "0";
+		arrow1.src = "imges/arrow-2.png";
+	}
+	
+	
+}
+var screenH = screen.height;
+console.log(screenH);
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	menu.style.height = screenH*4 + "px";
+	// alert(1)
+}
 
 
 
@@ -92,7 +118,7 @@ function Winter() {
 
 var flag = false;
 var cur = {x:0,y:0}
-var div0 = document.getElementById("Farm");
+var div0 = document.getElementById("Frame");
 var nx,ny,dx,dy,x,y;
 function down(){
     flag = true;
@@ -127,22 +153,22 @@ function move(){
 function end(){
     flag = false;
 }
-Farm.addEventListener("mousedown",function(){
+window.addEventListener("mousedown",function(){
 	down();
 },false);
-Farm.addEventListener("touchstart",function(){
+window.addEventListener("touchstart",function(){
 	down();
 },false)
-Farm.addEventListener("mousemove",function(){
+window.addEventListener("mousemove",function(){
 	move();
 },false);
-Farm.addEventListener("touchmove",function(){
+window.addEventListener("touchmove",function(){
 	move();
 },false)
-Farm.addEventListener("mouseup",function(){
+window.addEventListener("mouseup",function(){
 	end();
 },false);
-Farm.addEventListener("touchend",function(){
+window.addEventListener("touchend",function(){
 	end();
 },false);
 

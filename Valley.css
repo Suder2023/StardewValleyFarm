@@ -1,23 +1,42 @@
 body{
-	/*font-size: 16px;*/
-	/*font-size: 32px;*/
-	/*font-size: 48px;*/
+	background: #050304;
+	overflow-x: hidden;
+    overflow-y: hidden;
 	font-size: 64px;
 	margin: 0;
 }
+img{
+	display: block;
+}
+#body-1{
+	font-size: 16px;
+}
+#body-2{
+	font-size: 32px;
+}
+#body-3{
+	font-size: 48px;
+}
+#body-4{
+	font-size: 64px;
+}
 #Farm{
-	position: absolute;
-	z-index: 1;
 	width: 80em;
 	height: 65em;
 	background:url(imges/summer.png);
 	background-size:80em;
+	float: left;
+	/*margin-top: 16px;
+	margin-left: 16px;*/
 }
 .Farm{
 	display: -webkit-flex;
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+    position: absolute;
+    width: 80em;
+	height: 65em;
 }
 .Farm-Div{
 	width: 1em;
@@ -29,7 +48,7 @@ body{
 	z-index: 10;
 	width: 1em;
 	height: 1em;
-	display: block;
+	
 }
 #Farm-Middle{
 	position: absolute;
@@ -72,19 +91,92 @@ body{
 	top: -1em;
 }
 #Btn{
-	width: 8em;
 	position: absolute;
 	z-index: 20;
-	left: 10em;
-	top: 10em;
+	right: 10px;
+	bottom: 0em;
 	display: -webkit-flex;
     display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 #Btn div{
-	background: #000;
 	width: 1em;
 	height: 2em;
-	color: #fff;
 }
+#Frame{
+	background: #000;
+	position: absolute;
+	z-index: 1;
+}
+#Frame-1{
+	width: 24px;
+	height: 16px;
+	background:url(imges/frame-1.png);
+	float: left;
+}
+#Frame-2{
+	width: 16px;
+	height: 16px;
+	background:url(imges/frame-2.png);
+	float: left;
+}
+#Frame-3{
+	width: 16px;
+	height: 16px;
+	background:url(imges/frame-3.png);
+	float: left;
+}
+#Frame-4{
+	width: 16px;
+	height: 16px;
+	background:url(imges/frame-4.png);
+	float: left;
+}
+#Frame-5{
+	width: 16px;
+	height: 16px;
+	background:url(imges/frame-5.png);
+	float: left;
+}
+#Frame-6{
+	width: 20px;
+	height: 16px;
+	background:url(imges/frame-6.png);
+	float: left;
+}
+#Frame-7{
+	width: 16px;
+	height: 16px;
+	background:url(imges/frame-7.png);
+	float: left;
+}
+#Frame-8{
+	width: 20px;
+	height: 16px;
+	background:url(imges/frame-8.png);
+	float: left;
+}
+#menu{
+	position: absolute;
+	z-index: 30;
+	width: 320px;
+	height: 100%;
+	background:url(imges/menu-bj.png);
+	background: #000;
+	left: 0px;
+}
+#arrow{
+	width: 36px;
+	height: 64px;
+	position: absolute;
+	left: 320px;
+	top: 46%;
+}
+
+
+
+
+
