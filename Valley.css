@@ -162,20 +162,22 @@ img{
 #menu{
 	position: absolute;
 	z-index: 30;
-	width: 320px;
+	width: 5em;
 	height: 100%;
 	background:url(imges/menu-bj.png);
 	background: #000;
 	left: 0px;
 }
 #arrow{
-	width: 36px;
-	height: 64px;
+	
 	position: absolute;
-	left: 320px;
+	left: 5em;
 	top: 46%;
 }
-
+#arrow img{
+	width: 1em;
+	height: 1em;
+}
 
 
 

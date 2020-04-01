@@ -92,7 +92,7 @@ var menu = document.getElementById("menu");
 function MenuSwitch() {
 	var arrow1 = document.getElementById("arrow1");
 	if (menu.style.left == "0px" || menu.style.left == 0) {
-		menu.style.left = "-320px";
+		menu.style.left = "-5em";
 		arrow1.src = "imges/arrow-1.png";
 	}else{
 		menu.style.left = "0";
@@ -102,9 +102,12 @@ function MenuSwitch() {
 	
 }
 var screenH = screen.height;
+var screenW = screen.width;
 console.log(screenH);
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	menu.style.height = screenH*4 + "px";
+	// menu.style.height = screenH*4 + "px";
+	document.body.width = screenW + "px";
+	document.body.height = screenH + "px";
 	// alert(1)
 }
 
