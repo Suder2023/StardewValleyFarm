@@ -480,6 +480,12 @@ img{
 	position: absolute;
 	top: -400%;
 }
+#IsA{
+	width: 96px;
+	height: 64px;
+	display: block;
+	background:url(imges/download.png);
+}
 #save{
 	display: none;
 }

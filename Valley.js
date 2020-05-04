@@ -1580,6 +1580,9 @@ function cancel() {
 	var oCavans = document.getElementsByTagName("canvas")[0];
 	preview1.removeChild(oCavans);
 	preview.style.display = "none";
+	document.getElementById("load").style.display = "block";
+    document.getElementById("save").style.display = "none";
+    document.getElementById("cancel").style.display = "none";
 }
 
 
