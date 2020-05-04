@@ -1559,9 +1559,9 @@ function download(strDataURI1) {
     var link = document.getElementById("IsA");
     // link.innerHTML = "download_canvas_image";
     link.download = "mypainting.png";
-    
+    link.addEventListener("click", function(ev) {
     link.href = strDataURI1;
-    
+    }, false);
     document.getElementById("load").style.display = "none";
     document.getElementById("save").style.display = "block";
     document.getElementById("cancel").style.display = "block";
