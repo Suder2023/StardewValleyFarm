@@ -6,25 +6,71 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="Valley.css">
 </head>
-<body ondragstart="return false" id="body-1">
-	<div id="Btn">
-		<div onclick="Spring();">
-			<img src="imges/button/spring.png" alt="">
-		</div>
-		<div onclick="Summer();">
-			<img src="imges/button/summer.png" alt="">
-		</div>
-		<div onclick="Autumn();">
-			<img src="imges/button/autumn.png" alt="">
-		</div>
-		<div onclick="Winter();">
-			<img src="imges/button/winter.png" alt="">
-		</div>
-	</div>
+<body ondragstart="return false" id="body-4">
 	<div id="menu">
-		<div id="arrow" onclick="MenuSwitch();">
-			<img src="imges/arrow-2.png" alt="" id="arrow1">
+		<div id="menu-body">
+			<div id="menu-body-btn">
+				<img src="imges/menu-bjt.png" alt="" id="body-btn-top">
+				<img src="imges/btn.png" alt="" id="body-btn">
+				<img src="imges/menu-bjb.png" alt="" id="body-btn-bottom">
+			</div>
+			<div id="menu-body-0">
+				<div class="menu-body" id="menu-body-1"></div>
+				<div class="menu-body" id="menu-body-2"></div>
+				<div class="menu-body" id="menu-body-3"></div>
+				<div class="menu-body" id="menu-body-4"></div>
+				<div class="menu-body" id="menu-body-5"></div>
+				<div class="menu-body" id="menu-body-6">
+					<div id="tool-div">
+						<div id="tool-Title">
+							<div id="tool-Title-1">喷壶</div>
+							<div id="tool-Title-2">喷壶</div>
+						</div>
+						<div id="tool-text">
+							<div id="tool-text-1">用于改变农作物生长状态</div>
+							<div id="tool-text-2">用于改变农作物生长状态</div>
+						</div>
+					</div>
+					<img src="imges/icon/1.png" alt="" onclick="Kettle();">
+					<img src="imges/icon/2.png" alt="" onclick="Hoe();">
+					<img src="imges/icon/3.png" alt="" onclick="Axe();">
+					<img src="imges/icon/4.png" alt="" onclick="Pickaxe();">
+					<img src="imges/icon/5.png" alt="" onclick="dyeing();">
+				</div>
+			</div>
 		</div>
+		<div id="menu-btn">
+			<img src="imges/button/architecture.png" alt="">
+			<img src="imges/button/crops.png" alt="">
+			<img src="imges/button/tool.png" alt="">
+			<img src="imges/button/decorate.png" alt="">
+			<img src="imges/button/other.png" alt="">
+			<img src="imges/button/menu.png" alt="">
+			<img src="imges/button/arrow-2.png" alt="" onclick="MenuSwitch();">
+		</div>
+		<div id="name-text">
+			<div id="name-text-1">基础农场</div>
+			<div id="name-text-2">基础农场</div>
+		</div>
+		<div id="describe">
+			<div id="describe-1">地图的大部分都是可耕地，是种植农作物和饲养动物的理想选择。</div>
+			<div id="describe-2">地图的大部分都是可耕地，是种植农作物和饲养动物的理想选择。</div>
+		</div>
+		<div id="season">
+			<div>
+				<img src="imges/button/spring.png" alt="" onclick="Spring();">
+				<img src="imges/button/summer.png" alt="" onclick="Summer();">
+				<img src="imges/button/autumn.png" alt="" onclick="Autumn();">
+				<img src="imges/button/winter.png" alt="" onclick="Winter();">
+			</div>
+		</div>
+		<div id="zoom">
+			<img src="imges/btn-y.png" alt="" id="body-btn-y">
+			<img src="imges/zoomt.png" alt="">
+			<img src="imges/zoom.png" alt="">
+		</div>
+		<div id="menu-b"></div>
+		<div id="menu-t"></div>
 	</div>
 	<div id="Frame">
 		<div id="Frame-1"></div>
@@ -41,8 +87,22 @@
 		<div id="Frame-7"></div>
 		<div id="Frame-8"></div>
 	</div>
+	<div id="Btn">
+		<img src="imges/Explain-1.png" alt="" onclick="Explain();" id="Explain">
+		<img src="imges/Grid-1.png" alt="" onclick="Grid();" id="Grid">
+		<img src="imges/camera.png" alt="" onclick="screenshot();">
+	</div>
+	<div id="preview">
+		<div><img src="imges/Popup.png" alt=""></div>
+		<div id="load"><img src="imges/load.gif" alt=""></div>
+		<div id="save">
+			<a href="" id="IsA"><img src="imges/download.png" alt=""></a>
+		</div>
+		<div id="cancel"><img src="imges/cancel.png" alt="" onclick="cancel();" ></div>
+	</div>
+	<div id="preview1"></div>
 </body>
 <script src="html2canvas.js"></script>
-<!-- <script src="data.js"></script> -->
+<script src="data.js"></script>
 <script src="Valley.js"></script>
 </html>

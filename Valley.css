@@ -1,12 +1,13 @@
 body{
+	cursor:url(imges/Pointer.ico),auto;
 	background: #050304;
 	overflow-x: hidden;
     overflow-y: hidden;
-	font-size: 64px;
 	margin: 0;
 }
 img{
 	display: block;
+	/*pointer-events: none;*/
 }
 #body-1{
 	font-size: 16px;
@@ -23,7 +24,7 @@ img{
 #Farm{
 	width: 80em;
 	height: 65em;
-	background:url(imges/summer.png);
+	background:url(imges/spring.png);
 	background-size:80em;
 	float: left;
 	/*margin-top: 16px;
@@ -38,11 +39,11 @@ img{
     width: 80em;
 	height: 65em;
 }
-.Farm-Div{
+.Farm-B{
 	width: 1em;
 	height: 1em;
 }
-.Farm-Div img{
+.Farm-B img{
 	pointer-events: none;
 	position: relative;
 	z-index: 10;
@@ -50,9 +51,23 @@ img{
 	height: 1em;
 	
 }
+.Farm-M {
+	width: 1em;
+	height: 1em;
+}
+.Farm-M img{
+	pointer-events: none;
+	position: relative;
+	z-index: 15;
+	width: 1em;
+	height: 1em;
+	
+	
+}
 #Farm-Middle{
 	position: absolute;
 	z-index: 3;
+	pointer-events: none;
 }
 #Farm-bottom{
 	position: absolute;
@@ -103,8 +118,8 @@ img{
     flex-direction: column;
 }
 #Btn div{
-	width: 1em;
-	height: 2em;
+	width: 64px;
+	height: 128px;
 }
 #Frame{
 	background: #000;
@@ -162,23 +177,314 @@ img{
 #menu{
 	position: absolute;
 	z-index: 30;
-	width: 5em;
-	height: 100%;
-	background:url(imges/menu-bj.png);
-	background: #000;
+	width: 324px;
+	height: 100vh;
+	background:url(imges/menu-bj.png) repeat-y center 0px;
 	left: 0px;
+	/*display: none;*/
 }
-#arrow{
-	
+#menu-btn{
 	position: absolute;
-	left: 5em;
-	top: 46%;
+	left: 320px;
+	top: 12px;
 }
+#menu-btn img{
+	position: relative;
+}
+/*#btn1{
+	position: relative;
+	left: -8px;
+}
+#btn2{
+	position: relative;
+}
+#btn3{
+	position: relative;
+}
+#btn4{
+	position: relative;
+}
+#btn5{
+	position: relative;
+}
+#btn6{
+	position: relative;
+}*/
 #arrow img{
+	position: relative;
 	width: 1em;
 	height: 1em;
 }
+#menu-body{
+	margin-top: 20px;
+	width: 320px;
+	height: 700px;
+	/*background: #000;*/
+	overflow-x: hidden;
+    overflow-y: hidden;
+}
+.menu-body{
+	position: relative;
+	width: 256px;
+/*	background: #fff;*/
+	left: 10px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    background:url(imges/menu-body-bj.png) repeat-y center 0px;
+}
+.menu-body img{
+	width: 64px;
+	height: 64px;
+	margin: 2px 2px 0 2px;
+}
+#menu-body-btn{
+	position: absolute;
+	background:url(imges/menu-bj1.png);
+	width: 24px;
+	height: 700px;
+	right: 28px;
+}
+#body-btn{
+	position: absolute;
+	top: 0;
+}
+#body-btn-bottom{
+	position: absolute;
+	bottom: 0;
+}
+#menu-body-0{
+	width: 320px;
+}
+#menu-body-1{
+	height: 960px;
+}
+#menu-body-2{
+	height: 1120px;
+}
+#menu-body-3{
+	height: 2080px;
+}
+#menu-body-4{
+	height: 480px;
+}
+#menu-body-5{
+	height: 320px;
+}
+#menu-body-6{
+	height: 480px;
+}
+#tool-div{
+	width: 320px;
+	height: 310px;
+	background:url(imges/Axe.gif);
+}
+#name-text{
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	position: absolute;
+	bottom: 186px;
+	width: 324px;
+	height: 86px;
+	font-size: 36px;
+	text-align:center;
+	/*display: none;*/
+}
+#name-text div{
+	position: absolute;
+	width: 296px;
+	height: 68px;
+	font-family: 阿里巴巴普惠体;
+	font-weight: 500;
+	pointer-events: none;
+}
+#name-text-1{
+	top: 34px;
+	color: #dd9454;
+	left: -2px;
+	
+}
+#name-text-2{
+	top: 30px;
+	color: #221122;
+}
+#tool-Title{
+	position: absolute;
+	width: 256px;
+	height: 86px;
+	font-size: 36px;
+	text-align:center;
+	top: -16px;
+}
+#tool-Title div{
+	position: absolute;
+	width: 256px;
+	height: 68px;
+	font-family: 阿里巴巴普惠体;
+	font-weight: 500;
+	pointer-events: none;
+	font-size: 36px;
+}
+#tool-Title-1{
+	top: 34px;
+	color: #dd9454;
+	left: -2px;
+}
+#tool-Title-2{
+	top: 30px;
+	color: #221122;
+}
+#tool-text{
+	position: absolute;
+	width: 256px;
+	height: 180px;
+	font-size: 22px;
+	text-align:center;
+	top: 30px;
+}
+#tool-text div{
+	position: absolute;
+	width: 256px;
+	height: 68px;
+	font-family: 阿里巴巴普惠体;
+	font-weight: 500;
+	pointer-events: none;
+	font-size: 22px;
+}
+#tool-text-1{
+	top: 34px;
+	color: #dd9454;
+	left: -2px;
+}
+#tool-text-2{
+	top: 30px;
+	color: #221122;
+}
+#describe{
+	position: absolute;
+	bottom: 0;
+	width: 324px;
+	height: 180px;
+	font-size: 22px;
+	text-align:center;
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	/*display: none;*/
+}
+#describe div{
+	position: absolute;
+	width: 266px;
+	height: 68px;
+	font-family: 阿里巴巴普惠体;
+	font-weight: 500;
+	pointer-events: none;
+	margin-left: 20px;
+}
+#describe-1{
+	top: 37px;
+	color: #dd9454;
+	left: -2px;
+}
+#describe-2{
+	top: 34px;
+	color: #221122;
+}
+#zoom{
+	position: absolute;
+	bottom: 0;
+	width: 324px;
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	display: none;
+}
+#zoom img{
+	position: relative;
+	left: 20px;
+}
+#zoom img:first-of-type{
+	position: absolute;
+	bottom: 54px;
+	z-index: 35;
+	left: 236px;
+}
+#season{
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	position: absolute;
+	bottom: 186px;
+	width: 324px;
+	height: 86px;
+	display: none;
+	
+}
+#season div{
+	width: 292px;
+	position: absolute;
+	bottom: 0px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+#menu-b{
+	width: 324px;
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	position: absolute;
+	bottom: -12px;
+	height: 28px;
+}
+#menu-t{
+	width: 324px;
+	height: 28px;
+	background:url(imges/zoom-b.png) no-repeat center 0px;
+	position: absolute;
+	top: -12px;
+}
+#Farm-Top{
+	display: none;
+}
+.Farm-T{
+	background:url(imges/t.png);
+}
+#Btn{
+	width: 64px;
+	height: 500px;
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+#Btn img{
+	margin-top: 20px;
+}
 
-
+#preview{
+	top: 40%;
+	left: 40%;
+	/*margin: 0 auto;*/
+    -webkit-justify-content: space-between;
+    justify-content: center;
+	width: 192px;
+	height: 192px;
+	position: absolute;
+	z-index: 100;
+	display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    display: none;
+}
+#preview1{
+	position: absolute;
+	top: -400%;
+}
+#save{
+	display: none;
+}
+#cancel{
+	display: none;
+}
 
 
