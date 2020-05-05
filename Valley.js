@@ -281,7 +281,7 @@ function FrameSize() {
 	var FrameW = Farm.offsetWidth;
 	var FrameH = Farm.offsetHeight;
 	Frame.style.width = FrameW + 32 + "px";
-	Frame.style.height = FrameH + 32 + 150 + "px";
+	Frame.style.height = FrameH + 32 + 88 + "px";
 	Frame2.style.width = FrameW + 32 - 40 + "px";
 	Frame4.style.height = FrameH + "px";
 	Frame5.style.height = FrameH + "px";

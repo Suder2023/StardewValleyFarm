@@ -123,7 +123,7 @@ img{
 	height: 128px;
 }
 #Frame{
-	background: #000;
+	background: #050304;
 	position: absolute;
 	z-index: 1;
 }
@@ -494,7 +494,7 @@ img{
 	display: none;
 }
 #Farm-name{
-	height: 128px;
+	height: 72px;
 	position: absolute;
 	width: 100%;
 	bottom: 0;
@@ -502,20 +502,20 @@ img{
     display: flex;
     -webkit-justify-content: center;
     justify-content: center;
-    display: none;
+    /*display: none;*/
 }
 #name-l img{
 	width: 64px;
-	height: 128px;
+	height: 72px;
 }
 #name{
-	height: 128px;
+	height: 72px;
 	background: url(imges/name.png);
 	text-align: center;
 }
 #name-r img{
 	width: 64px;
-	height: 128px;
+	height: 72px;
 }
 
 
