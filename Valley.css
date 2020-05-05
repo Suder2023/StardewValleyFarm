@@ -502,7 +502,7 @@ img{
     display: flex;
     -webkit-justify-content: center;
     justify-content: center;
-    display: none;
+    /*display: none;*/
 }
 #name-l img{
 	width: 64px;
