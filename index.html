@@ -73,6 +73,18 @@
 		<div id="menu-t"></div>
 	</div>
 	<div id="Frame">
+		<div id="Farm-name">
+			<div id="name-l">
+				<img src="imges/name-l.png" alt="">
+			</div>
+			<div id="name">
+				<div id="name-1"></div>
+				<div id="name-2"></div>
+			</div>
+			<div id="name-r">
+				<img src="imges/name-r.png" alt="">
+			</div>
+		</div>
 		<div id="Frame-1"></div>
 		<div id="Frame-2"></div>
 		<div id="Frame-3"></div>
@@ -90,8 +102,9 @@
 	<div id="Btn">
 		<img src="imges/Explain-1.png" alt="" onclick="Explain();" id="Explain">
 		<img src="imges/Grid-1.png" alt="" onclick="Grid();" id="Grid">
-		<img src="imges/camera.png" alt="" onclick="screenshot();">
+		<img src="imges/camera.png" alt="" onclick="Farm_name();">
 	</div>
+
 	<div id="preview">
 		<div><img src="imges/Popup.png" alt=""></div>
 		<div id="load">
@@ -104,7 +117,17 @@
 			<img src="imges/cancel.png" alt="" onclick="cancel();" >
 		</div>
 	</div>
+	<div id="name-box">
+		<input type="text" id="name-tenx" placeholder="是否为农场命名" maxlength="8">
+		<div id="name-btn">
+			<div id="name-btn-1" onclick="Farm_name_OK();">确定</div>
+			<div id="name-btn-2" onclick="Farm_name_skip();">跳过</div>
+			<div id="name-btn-3" onclick="Farm_name_cancel();">取消</div>
+		</div>
+	</div>
+	
 	<div id="preview1"></div>
+	
 </body>
 <script src="html2canvas.js"></script>
 <script src="data.js"></script>

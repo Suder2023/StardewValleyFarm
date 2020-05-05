@@ -4,6 +4,7 @@ body{
 	overflow-x: hidden;
     overflow-y: hidden;
 	margin: 0;
+	font-family: 阿里巴巴普惠体;
 }
 img{
 	display: block;
@@ -492,5 +493,105 @@ img{
 #cancel{
 	display: none;
 }
+#Farm-name{
+	height: 2em;
+	position: absolute;
+	width: 100%;
+	top: -80px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    display: none;
+}
+#name-l img{
+	width: 64px;
+	height: 128px;
+}
+#name{
+	height: 128px;
+	background: url(imges/name.png);
+	text-align: center;
+}
+#name-r img{
+	width: 64px;
+	height: 128px;
+}
 
 
+#name div{
+	position: absolute;
+	font-family: 阿里巴巴普惠体;
+	pointer-events: none;
+	font-size: 46px;
+}
+#name-1{
+	top: 8px;
+	color: #dd9454;
+}
+#name-2{
+	top: 4px;
+	color: #221122;
+}
+
+#name-box{
+	position: absolute;
+	z-index: 99;
+	top: 30%;
+	left: 50%;
+	margin-left: -160px;
+	display: none;
+}
+
+
+#name-tenx{
+	width: 320px;
+	height: 128px;
+	border:none;outline:medium;
+	background: transparent;
+	font-size: 32px;
+	number:7;
+	text-align:center;
+	color: #221122;
+	text-shadow:-2px 4px #dd9454;
+	background: url(imges/text-name.png);
+	padding: 0;
+	
+}
+input:-moz-placeholder,   
+textarea:-moz-placeholder {   
+    color: #221122;  
+    opacity: 0.5;
+}   
+  
+input:-ms-input-placeholder,   
+textarea:-ms-input-placeholder {   
+	color: #221122;  
+	opacity: 0.5;
+}   
+  
+input::-webkit-input-placeholder,   
+textarea::-webkit-input-placeholder {   
+	color: #221122;  
+	opacity: 0.5;
+} 
+#name-btn{
+	width: 320px;
+	height: 64px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+#name-btn div{
+	width: 104px;
+	height: 64px;
+	background: url(imges/btn-name.png);
+	/*text-shadow:-2px 4px #dd9454;*/
+	font-size: 32px;
+	text-align:center;
+	line-height: 60px;
+	color: #221122;
+	font-weight: 500;
+	/*text-shadow:-2px 2px #853605;*/
+}
