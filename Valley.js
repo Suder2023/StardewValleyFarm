@@ -1590,12 +1590,12 @@ function Farm_name() {
 
 function Farm_name_OK() {
 	var name = document.getElementById("name-tenx").value;
+	document.getElementById("Farm-name").style.display = "flex";
 	document.getElementById("name-1").innerHTML = name + "农场";
 	document.getElementById("name-2").innerHTML = name + "农场";
 	document.getElementById("name").style.width = document.getElementById("name-2").offsetWidth + "px";
 	document.getElementById("name").style.width = document.getElementById("name-2").offsetWidth + "px";
 	document.getElementById("name-1").style.left = document.getElementById("name-2").offsetLeft - 2 + "px";
-	document.getElementById("Farm-name").style.display = "flex";
 	document.getElementById("name-box").style.display = "none";
 	screenshot();
 }
