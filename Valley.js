@@ -33,6 +33,7 @@ var IMG_T = 0;
 var IMG_L = 0;
 var IMG_W = "1em";
 var IMG_H = "1em";
+var Course_Num = 0;
 var otherSign = 0;
 var fenceArr = [];
 var fence_name = [];
@@ -51,41 +52,56 @@ var Position_Number = [];
 var Position_state = [];
 var Menu_status = false;
 var Grid_status = false;
+var Range_status = false;
 var Explain_status = false;
+var Frame_Num = 5200;
 IMG_icon_T = "0em";
 IMG_icon_W = "1em";
 IMG_icon_H = "1em";
 FrameSize()
-// function SignArray(){
-	for(var i = 0; i < 5200; i++){
-		createHtmlM();
-		createHtmlB();
-		createHtmlT();
+function Farm_1(){
+	Frame_Num = 5200;
+	for(var i = 0; i < Frame_Num; i++){
+		createHtml_M();
+		createHtml_B();
+		createHtml_T();
 	}
-// }
+	for(var i = 0; i < Frame_Num; i++){
+		FarmNumB[i].index = i;
+	}
+	FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-2.png" ;
+	FarmNumM[1225].firstChild.className = "greenhouse-2";
+	FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png" ;
+	FarmNumM[1339].firstChild.className = "House-L";
+	FarmNumM[1348].firstChild.src = "imges/Architecture/mailbox.png" ;
+	FarmNumM[1348].firstChild.className = "mailbox";
+	signMap();
+	document.getElementById("Choice").style.display = "none";
+	clearInterval(animation);
+
+}
 // console.log(fenceArr);
+var FarmNumT = Farm.getElementsByClassName("Farm-T");
 var FarmNumB = Farm.getElementsByClassName("Farm-B");
 var FarmNumM = Farm.getElementsByClassName("Farm-M");
 var Z = FarmNumM;
-for(var i = 0; i < 5200; i++){
-	FarmNumB[i].index = i;
-}
+
 // console.log(FarmNum);
-function createHtmlM(){
+function createHtml_M(){
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
 	Img.src = "imges/0.png";
 	div.appendChild(Img);
 	FarmMiddle.appendChild(div).className = "Farm-M";
 }
-function createHtmlB(){
+function createHtml_B(){
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
 	Img.src = "imges/0.png";
 	div.appendChild(Img);
 	FarmBottom.appendChild(div).className = "Farm-B";
 }
-function createHtmlT(){
+function createHtml_T(){
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
 	Img.src = "imges/0.png";
@@ -297,12 +313,7 @@ function FrameSize() {
 
 
 
-FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-2.png" ;
-FarmNumM[1225].firstChild.className = "greenhouse-2";
-FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png" ;
-FarmNumM[1339].firstChild.className = "House-L";
-FarmNumM[1348].firstChild.src = "imges/Architecture/mailbox.png" ;
-FarmNumM[1348].firstChild.className = "mailbox";
+
 
 
 function Spring() {
@@ -347,13 +358,16 @@ function GetSeason() {
 		GNot = "/notwinter/";
 		NNot = "/winter/";
 	}
+	console.log(Position_Catalog);
+	console.log(Position_name);
+	console.log(SeasonArr);
 	for (var i = 0 ; i < Position.length; i++) {
+		console.log(1);
 		var PositionI = Position[i];
 		var name = Position_name[i];
 		var CatalogArr = ["Architecture/","crops/","tool/","other/","tree/"];
 		var CatalogNum = Position_Catalog[i];
 		var Catalog = CatalogArr[CatalogNum];
-		console.log(SeasonArr[i]);
 		switch (CatalogNum){
 			case 0:
 			if (name == 29) {
@@ -361,11 +375,13 @@ function GetSeason() {
 			}
 			break;
 			case 1:
-			if (SeasonArr[i] == Season && name != 37) {
+			if (SeasonArr[i] == Season && name < 37) {
 				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name +"/0.png";
 			}else if(SeasonArr[i] == Season && name == 37) {
 				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name + "/" + Season + "/0.png";
-			}else{
+			}else if (SeasonArr[i] == Season && name == 38) {
+				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name + "/" + Season + "/" + Math.ceil(Math.random()*4) +".png";
+			}else if (SeasonArr[i] != Season) {
 				FarmNumM[PositionI].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png"
 			}
 			break;
@@ -397,7 +413,7 @@ function GetSeason() {
 		var B = FarmNumB[x].firstChild.src;
 		FarmNumB[x].firstChild.src = B.replace(GNot,NNot) 
 	}
-	Prev_Season = Season
+	Prev_Season = Season;
 }
 
 
@@ -429,7 +445,7 @@ var q3 = q2/q1;
 
 var signX = 1;
 var signY = 1;
-signMap();
+
 Farm.addEventListener("click",function(e){
 	console.log(e.target.index);
 	if (e.target.nodeName == "DIV" && Menu_status == true) {
@@ -452,11 +468,15 @@ Farm.addEventListener("click",function(e){
 					}
 					FarmNumM[e].firstChild.src = IMG;
 					Timg = FarmNumM[e].firstChild.src;
+					Range_fun();
 					break;
 					case 1:Is_state = 0;
 					window.Is_state = Is_state;
 					IsAdd();
-					if (otherSign == 39 || otherSign == 40 || otherSign == 41) {
+					if (otherSign == 38 ) {
+						signMapX();
+						signMap();
+					}else if (otherSign == 39 || otherSign == 40 || otherSign == 41) {
 						signMapX();
 						signMap();
 						huge();
@@ -470,14 +490,18 @@ Farm.addEventListener("click",function(e){
 					}
 					floor();
 					floorSign();
-					if (Season_spring == Season || Season_summer == Season || Season_autumn == Season || Season_autumn == Season) {
+					if (Season_spring == Season || Season_summer == Season || Season_autumn == Season || Season_winter == Season) {
 						if (otherSign == 37) {
 							FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/0.png";
+						}else if (otherSign == 38) {
+							FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/" + Math.ceil(Math.random()*4) +".png";
+							console.log(999);
 						}else{
 							FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/0.png";
 						}
 					}else{
-						FarmNumM[e].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png"
+						FarmNumM[e].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png";
+						console.log(888);
 					}
 					Timg = FarmNumM[e].firstChild.src;
 					FarmNumB[e].style.pointerEvents = "none";
@@ -492,9 +516,9 @@ Farm.addEventListener("click",function(e){
 					}
 					Timg = FarmNumM[e].firstChild.src;
 					FarmNumB[e].style.pointerEvents = "none";
+					Range_fun();
 					break;
 					case 3:if (otherSign < 4) {
-							sign_map.splice(IsE,1,1);
 							sign_X.splice(IsE,1,signX);
 							sign_Y.splice(IsE,1,signY);
 							fenceArr.push(IsE);
@@ -505,7 +529,6 @@ Farm.addEventListener("click",function(e){
 							door();
 							fence();
 						}else if (otherSign == 4) {
-							sign_map.splice(IsE,1,1);
 							sign_X.splice(IsE,1,signX);
 							sign_Y.splice(IsE,1,signY);
 							doorArr.push(IsE);
@@ -701,7 +724,6 @@ Farm.addEventListener("click",function(e){
 					doorArr.splice(Del_doorArr,1);
 					door_name.splice(Del_doorArr,1);
 				}
-				sign_map.splice(e,1,0);
 				sign_X.splice(e,1,0);
 				sign_Y.splice(e,1,0);
 				FarmNumM[IsE].firstChild.style.top = "0em";
@@ -858,28 +880,29 @@ function IsAdd() {
 		Position_Season_winter.push(Season_winter);
 		Position_Number.push(GoodsNumber);
 		Position_state.push(Is_state);
-		sign_map.splice(IsE,1,1);
 		sign_X.splice(IsE,1,signX);
 		sign_Y.splice(IsE,1,signY);
 		FarmNumM[IsE].firstChild.style.top = IMG_T;
 		FarmNumM[IsE].firstChild.style.left = IMG_L;
 		FarmNumM[IsE].firstChild.style.width = IMG_W;
 		FarmNumM[IsE].firstChild.style.height = IMG_H;
-		// console.log(Position);
-		// console.log(Position_name);
-		// console.log(Position_Catalog);
+		console.log(Position);
+		console.log(Position_name);
+		console.log(Position_Catalog);
 		// console.log(Position_Season_spring);
 		// console.log(Position_Season_summer);
 		// console.log(Position_Season_autumn);
 		// console.log(Position_Season_winter);
 		// console.log(Position_Number);
-		// console.log(sign_map);
 		// console.log(sign_X);
 		// console.log(sign_Y);
 	
 }
 function fruiter() {
 	console.log("fruiter");
+	for (var i = 0; i < fruiter_sign.length; i++) {
+		FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
+	}
 	for (var i = 0; i < Position.length; i++) {
 		console.log(Position.length);
 		if (Position_Catalog[i] == 4 && Position_name[i] != 10) {
@@ -888,12 +911,8 @@ function fruiter() {
 			for (var x = -2; x < 3; x++) {
 				for (var z = -2; z < 3; z++) {
 					FarmNumB[y-(MapWidth*x)-(z)].style.pointerEvents = "none";
-					// FarmNumB[y-(MapWidth*x)-(z)].firstChild.style.background = "red";
-					// FarmNumB[y-(MapWidth*x)-(z)].firstChild.style.opacity =  "0.5";
 				}
-				
 			}
-			
 		}
 	}
 }
@@ -918,10 +937,7 @@ function signMap() {
 			for (var x = 0; x < sign_X[i]; x++) {
 				for (var y = 0; y < sign_Y[i]; y++) {
 					FarmNumB[i+x-MapWidth*y].style.pointerEvents = "none";
-					// FarmNumB[i+x-MapWidth*y].firstChild.style.background = "blue";
-					// FarmNumB[i+x-MapWidth*y].firstChild.style.opacity =  "0.5";
 				}
-				// FarmNumB[i].firstChild.style.background = "red";
 			}
 		}
 	}
@@ -934,13 +950,9 @@ function signMapX() {
 		if (sign_X[i] != 0 && i-signX+1 > 0) {
 			for (var x = 0; x < signX; x++) {
 				FarmNumB[i-x].style.pointerEvents = "none";
-				// FarmNumB[i-x].firstChild.style.background = "yellow";
-				// FarmNumB[i-x].firstChild.style.opacity =  "0.5";
 				for (var y = 0; y < sign_Y[i]; y++) {
 					if (i-x-MapWidth*y > 0) {
 						FarmNumB[i-x-MapWidth*y].style.pointerEvents = "none";
-						// FarmNumB[i-x-MapWidth*y].firstChild.style.background = "yellow";
-						// FarmNumB[i-x-MapWidth*y].firstChild.style.opacity =  "0.5";
 					}
 				}
 			}
@@ -948,21 +960,15 @@ function signMapX() {
 		if (sign_X[i] != 0) {
 			for (var x = 0; x < sign_X[i]; x++) {
 				for (var y = 0; y < signY; y++) {
-					if (i+MapWidth*y+x < 5200) {
+					if (i+x+MapWidth*y < 5200) {
 						FarmNumB[i+MapWidth*y+x].style.pointerEvents = "none";
-						// FarmNumB[i+MapWidth*y+x].firstChild.style.background = "#000";
-						// FarmNumB[i+MapWidth*y+x].firstChild.style.opacity =  "0.5";
 					}
 				}
-				
-				// FarmNumB[i].firstChild.style.background = "red";
 			}
 			for (var x = 0; x < signX; x++) {
 				for (var y = 1; y < signY; y++) {
 					if (i+MapWidth*y-x > 0 && i+MapWidth*y-x <5200) {
 						FarmNumB[i-x+MapWidth*y].style.pointerEvents = "none";
-						// FarmNumB[i-x+MapWidth*y].firstChild.style.background = "#000";
-						// FarmNumB[i-x+MapWidth*y].firstChild.style.opacity =  "0.5";
 					}
 				}
 			}
@@ -975,21 +981,15 @@ function signMapY() {
 		var sign = Architecture_sign[i];
 		for (var x = 0; x < signX; x++) {
 			FarmNumB[sign-x].style.pointerEvents = "none";
-			// FarmNumB[sign-x].firstChild.style.background = "#000";
-			// FarmNumB[sign-x].firstChild.style.opacity =  "0.5";
 			for (var y = 1; y < signY; y++) {
 				if (sign+MapWidth*y-x > 0 && sign+MapWidth*y-x <5200) {
 					FarmNumB[sign-x+MapWidth*y].style.pointerEvents = "none";
-					// FarmNumB[sign-x+MapWidth*y].firstChild.style.background = "#000";
-					// FarmNumB[sign-x+MapWidth*y].firstChild.style.opacity =  "0.5";
 				}
 			}
 		}
 		for (var y = 0; y < signY; y++) {
 			if (sign+MapWidth*y < 5200) {
 				FarmNumB[sign+MapWidth*y].style.pointerEvents = "none";
-				// FarmNumB[sign+MapWidth*y].firstChild.style.background = "#000";
-				// FarmNumB[sign+MapWidth*y].firstChild.style.opacity =  "0.5";
 			}
 		}
 	}	
@@ -1460,10 +1460,8 @@ function Cultivation() {
 		if (state == "Hoe" || menuBodySign == 1) {
 			console.log(state);
 			FarmNumB[x].style.pointerEvents = "none";
-			FarmNumB[x].style.background = "blue";
 		}else{
 			FarmNumB[x].style.pointerEvents = "auto";
-			FarmNumB[x].style.background = "";
 		}
 		
 	}
@@ -1481,25 +1479,92 @@ function GIF() {
 function Grid() {
 	var Grid_Btn = document.getElementById("Grid");
 	if (Grid_status == false) {
-		FarmTop.style.display = "flex";
+		for (var i = 0; i < Frame_Num; i++) {
+			FarmNumT[i].style.background = "url(imges/t.png)";
+		}
 		Grid_Btn.src = "imges/Grid-2.png";
 		Grid_status = true;
 	}else{
-		FarmTop.style.display = "none";
+		for (var i = 0; i < Frame_Num; i++) {
+			FarmNumT[i].style.background = "url(imges/0.png)";
+		}
 		Grid_Btn.src = "imges/Grid-1.png";
 		Grid_status = false;
 	}
+}
+function Range() {
+	console.log("Range");
+	FarmTop.style.display = "flex";
+	var Range_Btn = document.getElementById("Range");
+	if (Range_status == false) {
+		Range_Btn.src = "imges/Range-2.png";
+		Range_status = true;
+		Range_fun();
+	}else{
+		Range_Btn.src = "imges/Range-1.png";
+		Range_status = false;
+		for (var i = 0 ; i < Position.length; i++) {
+			if (Position_Catalog[i] == 2 && Position_name[i] > 0 && Position_name[i] < 10) {
+				FarmNumT[Position[i]].firstChild.src = "imges/t.png"
+				FarmNumT[Position[i]].firstChild.style.top = "0em";
+				FarmNumT[Position[i]].firstChild.style.left = "0em";
+				FarmNumT[Position[i]].firstChild.style.width = "1em";
+				FarmNumT[Position[i]].firstChild.style.height = "1em";
+			}else if (Position_Catalog[i] == 2 && Position_name[i] == 10) {
+				FarmNumT[Position[i]].firstChild.src = "imges/t.png"
+				FarmNumT[Position[i]].firstChild.style.top = "0em";
+				FarmNumT[Position[i]].firstChild.style.left = "0em";
+				FarmNumT[Position[i]].firstChild.style.width = "1em";
+				FarmNumT[Position[i]].firstChild.style.height = "1em";
+			}else if (Position_Catalog[i] == 0 && Position_name[i] == 29) {
+				FarmNumT[Position[i]].firstChild.src = "imges/t.png"
+				FarmNumT[Position[i]].firstChild.style.top = "0em";
+				FarmNumT[Position[i]].firstChild.style.left = "0em";
+				FarmNumT[Position[i]].firstChild.style.width = "1em";
+				FarmNumT[Position[i]].firstChild.style.height = "1em";
+			}
+		}
+	}
 	
+}
+function Range_fun() {
+	if (Range_status == true) {
+		for (var i = 0 ; i < Position.length; i++) {
+			if (Position_Catalog[i] == 2 && Position_name[i] > 0 && Position_name[i] < 10) {
+				FarmNumT[Position[i]].firstChild.src = "imges/scarecrow.png"
+				FarmNumT[Position[i]].firstChild.style.top = "-8em";
+				FarmNumT[Position[i]].firstChild.style.left = "-8em";
+				FarmNumT[Position[i]].firstChild.style.width = "17em";
+				FarmNumT[Position[i]].firstChild.style.height = "17em";
+			}else if (Position_Catalog[i] == 2 && Position_name[i] == 10) {
+				FarmNumT[Position[i]].firstChild.src = "imges/luxury-scarecrow.png"
+				FarmNumT[Position[i]].firstChild.style.top = "-16em";
+				FarmNumT[Position[i]].firstChild.style.left = "-16em";
+				FarmNumT[Position[i]].firstChild.style.width = "33em";
+				FarmNumT[Position[i]].firstChild.style.height = "33em";
+			}else if (Position_Catalog[i] == 0 && Position_name[i] == 29) {
+				FarmNumT[Position[i]].firstChild.src = "imges/Junimos.png"
+				FarmNumT[Position[i]].firstChild.style.top = "-8em";
+				FarmNumT[Position[i]].firstChild.style.left = "-7em";
+				FarmNumT[Position[i]].firstChild.style.width = "17em";
+				FarmNumT[Position[i]].firstChild.style.height = "17em";
+			}
+		}
+	}
 }
 function Explain() {
 	var Explain_Btn = document.getElementById("Explain");
-	if (Explain_status == false) {
-		Explain_Btn.src = "imges/Explain-2.png";
-		Explain_status = true;
-	}else{
-		Explain_Btn.src = "imges/Explain-1.png";
-		Explain_status = false;
-	}
+	// Explain_Btn.src = "imges/Explain-2.png";
+	document.getElementById("Course_content").style.display = "block";
+	// if (Explain_status == false) {
+	// 	Explain_Btn.src = "imges/Explain-2.png";
+	// 	document.getElementById("Course_content").style.display = "block";
+	// 	Explain_status = true;
+	// }else{
+	// 	Explain_Btn.src = "imges/Explain-1.png";
+	// 	document.getElementById("Course_content").style.display = "none";
+	// 	Explain_status = false;
+	// }
 	
 }
 
@@ -1601,7 +1666,75 @@ function Farm_name_OK() {
 }
 function Farm_name_skip() {
 	screenshot();
+	document.getElementById("name-box").style.display = "none";
 }
 function Farm_name_cancel() {
 	document.getElementById("name-box").style.display = "none";
+}
+function Course_X() {
+	document.getElementById("Course_content").style.display = "none";
+}
+function Course_prev() {
+	var Course_arr = document.getElementById("Course_content");
+	var ARR = Course_arr.getElementsByClassName("Course_content");
+	if (Course_Num > 0) {
+		Course_Num = Course_Num - 1;	
+	}else if (Course_Num == 0) {
+		Course_Num = 0;
+	}
+	ARR[Course_Num].style.display = "block";
+	ARR[Course_Num+1].style.display = "none";
+}
+function Course_next() {
+	var Course_arr = document.getElementById("Course_content");
+	var ARR = Course_arr.getElementsByClassName("Course_content");
+	if (Course_Num < 2) {
+		Course_Num = Course_Num + 1;	
+	}else if (Course_Num == 2) {
+		Course_Num = 2;
+	}
+	ARR[Course_Num].style.display = "block";
+	ARR[Course_Num-1].style.display = "none";
+}
+function Course_yes() {
+	document.getElementById("Course_content").style.display = "block";
+	document.getElementById("Course").style.display = "none";
+}
+function Course_no() {
+	document.getElementById("Course").style.display = "none";
+}
+function House() {
+	window.open("http://bishengming.gitee.io/stardewvalley/")
+}
+function author() {
+	document.getElementById("author").style.display = "block";
+}
+function author_X() {
+	document.getElementById("author").style.display = "none";
+}
+var time = 0;
+var timeX = 0
+var cloudY = document.getElementById("cloud");
+var cloudN = cloudY.querySelectorAll("div");
+var cloudX1 = cloudN[0].offsetLeft;
+var cloudX2 = cloudN[1].offsetLeft;
+var cloudX3 = cloudN[2].offsetLeft;
+var cloudX4 = cloudN[3].offsetLeft;
+var animation = setInterval("cloud()",50)
+function cloud() {
+	if (timeX == 0) {
+		window.time = time + 1;
+		if (time == 300) {
+			window.timeX = 1
+		}
+	}else if (timeX == 1) {
+		window.time = time - 1;
+		if (time == 1) {
+			window.timeX = 0
+		}
+	}
+	cloudN[0].style.left = cloudX1 + time +"px";
+	cloudN[1].style.left = cloudX2 - time +"px";
+	cloudN[2].style.left = cloudX4 - time*2 +"px";
+	cloudN[3].style.left = cloudX3 + time*2 +"px";
 }

@@ -7,6 +7,59 @@
 	<link rel="stylesheet" href="Valley.css">
 </head>
 <body ondragstart="return false" id="body-1">
+	<div id="Choice">
+		<div id="Choice-1">
+			<div id="Title-1">
+				<img src="imges/Choice/TitleX3.png" alt="" id="Title-img">
+			</div>
+			<div id="Title-2">
+				<div></div>
+				<img src="imges/Choice/1.png" alt="" onclick="Farm_1();">
+				<img src="imges/Choice/2.png" alt="">
+				<img src="imges/Choice/3.png" alt="">
+				<img src="imges/Choice/4.png" alt="">
+				<img src="imges/Choice/5.png" alt="">
+				<img src="imges/Choice/6.png" alt="">
+				<div></div>
+			</div>
+		</div>
+		<div id="cloud">
+			<div id="cloud-1">
+				<img src="imges/Choice/cloud.png" alt="">
+			</div>
+			<div id="cloud-2">
+				<img src="imges/Choice/cloud.png" alt="">
+			</div>
+			<div id="cloud-3">
+				<img src="imges/Choice/cloud.png" alt="">
+			</div>
+			<div id="cloud-4">
+				<img src="imges/Choice/cloud.png" alt="">
+			</div>
+		</div>
+	</div>
+	<div id="Course">
+		<div class="Course-1" onclick="Course_yes();"></div>
+		<div class="Course-1" onclick="Course_no();"></div>
+	</div>
+	<div id="Course_content">
+		<img src="imges/Explain/X.png" alt="" class="Course_content_X" onclick="Course_X();">
+		<img src="imges/Explain/prev.png" alt="" class="Course_content_prev" onclick="Course_prev();">
+		<img src="imges/Explain/next.png" alt="" class="Course_content_next" onclick="Course_next();">
+		<div id="Course_content_1" class="Course_content">
+			<img src="imges/Explain/Explain-1.png" alt="">
+		</div>
+		<div id="Course_content_2" class="Course_content">
+			<img src="imges/Explain/Explain-2.png" alt="">
+		</div>
+		<div id="Course_content_3" class="Course_content">
+			<img src="imges/Explain/Explain-3.png" alt="">
+		</div>
+	</div>
+	<div id="author">
+		<img src="imges/Explain/X.png" alt="" class="Course_content_X" onclick="author_X();">
+		<img src="imges/Explain/author.png" alt="">
+	</div>
 	<div id="menu">
 		<div id="menu-body">
 			<div id="menu-body-btn">
@@ -36,6 +89,7 @@
 					<img src="imges/icon/3.png" alt="" onclick="Axe();">
 					<img src="imges/icon/4.png" alt="" onclick="Pickaxe();">
 					<img src="imges/icon/5.png" alt="" onclick="dyeing();">
+					<img src="imges/0.png" alt="" >
 				</div>
 			</div>
 		</div>
@@ -102,6 +156,9 @@
 	<div id="Btn">
 		<img src="imges/Explain-1.png" alt="" onclick="Explain();" id="Explain">
 		<img src="imges/Grid-1.png" alt="" onclick="Grid();" id="Grid">
+		<img src="imges/Range-1.png" alt="" onclick="Range();" id="Range">
+		<img src="imges/House.png" alt="" onclick="House();" id="Range">
+		<img src="imges/author.png" alt="" onclick="author();" id="Range">
 		<img src="imges/camera.png" alt="" onclick="Farm_name();">
 	</div>
 
@@ -118,7 +175,7 @@
 		</div>
 	</div>
 	<div id="name-box">
-		<input type="text" id="name-tenx" placeholder="是否为农场命名" maxlength="8">
+		<input type="text" id="name-tenx" placeholder="请为你的农场命名" maxlength="8">
 		<div id="name-btn">
 			<div id="name-btn-1" onclick="Farm_name_OK();">确定</div>
 			<div id="name-btn-2" onclick="Farm_name_skip();">跳过</div>

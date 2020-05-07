@@ -441,10 +441,21 @@ img{
 	top: -12px;
 }
 #Farm-Top{
-	display: none;
+	position: absolute;
+	z-index: 80;
+	pointer-events: none;
 }
 .Farm-T{
-	background:url(imges/t.png);
+	background:url(imges/0.png);
+	width: 1em;
+	height: 1em;
+}
+.Farm-T img{
+	pointer-events: none;
+	position: relative;
+	z-index: 20;
+	width: 1em;
+	height: 1em;
 }
 #Btn{
 	width: 64px;
@@ -502,7 +513,7 @@ img{
     display: flex;
     -webkit-justify-content: center;
     justify-content: center;
-    /*display: none;*/
+    display: none;
 }
 #name-l img{
 	width: 64px;
@@ -594,4 +605,126 @@ textarea::-webkit-input-placeholder {
 	color: #221122;
 	font-weight: 500;
 	/*text-shadow:-2px 2px #853605;*/
+}
+#Course{
+	width: 272px;
+	height: 168px;
+	position: absolute;
+	z-index: 99;
+	top: 40%;
+	left: 50%;
+	margin-left: -160px;
+	background: url(imges/Explain/Course.png);
+}
+.Course-1{
+	margin-top: 80px;
+	width: 136px;
+	height: 88px;
+	float: left;
+}
+#Course_content{
+	width: 1280px;
+	height: 768px;
+	position: absolute;
+	z-index: 99;
+	top: 5%;
+	left: 50%;
+	margin-left: -640px;
+	display: none;
+}
+#Course_content_1{
+	display: block;
+}
+#Course_content_2{
+	display: none;
+}
+#Course_content_3{
+	display: none;
+}
+.Course_content_X{
+	position: absolute;
+	right: 0;
+	top: 32px;
+}
+.Course_content_prev{
+	position: absolute;
+	left: 532px;
+	bottom: 44px;
+}
+.Course_content_next{
+	position: absolute;
+	left: 704px;
+	bottom: 44px;
+}
+#author{
+	width: 1280px;
+	height: 768px;
+	position: absolute;
+	z-index: 99;
+	top: 5%;
+	left: 50%;
+	margin-left: -640px;
+	display: none;
+}
+#Choice{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 999;
+	background: url(imges/Choice/Title-bj.png);
+}
+#cloud{
+	position: absolute;
+	top: 50px;
+}
+#cloud-1{
+	position: absolute;
+	top: 50px;
+	left: 10px;
+}
+#cloud-2{
+	position: absolute;
+	top: 100px;
+	left: 1200px;
+}
+#cloud-3{
+	position: absolute;
+	top: 200px;
+	left: 100px;
+}
+#cloud-4{
+	position: absolute;
+	top: 400px;
+	left: 500px;
+}
+#Choice-1{
+	width: 1216px;
+	position: relative;
+	left: 50%;
+	top: 5%;
+	margin-left: -608px;
+	z-index: 1000;
+}
+#Title-2{
+	width: 1156px;
+	height: 158px;
+	position: relative;
+	left: 50%;
+	margin-left: -578px;
+	margin-top: 16px;
+	background: url(imges/Choice/bj.png);
+	display: -webkit-flex;
+    display: flex;
+     -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    align-items: center;
+}
+#Title-2 img{
+	width: 128px;
+	height: 128px;
+}
+#Title-2 div{
+	width: 1px;
+	height: 80px;
 }
