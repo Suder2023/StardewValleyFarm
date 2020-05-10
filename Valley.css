@@ -192,25 +192,6 @@ img{
 #menu-btn img{
 	position: relative;
 }
-/*#btn1{
-	position: relative;
-	left: -8px;
-}
-#btn2{
-	position: relative;
-}
-#btn3{
-	position: relative;
-}
-#btn4{
-	position: relative;
-}
-#btn5{
-	position: relative;
-}
-#btn6{
-	position: relative;
-}*/
 #arrow img{
 	position: relative;
 	width: 1em;
@@ -276,6 +257,15 @@ img{
 	height: 320px;
 }
 #menu-body-6{
+	height: 480px;
+}
+#menu-body-6 img{
+	width: 258px;
+	height: 480px;
+	margin-top: -1px;
+	margin-left: -1px;
+}
+#menu-body-7{
 	height: 480px;
 }
 #tool-div{
@@ -444,6 +434,7 @@ img{
 	position: absolute;
 	z-index: 80;
 	pointer-events: none;
+	/*display: none;*/
 }
 .Farm-T{
 	background:url(imges/0.png);
@@ -727,4 +718,52 @@ textarea::-webkit-input-placeholder {
 #Title-2 div{
 	width: 1px;
 	height: 80px;
+}
+#Statistics{
+	width: 1280px;
+	height: 768px;
+	position: absolute;
+	z-index: 99;
+	top: 5%;
+	left: 50%;
+	margin-left: -640px;
+	background: url(imges/Statistics.png);
+	display: none;
+}
+#Statistics_table{
+	width: 1152px;
+	height: 480px;
+	position: relative;
+	left: 50%;
+	margin-left: -576px;
+	margin-top: 192px;
+}
+#Statistics_table img {
+	width: 59px;
+	height: 35px;
+	position: absolute;
+	top: 496px;
+}
+.Statistics_table{
+	width: 1152px;
+	height: 480px;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+#Statistics_table-1{
+	display: flex;
+}
+#Statistics_table-2{
+	display: none;
+}
+.Statistics-text{
+	width: 164px;
+	height: 32px;
+	font-size: 24px;
+	color: #221122;
+	text-shadow:-1px 2px #dd9454;
 }

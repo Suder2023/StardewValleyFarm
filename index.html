@@ -5,6 +5,7 @@
 	<title>星露谷物语布局模拟器</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="Valley.css">
+	<link rel="icon" href="favicon.ico" type="image/x-icon"/>
 </head>
 <body ondragstart="return false" id="body-1">
 	<div id="Choice">
@@ -60,6 +61,19 @@
 		<img src="imges/Explain/X.png" alt="" class="Course_content_X" onclick="author_X();">
 		<img src="imges/Explain/author.png" alt="">
 	</div>
+	<div id="Statistics">
+		<img src="imges/Explain/X.png" alt="" class="Course_content_X" onclick="Statistics_X();">
+		<img src="imges/Explain/prev.png" alt="" class="Course_content_prev" onclick="Statistics_prev();" id="Statistics-prev">
+		<img src="imges/Explain/next.png" alt="" class="Course_content_next" onclick="Statistics_next();" id="Statistics-next">
+		<div id="Statistics_table">
+			<id id="Statistics_table-1" class="Statistics_table">
+				<img src="imges/1_2.png" alt="" id="Statistics_table-1-img">
+			</id>
+			<id id="Statistics_table-2" class="Statistics_table">
+				<img src="imges/2_2.png" alt="">
+			</id>
+		</div>
+	</div>
 	<div id="menu">
 		<div id="menu-body">
 			<div id="menu-body-btn">
@@ -74,6 +88,9 @@
 				<div class="menu-body" id="menu-body-4"></div>
 				<div class="menu-body" id="menu-body-5"></div>
 				<div class="menu-body" id="menu-body-6">
+					<img src="imges/construction.gif" alt="">
+				</div>
+				<div class="menu-body" id="menu-body-7">
 					<div id="tool-div">
 						<div id="tool-Title">
 							<div id="tool-Title-1">喷壶</div>
@@ -99,6 +116,7 @@
 			<img src="imges/button/tool.png" alt="">
 			<img src="imges/button/decorate.png" alt="">
 			<img src="imges/button/other.png" alt="">
+			<img src="imges/button/npc.png" alt="">
 			<img src="imges/button/menu.png" alt="">
 			<img src="imges/button/arrow-2.png" alt="" onclick="MenuSwitch();">
 		</div>
@@ -157,6 +175,7 @@
 		<img src="imges/Explain-1.png" alt="" onclick="Explain();" id="Explain">
 		<img src="imges/Grid-1.png" alt="" onclick="Grid();" id="Grid">
 		<img src="imges/Range-1.png" alt="" onclick="Range();" id="Range">
+		<img src="imges/Statistics-btn.png" alt="" onclick="Statistics();" id="Range">
 		<img src="imges/House.png" alt="" onclick="House();" id="Range">
 		<img src="imges/author.png" alt="" onclick="author();" id="Range">
 		<img src="imges/camera.png" alt="" onclick="Farm_name();">
