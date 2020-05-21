@@ -597,22 +597,7 @@ textarea::-webkit-input-placeholder {
 	font-weight: 500;
 	/*text-shadow:-2px 2px #853605;*/
 }
-#Course{
-	width: 272px;
-	height: 168px;
-	position: absolute;
-	z-index: 99;
-	top: 40%;
-	left: 50%;
-	margin-left: -160px;
-	background: url(imges/Explain/Course.png);
-}
-.Course-1{
-	margin-top: 80px;
-	width: 136px;
-	height: 88px;
-	float: left;
-}
+
 #Course_content{
 	width: 1280px;
 	height: 768px;
@@ -690,26 +675,40 @@ textarea::-webkit-input-placeholder {
 }
 #Choice-1{
 	width: 1216px;
-	position: relative;
+	position: absolute;
 	left: 50%;
-	top: 5%;
+	bottom: 10%;
+	/*top: 5%;*/
 	margin-left: -608px;
 	z-index: 1000;
 }
 #Title-2{
-	width: 1156px;
-	height: 158px;
 	position: relative;
-	left: 50%;
-	margin-left: -578px;
-	margin-top: 16px;
-	background: url(imges/Choice/bj.png);
+	margin-top: 64px;
 	display: -webkit-flex;
     display: flex;
-     -webkit-justify-content: space-between;
+}
+.Title-2-3{
+	width: 1156px;
+	height: 158px;
+	left: 50%;
+	margin-left: -578px;
+	 -webkit-justify-content: space-between;
     justify-content: space-between;
     -webkit-align-items: center;
     align-items: center;
+    background: url(imges/Choice/bj.png);
+}
+.Title-2-2{
+	width: 832px;
+	height: 158px;
+	left: 50%;
+	margin-left: -416px;
+	 -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    background: url(imges/Choice/bj-2.png);
 }
 #Title-2 img{
 	width: 128px;
@@ -766,4 +765,24 @@ textarea::-webkit-input-placeholder {
 	font-size: 24px;
 	color: #221122;
 	text-shadow:-1px 2px #dd9454;
+}
+.Title-img-2{
+	margin: 0 auto;
+	margin-top: 64px;
+}
+#Course{
+	width: 328px;
+	height: 236px;
+	position: absolute;
+	margin-top: 20%;
+	left: 50%;
+	margin-left: -164px;
+	z-index: 80;
+	background: url(imges/Course.png);
+}
+#Course div{
+	width: 164px;
+	height: 116px;
+	float: left;
+	margin-top: 120px;
 }

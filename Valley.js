@@ -54,6 +54,14 @@ var Grid_status = false;//标记网格是否开启
 var Range_status = false;//标记稻草人与祝尼魔范围
 var Explain_status = false;//标记教程是否开启
 var Frame_Num = 5200;//地图规模
+var screen_H = screen.height;
+if (screen_H < 800) {
+	var Title_img = document.getElementById("Title-img");
+	var Title_2 = document.getElementById("Title-2");
+	Title_img.src = "imges/Choice/TitleX2.png";
+	Title_img.className = "Title-img-2";
+	Title_2.className = "Title-2-2";
+}
 FrameSize();//边框校准
 function Farm_1(){//生成标准农场
 	Frame_Num = 5200;
@@ -118,7 +126,6 @@ for(var i = 0; i < menuBodyNum.length; i++){
 		menuBodyNum[i].style.display = "none";//关闭其他物品栏页面
 	}
 }
-console.log(menuBodyNum);
 menuNum[0].style.left = "-8px";//校准一个菜单按钮位置
 ///////////////////////////////////点击菜单按钮功能/////////////////////////////////////
 menuBtn.addEventListener("click",function(e){
@@ -742,8 +749,13 @@ Farm.addEventListener("click",function(e){
 				FarmNumM[IsE].firstChild.style.left = "0em";//清除横向偏移
 				FarmNumM[IsE].firstChild.style.width = "1em";//初始化地块宽度
 				FarmNumM[IsE].firstChild.style.height = "1em";//初始化地块高度
+				FarmNumT[IsE].firstChild.style.top = "0em";//清除纵向偏移
+				FarmNumT[IsE].firstChild.style.left = "0em";//清除横向偏移
+				FarmNumT[IsE].firstChild.style.width = "1em";//初始化地块宽度
+				FarmNumT[IsE].firstChild.style.height = "1em";//初始化地块高度
 				FarmNumM[e].firstChild.src = "imges/0.png"//初始化地块物品层贴图
 				FarmNumB[e].firstChild.src = "imges/0.png"//初始化地块地板层贴图
+				FarmNumT[e].firstChild.src = "imges/0.png"//初始化地块地板层贴图
 				door();//校准门状态
 				fence();//校准栅栏状态
 				floor();//校准地板状态
@@ -1537,7 +1549,7 @@ function Range_fun() {//刷新祝尼魔和稻草人范围标记
 				FarmNumT[Position[i]].firstChild.style.height = "17em";
 				FarmNumT[Position[i]].firstChild.style.zIndex = 10;
 			}
-			console.log(FarmNumT[Position[i]]);
+			// console.log(FarmNumT[Position[i]]);
 		}
 	}
 }
