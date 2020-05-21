@@ -786,3 +786,16 @@ textarea::-webkit-input-placeholder {
 	float: left;
 	margin-top: 120px;
 }
+#warning{
+	width: 640px;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	margin-left: -320px;
+	z-index: 1111;
+	display: none;
+}
+#warning img{
+	margin: 0 auto;
+	width: 320px;
+}

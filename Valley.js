@@ -1870,3 +1870,7 @@ function Statistics_add_2(){//统计页2
 	var div = document.createElement("div");
 	Statistics_table_2.appendChild(div).className = "Statistics-text";
 }
+if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+	document.getElementById("warning").style.display = "block"
+	document.getElementById("Choice-1").style.display = "none"
+}
