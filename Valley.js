@@ -1873,4 +1873,27 @@ function Statistics_add_2(){//统计页2
 if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 	document.getElementById("warning").style.display = "block"
 	document.getElementById("Choice-1").style.display = "none"
+
 }
+function Choice() {
+	if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+	window.location.href="http://bishengming.gitee.io/pixel/";
+	}
+}
+window.onload = function() {
+	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+	    
+	} else {
+	    if (screen.height < 800) {
+	    	document.getElementById("f11").style.display = "block"
+	    	document.getElementById("Choice-1").style.display = "none"
+	    }
+	}
+}
+document.onkeydown=function(event){
+	var e = event || window.event || arguments.callee.caller.arguments[0];
+	if(e && e.keyCode==122){ 
+		document.getElementById("f11").style.display = "none"
+	    document.getElementById("Choice-1").style.display = "block"
+	}
+}; 
