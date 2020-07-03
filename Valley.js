@@ -1872,7 +1872,6 @@ function Statistics_add_2(){//统计页2
 }
 if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 	document.getElementById("warning").style.display = "block"
-	document.getElementById("warning").style.background = "url(imges/warning.png)";
 	document.getElementById("Choice-1").style.display = "none"
 
 }
@@ -1883,21 +1882,19 @@ function Choice() {
 }
 
 window.onload = function() {
-	document.getElementById("ceshi").innerHTML = document.getElementById("warning").getAttribute("style");//写入名称栏
-	console.log(document.getElementById("warning").getAttribute("style"))
-	// if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-	//     document.getElementById("f11").style.display = "none"
-	// } else {
-	//     if (screen.height < 800) {
-	//     	document.getElementById("f11").style.display = "block"
-	//     	document.getElementById("Choice-1").style.display = "none"
-	//     }
-	// }
+	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+	    document.getElementById("f11").style.display = "none"
+	} else {
+	    if (screen.height < 800) {
+	    	document.getElementById("f11").style.display = "block"
+	    	document.getElementById("Choice-1").style.display = "none"
+	    }
+	}
 }
-// document.onkeydown=function(event){
-// 	var e = event || window.event || arguments.callee.caller.arguments[0];
-// 	if(e && e.keyCode==122){ 
-// 		document.getElementById("f11").style.display = "none"
-// 	    document.getElementById("Choice-1").style.display = "block"
-// 	}
-// }; 
+document.onkeydown=function(event){
+	var e = event || window.event || arguments.callee.caller.arguments[0];
+	if(e && e.keyCode==122){ 
+		document.getElementById("f11").style.display = "none"
+	    document.getElementById("Choice-1").style.display = "block"
+	}
+}; 
