@@ -1882,7 +1882,7 @@ function Choice() {
 }
 window.onload = function() {
 	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-	    
+	    document.getElementById("f11").style.display = "none"
 	} else {
 	    if (screen.height < 800) {
 	    	document.getElementById("f11").style.display = "block"

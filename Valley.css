@@ -801,7 +801,7 @@ textarea::-webkit-input-placeholder {
 	top: 30%;
 	left: 50%;
 	margin-left: -320px;
-	position: absolute;
+	/*position: absolute;*/
 	z-index: 1112;
 	display: none;
 }
