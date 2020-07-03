@@ -1872,6 +1872,7 @@ function Statistics_add_2(){//统计页2
 }
 if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 	document.getElementById("warning").style.display = "block"
+	document.getElementById("warning").style.background = "url(imges/warning.png)";
 	document.getElementById("Choice-1").style.display = "none"
 
 }
@@ -1882,7 +1883,7 @@ function Choice() {
 }
 
 window.onload = function() {
-	document.getElementById("ceshi").innerHTML = document.getElementById("warning").style.background;//写入名称栏
+	document.getElementById("ceshi").innerHTML = document.getElementById("warning").getAttribute("style");//写入名称栏
 	console.log(document.getElementById("warning").getAttribute("style"))
 	// if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 	//     document.getElementById("f11").style.display = "none"
