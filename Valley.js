@@ -1880,20 +1880,23 @@ function Choice() {
 	window.location.href="http://bishengming.gitee.io/pixel/";
 	}
 }
+
 window.onload = function() {
-	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-	    document.getElementById("f11").style.display = "none"
-	} else {
-	    if (screen.height < 800) {
-	    	document.getElementById("f11").style.display = "block"
-	    	document.getElementById("Choice-1").style.display = "none"
-	    }
-	}
+	document.getElementById("ceshi").innerHTML = document.getElementById("warning").style.background;//写入名称栏
+	console.log(document.getElementById("warning").getAttribute("style"))
+	// if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+	//     document.getElementById("f11").style.display = "none"
+	// } else {
+	//     if (screen.height < 800) {
+	//     	document.getElementById("f11").style.display = "block"
+	//     	document.getElementById("Choice-1").style.display = "none"
+	//     }
+	// }
 }
-document.onkeydown=function(event){
-	var e = event || window.event || arguments.callee.caller.arguments[0];
-	if(e && e.keyCode==122){ 
-		document.getElementById("f11").style.display = "none"
-	    document.getElementById("Choice-1").style.display = "block"
-	}
-}; 
+// document.onkeydown=function(event){
+// 	var e = event || window.event || arguments.callee.caller.arguments[0];
+// 	if(e && e.keyCode==122){ 
+// 		document.getElementById("f11").style.display = "none"
+// 	    document.getElementById("Choice-1").style.display = "block"
+// 	}
+// }; 

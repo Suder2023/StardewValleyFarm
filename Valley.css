@@ -795,7 +795,7 @@ textarea::-webkit-input-placeholder {
 	margin-left: -160px;
 	z-index: 1111;
 	display: none;
-	background: url(imges/Choice/warning-1.png);
+	background: url(imges/Choice/warning.png);
 }
 #f11{
 	top: 30%;
