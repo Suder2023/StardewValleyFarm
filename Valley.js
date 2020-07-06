@@ -834,9 +834,7 @@ menuBody.addEventListener("click",function(e){
 		 	}
 		}else if (menuBodySign == 4 && otherSign != undefined) {//当前菜单为树木
 			NAME = treeNum[otherSign];
-			if (otherSign > 3 && otherSign < 9) {
-				fruiter();
-			}else if (otherSign == 9) {
+			if (otherSign == 9) {
 				IMG = "imges/tree/" + otherSign + "/" + "0.png";
 			}
 			if (e.target.id != "body-btn") {
@@ -849,6 +847,9 @@ menuBody.addEventListener("click",function(e){
 		signMapX();
 		signMap();
 		door();
+		if (otherSign > 2 && otherSign < 9) {
+				fruiter();
+			}
 		if (menuBodySign == 0) {
 			signMapY();
 		}
