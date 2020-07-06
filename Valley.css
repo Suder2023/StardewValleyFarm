@@ -271,7 +271,7 @@ img{
 #tool-div{
 	width: 320px;
 	height: 310px;
-	background:url(imges/Axe.gif);
+	background:url(imges/Kettle.gif);
 }
 #name-text{
 	background:url(imges/zoom-b.png) no-repeat center 0px;
@@ -804,4 +804,5 @@ textarea::-webkit-input-placeholder {
 	position: absolute;
 	z-index: 1112;
 	display: none;
+
 }
