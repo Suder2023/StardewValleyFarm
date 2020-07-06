@@ -925,10 +925,12 @@ function fence() {//校准栅栏状态
 }
 function door() {//校准门状态
 	for (var i = 0 ; i < doorArr.length; i++) {//遍历门数组
-		var up = door_name[fenceArr.indexOf(doorArr[i] - MapWidth)];//定义坐标"上"
-		var down = door_name[fenceArr.indexOf(doorArr[i] + MapWidth)];//定义坐标"下"
-		var left = door_name[fenceArr.indexOf(doorArr[i] - 1)];//定义坐标"左"
-		var right = door_name[fenceArr.indexOf(doorArr[i] + 1)];//定义坐标"右"
+		var up = fenceArr[fenceArr.indexOf(doorArr[i] - MapWidth)];//定义坐标"上"
+		var down = fenceArr[fenceArr.indexOf(doorArr[i] + MapWidth)];//定义坐标"下"
+		var left = fenceArr[fenceArr.indexOf(doorArr[i] - 1)];//定义坐标"左"
+		var right = fenceArr[fenceArr.indexOf(doorArr[i] + 1)];//定义坐标"右"
+		// console.log(fenceArr.indexOf(doorArr[i] + 1))
+		// console.log(up+","+down+","+left+","+right)
 		if (up == undefined && down == undefined && left == undefined && right == undefined) {
 			var Is_state = 1;//如果上下左右都无栅栏,则门状态设置为1
 			FarmNumM[doorArr[i]].firstChild.style.top = "-1em";
@@ -962,6 +964,7 @@ function door() {//校准门状态
 			FarmNumM[doorArr[i]].firstChild.style.width = "1em";
 			FarmNumM[doorArr[i]].firstChild.style.height = "3em";
 		}else if (up == undefined && down == undefined && left != undefined && right != undefined) {
+			console.log(999)
 			var Is_state = 2;
 			FarmNumM[doorArr[i]].firstChild.style.left = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.width = "3em";
