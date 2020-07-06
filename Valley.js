@@ -964,7 +964,6 @@ function door() {//校准门状态
 			FarmNumM[doorArr[i]].firstChild.style.width = "1em";
 			FarmNumM[doorArr[i]].firstChild.style.height = "3em";
 		}else if (up == undefined && down == undefined && left != undefined && right != undefined) {
-			console.log(999)
 			var Is_state = 2;
 			FarmNumM[doorArr[i]].firstChild.style.left = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.width = "3em";
