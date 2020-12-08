@@ -87,7 +87,7 @@ function Farm_1(){//生成标准农场
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
 	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
-		FarmNumM[i].firstChild.style.zIndex = i;
+		FarmNumM[i].firstChild.style.zIndex = i+20;
 	}
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
