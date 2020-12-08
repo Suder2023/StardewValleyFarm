@@ -86,9 +86,8 @@ function Farm_1(){//生成标准农场
 	signMap();//校准地图状态
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
-	console.log(FarmNumM.length);
 	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
-		FarmNumM[i].style.zIndex = i;
+		FarmNumM[i].firstChild.style.zIndex = i;
 	}
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
