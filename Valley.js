@@ -73,6 +73,9 @@ function Farm_1(){//生成标准农场
 	for(var i = 0; i < Frame_Num; i++){
 		FarmNumB[i].index = i;//给地块编号
 	}
+	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
+		FarmNumM[i].firstChild.style.zIndex = i+20;
+	}
 	FarmNumM[0].firstChild.src = "imges/spring-1.png";//地图遮罩
 	FarmNumM[0].firstChild.style.zIndex = 9999;
 	FarmNumM[0].firstChild.style.width = "80em";
@@ -86,9 +89,7 @@ function Farm_1(){//生成标准农场
 	signMap();//校准地图状态
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
-	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
-		FarmNumM[i].firstChild.style.zIndex = i+20;
-	}
+	
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
 var FarmNumM = Farm.getElementsByClassName("Farm-M");//获取物品层集合
