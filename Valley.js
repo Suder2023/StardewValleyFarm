@@ -74,7 +74,7 @@ function Farm_1(){//生成标准农场
 		FarmNumB[i].index = i;//给地块编号
 	}
 	FarmNumM[0].firstChild.src = "imges/spring-1.png";//地图遮罩
-	FarmNumM[0].firstChild.style.zIndex = 50;
+	FarmNumM[0].firstChild.style.zIndex = 9999;
 	FarmNumM[0].firstChild.style.width = "80em";
 	FarmNumM[0].firstChild.style.height = "65em";
 	FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-2.png";//添加温室
