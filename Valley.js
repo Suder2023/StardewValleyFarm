@@ -86,7 +86,10 @@ function Farm_1(){//生成标准农场
 	signMap();//校准地图状态
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
-	createHtml_M_sort()
+	console.log(FarmNumM.length);
+	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
+		FarmNumM[i].style.zIndex = i;
+	}
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
 var FarmNumM = Farm.getElementsByClassName("Farm-M");//获取物品层集合
@@ -105,11 +108,7 @@ function createHtml_M(){//创建物品层
 	div.appendChild(Img);
 	FarmMiddle.appendChild(div).className = "Farm-M";
 }
-function createHtml_M_sort(){//调整物品层层次
-	for(var i = 0; i < FarmNumM.length; i++){
-		FarmNumM[i].style.zIndex = i;
-	}
-}
+
 function createHtml_B(){//创建地板层
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
