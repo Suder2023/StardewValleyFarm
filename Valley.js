@@ -104,6 +104,11 @@ function createHtml_M(){//创建物品层
 	div.appendChild(Img);
 	FarmMiddle.appendChild(div).className = "Farm-M";
 }
+function createHtml_M_sort(){//创建物品层
+	for(var i = 0; i < FarmNumM.length; i++){
+		FarmNumM[i].style.zIndex = i;
+	}
+}
 function createHtml_B(){//创建地板层
 	var div = document.createElement("div");
 	var Img = document.createElement("img");
