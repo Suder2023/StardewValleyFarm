@@ -175,11 +175,12 @@ menuBtn.addEventListener("click",function(e){
 		describe.style.display = "none";
 		season.style.display = "block";
 		zoom.style.display = "block";
-	}else {
+	}else{
 		name_text.style.display = "block";
 		describe.style.display = "block";
 		season.style.display = "none";
 		zoom.style.display = "none";
+
 	}
 })
 var isDown = false;//标记菜单滚动条是否启用
@@ -442,6 +443,11 @@ function MenuSwitch() {//显示/隐藏菜单功能
 	if (menu.style.left == "0px" || menu.style.left == 0) {
 		menu.style.left = "-320px";
 		menuNum[7].src = "imges/button/arrow-1.png";
+		for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
+			FarmNumM[i].style.pointerEvents = "none"
+			FarmNumB[i].style.pointerEvents = "none"
+			FarmNumT[i].style.pointerEvents = "none"
+		}
 	}else{
 		menu.style.left = "0";
 		menuNum[7].src = "imges/button/arrow-2.png";
