@@ -55,6 +55,8 @@ var Range_status = false;//标记稻草人与祝尼魔范围
 var Explain_status = false;//标记教程是否开启
 var Frame_Num = 5200;//地图规模
 var screen_H = screen.height;
+var mapArr = ["basics","rivers"];
+var mapNum;
 if (screen_H < 800) {
 	var Title_img = document.getElementById("Title-img");
 	var Title_2 = document.getElementById("Title-2");
@@ -63,7 +65,10 @@ if (screen_H < 800) {
 	Title_2.className = "Title-2-2";
 }
 FrameSize();//边框校准
-function Farm_1(){//生成标准农场
+function Farm_1(x){//生成标准农场
+	mapNum = mapArr[x];
+	Farm.style.background = "url(imges/map/" + mapNum +  "/spring.png)";
+	Farm.style.backgroundSize = MapWidth + "em";
 	Frame_Num = 5200;
 	for(var i = 0; i < Frame_Num; i++){
 		createHtml_T();//创建网格层
@@ -76,7 +81,7 @@ function Farm_1(){//生成标准农场
 	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
 		FarmNumM[i].firstChild.style.zIndex = i+20;
 	}
-	FarmNumM[0].firstChild.src = "imges/spring-1.png";//地图遮罩
+	FarmNumM[0].firstChild.src = "imges/map/" + mapNum +  "/spring-1.png";//地图遮罩
 	FarmNumM[0].firstChild.style.zIndex = 9999;
 	FarmNumM[0].firstChild.style.width = "80em";
 	FarmNumM[0].firstChild.style.height = "65em";
@@ -89,7 +94,7 @@ function Farm_1(){//生成标准农场
 	signMap();//校准地图状态
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
-	
+	Grid();
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
 var FarmNumM = Farm.getElementsByClassName("Farm-M");//获取物品层集合
@@ -1142,9 +1147,12 @@ function Write() {//获取当前物品数据
 function MapDel() {//解锁全部非初始地块
 	console.log("MapDel");
 	for (var i = 0 ; i < sign_map_del.length; i++) {
+		if (sign_map_del[i] == 0) {
 			FarmNumB[i].style.pointerEvents = "auto";
 			FarmNumB[i].firstChild.style.background = "";
 			FarmNumB[i].firstChild.style.opacity =  "1";
+		}
+			
 	}
 }
 var menuBody0Num = [12,14,26,6,4];//菜单页内按钮行数
