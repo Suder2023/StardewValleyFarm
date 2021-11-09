@@ -149,7 +149,7 @@ function Farm_1(x,y,w,h,g){//生成标准农场
 	// FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/greenhouse-2.png";//添加温室
 	// FarmNumM[Greenhouse_position].firstChild.className = "greenhouse-2";
 	add_Greenhouse();
-	if (x == 1 || x == 2 || x == 3 || x == 4) {
+	if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5) {
 		supplement(x);
 	}
 	FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png";//添加房子
@@ -486,7 +486,7 @@ function GetSeason() {//切换季节时校准对应贴图
 		var Catalog = CatalogArr[CatalogNum];//当前贴图路径
 		switch (CatalogNum){
 			case 0://目录编号为建筑
-			if (name == 28 || name == 87 || name == 88 || name == 89 || name == 90 || name == 91 || name == 92 || name == 93 || name == 94 || name == 95 || name == 96 || name == 100) {//祝尼魔小屋和固定植物
+			if (name == 28 || name == 87 || name == 88 || name == 89 || name == 90 || name == 91 || name == 92 || name == 93 || name == 94 || name == 95 || name == 96 || name == 100 || name == 101) {//祝尼魔小屋和固定植物
 				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name +"/" + Season + ".png";
 			}
 			if (name == 3 || name == 99) {
@@ -2281,6 +2281,9 @@ function supplement(x) {
 	}else if (x == 4) {
 		var supplement_sign = [3272,3351,4388,4462,4541,4616,4673,4831,4925,4929];
 		var supplement_goods = [6,5,7,8,5,8,0,6,4,8];
+	}else if (x == 5) {
+		var supplement_sign = [4277,4363,4517,4838,4922];
+		var supplement_goods = [4,5,11,8,6];
 	}
 	for (var i = 0; i < supplement_sign.length; i++) {
 		var a = supplement_goods[i];
