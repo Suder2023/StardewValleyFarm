@@ -25,7 +25,7 @@ img{
 #Farm{
 	width: 80em;
 	height: 65em;
-	background:url(imges/map/basics/spring.png);
+	background:url(imges/map/0/spring.png);
 	background-size:80em;
 	float: left;
 	/*margin-top: 16px;
@@ -138,6 +138,8 @@ img{
 	height: 16px;
 	background:url(imges/frame-2.png);
 	float: left;
+	position: relative;
+	z-index: 999;
 }
 #Frame-3{
 	width: 16px;
@@ -245,25 +247,19 @@ img{
 	height: 960px;
 }
 #menu-body-2{
-	height: 1120px;
+	height: 1200px;
 }
 #menu-body-3{
-	height: 2080px;
+	height: 2480px;
 }
 #menu-body-4{
 	height: 480px;
 }
 #menu-body-5{
-	height: 320px;
+	height: 400px;
 }
 #menu-body-6{
-	height: 480px;
-}
-#menu-body-6 img{
-	width: 258px;
-	height: 480px;
-	margin-top: -1px;
-	margin-left: -1px;
+	height: 400px;
 }
 #menu-body-7{
 	height: 480px;
@@ -615,6 +611,9 @@ textarea::-webkit-input-placeholder {
 	display: none;
 }
 #Course_content_3{
+	display: none;
+}
+#Course_content_4{
 	display: none;
 }
 .Course_content_X{

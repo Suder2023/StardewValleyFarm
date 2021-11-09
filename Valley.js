@@ -20,6 +20,7 @@ var tool_text_1 = document.getElementById("tool-text-1");
 var tool_text_2 = document.getElementById("tool-text-2");
 var tool_div = document.getElementById("tool-div");
 var MapWidth = 80;//地图宽度
+var MapHeight = 65;//地图宽度
 var state = "none";//物品状态
 var Season = "spring";//当前季节
 var Prev_Season = "spring";//上一个季节
@@ -55,8 +56,18 @@ var Range_status = false;//标记稻草人与祝尼魔范围
 var Explain_status = false;//标记教程是否开启
 var Frame_Num = 5200;//地图规模
 var screen_H = screen.height;
-var mapArr = ["basics","rivers"];
-var mapNum;
+var map_state;
+var Greenhouse_position;
+var Greenhouse_Disable;
+var Greenhouse_floor;
+var Greenhouse_status = 2;//2:废墟 1:不存在温室 0:已存在温室
+var Greenhouse_name;
+var NPC;
+var continuityNum = undefined;
+var continuityArr = [];
+
+
+
 if (screen_H < 800) {
 	var Title_img = document.getElementById("Title-img");
 	var Title_2 = document.getElementById("Title-2");
@@ -64,16 +75,32 @@ if (screen_H < 800) {
 	Title_img.className = "Title-img-2";
 	Title_2.className = "Title-2-2";
 }
-FrameSize();//边框校准
-function Farm_1(x){//生成标准农场
-	mapNum = mapArr[x];
-	Farm.style.background = "url(imges/map/" + mapNum +  "/spring.png)";
-	Farm.style.backgroundSize = MapWidth + "em";
-	Frame_Num = 5200;
+function Farm_1(x,y,w,h,g){//生成标准农场
+	console.log(x,y,w,h,g);
+	Greenhouse_position = g;
+	map_state = x;
+	Frame_Num = y;
+	MapWidth = w;
+	MapHeight = h;
+	Farm.style.width = MapWidth + "em";
+	Farm.style.height = MapHeight + "em";
+	var map = mapArr[x];
+	var Cultivation = CultivationArr[x];
+	var Architecture = ArchitectureArr[x];
 	for(var i = 0; i < Frame_Num; i++){
 		createHtml_T();//创建网格层
 		createHtml_M();//创建物品层
 		createHtml_B();//创建地板层	
+		sign_map.push(map[i]);
+		sign_map_del.push(map[i]);
+		sign_X.push(map[i]);
+		sign_Y.push(map[i]);
+	};
+	for (var i = 0; i < Cultivation.length; i++) {
+		Cultivation_sign.push(Cultivation[i]);
+	}
+	for (var i = 0; i < Architecture.length; i++) {
+		Architecture_sign.push(Architecture[i]);
 	}
 	for(var i = 0; i < Frame_Num; i++){
 		FarmNumB[i].index = i;//给地块编号
@@ -81,12 +108,50 @@ function Farm_1(x){//生成标准农场
 	for(var i = 0; i < FarmNumM.length; i++){//调整物品层层次
 		FarmNumM[i].firstChild.style.zIndex = i+20;
 	}
-	FarmNumM[0].firstChild.src = "imges/map/" + mapNum +  "/spring-1.png";//地图遮罩
+	Farm.style.background = "url(imges/map/" + x + "/spring.png)";
+	Farm.style.backgroundSize = MapWidth + "em";
+	FarmNumM[0].firstChild.src = "imges/map/" + x + "/spring-1.png";//地图遮罩
 	FarmNumM[0].firstChild.style.zIndex = 9999;
-	FarmNumM[0].firstChild.style.width = "80em";
-	FarmNumM[0].firstChild.style.height = "65em";
-	FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-2.png";//添加温室
-	FarmNumM[1225].firstChild.className = "greenhouse-2";
+	FarmNumM[0].firstChild.style.width = MapWidth + "em";
+	FarmNumM[0].firstChild.style.height = MapHeight + "em";
+	FarmNumM[1191].firstChild.src = "imges/Architecture/4.png";
+	Position.push(1191);//写入坐标
+	Position_Catalog.push(0);//写入目录序号
+	Position_name.push(4);//写入物品序号
+	Position_Season_spring.push("none");//写入春季
+	Position_Season_summer.push("none");//写入夏季
+	Position_Season_autumn.push("none");//写入秋季
+	Position_Season_winter.push("none");//写入冬季
+	Position_Number.push(1);//写入变化状态数量
+	Position_state.push(0);//写入当前状态
+	sign_X.splice(1191,1,2);//写入物品宽度
+	sign_Y.splice(1191,1,1);//写入物品高度
+	FarmNumM[1191].firstChild.style.top = "-1em";//设置纵向偏移
+	FarmNumM[1191].firstChild.style.left = "0em";//设置横向偏移
+	FarmNumM[1191].firstChild.style.width = "2em";//设置物品宽度
+	FarmNumM[1191].firstChild.style.height = "3em";//设置物品高度
+	FarmNumM[549].firstChild.src = "imges/NPC/12/" + Season+ ".png";
+	Position.push(549);//写入坐标
+	Position_Catalog.push(5);//写入目录序号
+	Position_name.push(12);//写入物品序号
+	Position_Season_spring.push("spring");//写入春季
+	Position_Season_summer.push("summer");//写入夏季
+	Position_Season_autumn.push("autumn");//写入秋季
+	Position_Season_winter.push("winter");//写入冬季
+	Position_Number.push(1);//写入变化状态数量
+	Position_state.push(0);//写入当前状态
+	sign_X.splice(549,1,1);//写入物品宽度
+	sign_Y.splice(549,1,1);//写入物品高度		
+	FarmNumM[549].firstChild.style.top = "0em";//设置纵向偏移
+	FarmNumM[549].firstChild.style.left = "0em";//设置横向偏移
+	FarmNumM[549].firstChild.style.width = "4em";//设置物品宽度
+	FarmNumM[549].firstChild.style.height = "4em";//设置物品高度		
+	// FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/greenhouse-2.png";//添加温室
+	// FarmNumM[Greenhouse_position].firstChild.className = "greenhouse-2";
+	add_Greenhouse();
+	if (x == 1 || x == 2 || x == 3 || x == 4) {
+		supplement(x);
+	}
 	FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png";//添加房子
 	FarmNumM[1339].firstChild.className = "House-L";
 	FarmNumM[1348].firstChild.src = "imges/Architecture/mailbox.png";//添加信箱
@@ -94,7 +159,10 @@ function Farm_1(x){//生成标准农场
 	signMap();//校准地图状态
 	document.getElementById("Choice").style.display = "none";//关闭选择界面
 	clearInterval(animation);//清除云层动画
-	Grid();
+	FrameSize();//边框校准
+	save_load();//加载存档
+	// Grid()
+	
 }
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
 var FarmNumM = Farm.getElementsByClassName("Farm-M");//获取物品层集合
@@ -210,15 +278,15 @@ var FrameNl = 0;
 var FrameNt = 0;
 var BtnYNum = 4;
 Frame.onmousedown = function(e) {//鼠标移入农场时开启农场移动状态
-    //获取坐标
-    FrameX = e.clientX;
-    FrameY = e.clientY;
-    //获取偏移量
-    FrameT = Frame.offsetTop;
-    FrameL = Frame.offsetLeft;
-    //开关打开
-    isFrame = true;
-    //设置样式  
+	//获取坐标
+	FrameX = e.clientX;
+	FrameY = e.clientY;
+	//获取偏移量
+	FrameT = Frame.offsetTop;
+	FrameL = Frame.offsetLeft;
+	//开关打开
+	isFrame = true;
+	//设置样式  
 }
 menuBody.onmousedown = function(e) {
 	if (e.target.id != "body-btn") {
@@ -228,24 +296,24 @@ menuBody.onmousedown = function(e) {
 	}
 }
 bodyBtn.onmousedown = function(e) {//鼠标移入菜单滚动条时开启农场移动状态
-    if (e.target.nodeName == "IMG") {
+	if (e.target.nodeName == "IMG") {
 		y = e.clientY;//获取y坐标
 		t = bodyBtn.offsetTop;//获取顶部的偏移量
 		isDown = true;//开关打开
 	}
 }
 bodyBtnY.onmousedown = function(e) {//鼠标移入缩放滚动条时开启农场移动状态
-    //获取x坐标
-    x = e.clientX;
-    //获取左部的偏移量
-    l = bodyBtnY.offsetLeft;
-    //开关打开
-    isBtnY = true;
-    //设置样式  
+	//获取x坐标
+	x = e.clientX;
+	//获取左部的偏移量
+	l = bodyBtnY.offsetLeft;
+	//开关打开
+	isBtnY = true;
+	//设置样式  
 }
 window.onmousemove = function(e) {//移动功能函数
-    if (isDown == true) {//菜单滚动条
-        var ny = e.clientY;
+	if (isDown == true) {//菜单滚动条
+		var ny = e.clientY;
 		//计算移动后的左偏移量和顶部的偏移量
 		var nt = ny - (y - t);
 		if (nt < 0) {
@@ -258,11 +326,11 @@ window.onmousemove = function(e) {//移动功能函数
 		}
 		bodyBtn.style.top = nt + "px";
 		myMenu.style.bottom = nt/q3 + "px";
-    }else if (isBtnY == true) {//缩放滚动条
-        var nx = e.clientX;
+	}else if (isBtnY == true) {//缩放滚动条
+		var nx = e.clientX;
 		nl = nx - (x - l);
-	    bodyBtnY.style.left = nl + "px";
-	    if (nl > 20 && nl < 70) {
+		bodyBtnY.style.left = nl + "px";
+		if (nl > 20 && nl < 70) {
 			document.body.id = "body-1";
 			Frame.style.left = (document.body.clientWidth - 320)/2 - Frame.offsetWidth/2 + 320 + "px";
 			Frame.style.top = window.screen.height/2 - Frame.offsetHeight/2 + "px";
@@ -286,15 +354,15 @@ window.onmousemove = function(e) {//移动功能函数
 			bodyBtnY.style.left = "20px";
 		}
 		FrameSize()
-    }else if (isFrame == true) {//移动农场
-    	var FrameNx = e.clientX;
-        var FrameNy = e.clientY;
-        FrameNl = FrameNx - (FrameX - FrameL);
-        FrameNt = FrameNy - (FrameY - FrameT);
-        Frame.style.left = FrameNl + "px";
-        Frame.style.top = FrameNt + "px";
-    }else if (isMenu == true) {
-    	var ny = e.clientY;
+	}else if (isFrame == true) {//移动农场
+		var FrameNx = e.clientX;
+		var FrameNy = e.clientY;
+		FrameNl = FrameNx - (FrameX - FrameL);
+		FrameNt = FrameNy - (FrameY - FrameT);
+		Frame.style.left = FrameNl + "px";
+		Frame.style.top = FrameNt + "px";
+	}else if (isMenu == true) {
+		var ny = e.clientY;
 		//计算移动后的左偏移量和顶部的偏移量
 		var nt = ny - (y - t + 20);
 		if (nt > 0) {
@@ -307,7 +375,7 @@ window.onmousemove = function(e) {//移动功能函数
 		}
 		myMenu.style.bottom = -nt + "px";
 		bodyBtn.style.top = -(nt*q3) + "px";
-    }
+	}
 }
 window.onmouseup = function() {//结束移动函数
 	//开关关闭
@@ -330,8 +398,8 @@ window.onmouseup = function() {//结束移动函数
 		}else if (nl < 20){
 			bodyBtnY.style.left = "20px";
 		}
-    }else if (isFrame == true) {
-    	isFrame = false;
+	}else if (isFrame == true) {
+		isFrame = false;
 	}else if (isMenu == true) {
 		isMenu = false;
 	}
@@ -348,33 +416,45 @@ function FrameSize() {//农场边框初始化
 	Frame7.style.width = FrameW - 8 + "px";
 }
 function Spring() {//进入春天
-	Farm.style.background = "url(imges/spring.png)";
+	Farm.style.background = "url(imges/map/" + map_state + "/spring.png)";
 	Farm.style.backgroundSize = MapWidth + "em";
-	FarmNumM[0].firstChild.src = "imges/spring-1.png";//地图遮罩
+	FarmNumM[0].firstChild.src = "imges/map/" + map_state + "/spring-1.png";//地图遮罩
+	if (map_state == 3) {
+		FarmNumM[2960].firstChild.src = "imges/map/3/spring-2.png";//地图遮罩
+	}
 	Season = "spring";
 	SeasonArr = Position_Season_spring;
 	GetSeason();
 }
 function Summer() {//进入夏天
-	Farm.style.background = "url(imges/summer.png)";
+	Farm.style.background = "url(imges/map/" + map_state + "/summer.png)";
 	Farm.style.backgroundSize = MapWidth + "em";
-	FarmNumM[0].firstChild.src = "imges/summer-1.png";//地图遮罩
+	FarmNumM[0].firstChild.src = "imges/map/" + map_state + "/summer-1.png";//地图遮罩
+	if (map_state == 3) {
+		FarmNumM[2960].firstChild.src = "imges/map/3/summer-2.png";//地图遮罩
+	}
 	Season = "summer";
 	SeasonArr = Position_Season_summer;
 	GetSeason();
 }
 function Autumn() {//进入秋天
-	Farm.style.background = "url(imges/autumn.png)";
+	Farm.style.background = "url(imges/map/" + map_state + "/autumn.png)";
 	Farm.style.backgroundSize = MapWidth + "em";
-	FarmNumM[0].firstChild.src = "imges/autumn-1.png";//地图遮罩
+	FarmNumM[0].firstChild.src = "imges/map/" + map_state + "/autumn-1.png";//地图遮罩
+	if (map_state == 3) {
+		FarmNumM[2960].firstChild.src = "imges/map/3/autumn-2.png";//地图遮罩
+	}
 	Season = "autumn";
 	SeasonArr = Position_Season_autumn;
 	GetSeason();
 }
 function Winter() {//进入冬天
-	Farm.style.background = "url(imges/winter.png)";
+	Farm.style.background = "url(imges/map/" + map_state + "/winter.png)";
 	Farm.style.backgroundSize = MapWidth + "em";
-	FarmNumM[0].firstChild.src = "imges/winter-1.png";//地图遮罩
+	FarmNumM[0].firstChild.src = "imges/map/" + map_state + "/winter-1.png";//地图遮罩
+	if (map_state == 3) {
+		FarmNumM[2960].firstChild.src = "imges/map/3/winter-2.png";//地图遮罩
+	}
 	Season = "winter";
 	SeasonArr = Position_Season_winter;
 	GetSeason();
@@ -393,24 +473,32 @@ function GetSeason() {//切换季节时校准对应贴图
 		GNot = "/notwinter/";
 		NNot = "/winter/";
 	}
+	if (Greenhouse_status == 2) {
+		if (map_state == 0 || map_state == 3 || map_state == 4 || map_state == 5) {
+			FarmNumB[Greenhouse_position-394].firstChild.src = "imges/Architecture/98/" + Season + ".png";
+		}
+	}
 	for (var i = 0 ; i < Position.length; i++) {//遍历已放置物品
 		var PositionI = Position[i];//获取坐标
 		var CatalogNum = Position_Catalog[i];//获取目录编号
 		var name = Position_name[i];//获取物品编号
-		var CatalogArr = ["Architecture/","crops/","tool/","other/","tree/"];//贴图路径
+		var CatalogArr = ["Architecture/","crops/","tool/","other/","tree/","NPC/"];//贴图路径
 		var Catalog = CatalogArr[CatalogNum];//当前贴图路径
 		switch (CatalogNum){
 			case 0://目录编号为建筑
-			if (name == 29) {//祝尼魔小屋,唯一受季节影响的建筑
+			if (name == 28 || name == 87 || name == 88 || name == 89 || name == 90 || name == 91 || name == 92 || name == 93 || name == 94 || name == 95 || name == 96 || name == 100) {//祝尼魔小屋和固定植物
 				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name +"/" + Season + ".png";
+			}
+			if (name == 3 || name == 99) {
+				FarmNumB[Greenhouse_position].firstChild.src = "imges/" + Catalog + Greenhouse_name +"/" + Season + ".png";
 			}
 			break;
 			case 1://目录编号为农作物
-			if (SeasonArr[i] == Season && name < 37) {//普通农作物,判断季节是否对应,非对应季节枯萎
-				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name +"/0.png";
-			}else if(SeasonArr[i] == Season && name == 37) {//茶苗,适应四季,不会枯萎
-				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name + "/" + Season + "/0.png";
-			}else if (SeasonArr[i] == Season && name == 38) {//牧草,更换随机贴图
+			if (SeasonArr[i] == Season && name < 39) {//普通农作物,判断季节是否对应,非对应季节枯萎
+				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name +"/" + Position_state[i] + ".png";
+			}else if(SeasonArr[i] == Season && name == 39 || name == 40) {//茶苗,适应四季,不会枯萎
+				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name + "/" + Season + "/" + Position_state[i] + ".png";
+			}else if (SeasonArr[i] == Season && name == 41) {//牧草,更换随机贴图
 				FarmNumM[PositionI].firstChild.src = "imges/" + Catalog + name + "/" + Season + "/" + Math.ceil(Math.random()*4) +".png";
 			}else if (SeasonArr[i] != Season) {//如果季节不对应,更换随机枯萎贴图
 				FarmNumM[PositionI].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png"
@@ -422,18 +510,21 @@ function GetSeason() {//切换季节时校准对应贴图
 			}
 			break;
 			case 4://目录编号为树木
-			if (name == 9 && Season == "winter") {//蘑菇树,冬季特殊状态
-				if (Position_state[i] == 0 || Position_state[i] == 1) {
-					FarmNumM[PositionI].firstChild.src = "imges/tree/9/2.png"
+			if (name == 12 && Season == "winter") {//蘑菇树,冬季特殊状态
+				if (Position_state[i] < 3) {
+					FarmNumM[PositionI].firstChild.src = "imges/tree/12/3.png"
 				}
-			}else if (name == 9 && Season != "winter") {//蘑菇树,非冬季常规状态
-				if (Position_state[i] == 0 || Position_state[i] == 1) {
-					FarmNumM[PositionI].firstChild.src = "imges/tree/9/" + Position_state[i] + ".png"
+			}else if (name == 12 && Season != "winter") {//蘑菇树,非冬季常规状态
+				if (Position_state[i] < 3) {
+					FarmNumM[PositionI].firstChild.src = "imges/tree/12/" + Position_state[i] + ".png"
 				}
 			}else{//不同树木,贴图随季节更换
 				var B = FarmNumM[PositionI].firstChild.src;
 				FarmNumM[PositionI].firstChild.src = B.replace(Prev_Season,Season);
 			}
+			break;
+			case 5://目录编号为NPC
+			FarmNumM[PositionI].firstChild.src = "imges/NPC/" + name +"/" + Season + ".png";
 			break;
 		}
 	}
@@ -487,13 +578,20 @@ Farm.addEventListener("click",function(e){
 				signMapX();//校准地图不可选坐标
 				signMapY();//当前物品为建筑时,不可放置建筑地块
 				signMap();//校准地图状态
-				if (otherSign == 34) {//物品为"陨石"时,清理被覆盖地块
-					huge();//清理陨石和巨大作物下的地板
-					floor();//校准地板状态
+				if (otherSign == 3) {
+					// Greenhouse_status = 0;
+					Greenhouse_position = IsE;
+					console.log(Greenhouse_status);
+					verification_Greenhouse(0);
+					for (var i = 0; i < Frame_Num; i++) {
+						FarmNumB[i].style.pointerEvents = "none";
+					}
 				}
+				huge();//清理陨石和巨大作物下的地板
+				floor();//校准地板状态
 				FarmNumM[e].firstChild.src = IMG;//在地板层添加贴图
 				Timg = FarmNumM[e].firstChild.src;//更换鼠标移出时贴图
-				if (otherSign == 29) {//当前物品为祝尼魔小屋
+				if (otherSign == 28) {//当前物品为祝尼魔小屋
 					Range_fun();//更新稻草人和祝尼魔小屋范围
 				}
 				Prohibit()
@@ -502,27 +600,31 @@ Farm.addEventListener("click",function(e){
 				Is_state = 0;//初始化物品状态编号
 				window.Is_state = Is_state;
 				IsAdd();//将物品信息写入数据库
-				if (otherSign == 38 ) {//当前物品为牧草时,禁用拥有地板地块
-					signMapX();
-					signMap();
-				}else if (otherSign == 39 || otherSign == 40 || otherSign == 41) {//当前物品为巨大作物,禁用拥有地板地块,清理巨大作物下方地板
-					signMapX();
-					signMap();
-					huge();
-				}else if (otherSign < 37) {//当前物品为普通作物时
+				signMapX();
+				signMap();
+				if (otherSign < 42 ) {
+					if (continuityArr.indexOf(e) == -1) {
+						continuityNum = undefined;
+						continuityArr = [];
+					}
+					continuity();
 					var land = floor_name[floorArr.indexOf(e)];
 					var landNum = floorArr.indexOf(e);//查找当前地块是否被开垦
 					if (land == undefined) {//当前地块未被开垦则在下方添加被开垦土地
 						floorArr.push(IsE);
 						floor_name.push(16);
-					}	
+					}
+				}else if (otherSign == 42 || otherSign == 43 || otherSign == 44) {//当前物品为巨大作物,禁用拥有地板地块,清理巨大作物下方地板
+					signMapX();
+					signMap();
+					huge();
 				}
 				floor();//校准地板状态
 				floorSign();//校准地板禁用状态
 				if (Season_spring == Season || Season_summer == Season || Season_autumn == Season || Season_winter == Season) {//判断当前季节是否适合选取农作物生长
-					if (otherSign == 37) {//当前物品为茶苗
+					if (otherSign == 39 || otherSign == 40) {//当前物品为茶苗和纤维种子
 						FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/0.png";//添加对应季节贴图
-					}else if (otherSign == 38) {//当前物品为牧草
+					}else if (otherSign == 41) {//当前物品为牧草
 						FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/" + Math.ceil(Math.random()*4) +".png";//添加随机对应季节贴图
 					}else{
 						FarmNumM[e].firstChild.src = "imges/crops/" + otherSign + "/0.png";//普通农作物成熟贴图
@@ -550,6 +652,11 @@ Farm.addEventListener("click",function(e){
 				break;
 				case 3://菜单序号为栅栏与地板
 				if (otherSign < 4) {//当前物品为栅栏
+					if (continuityArr.indexOf(e) == -1) {
+						continuityNum = undefined;
+						continuityArr = [];
+					}
+					continuity();
 					sign_X.splice(IsE,1,signX);//向数据库写入宽度
 					sign_Y.splice(IsE,1,signY);//向数据库写入高度
 					fenceArr.push(IsE);//写入栅栏坐标
@@ -565,11 +672,21 @@ Farm.addEventListener("click",function(e){
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 					door();//校准门状态
 				}else if (otherSign > 4 && otherSign < 15) {//当前物品为普通地板
+					if (continuityArr.indexOf(e) == -1) {
+						continuityNum = undefined;
+						continuityArr = [];
+					}
+					continuity();
 					floorArr.push(IsE);//写入地板坐标
 					floor_name.push(otherSign);//写入物品编号
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 					floor();//校准地板状态
 				}else if (otherSign == 15) {//当前物品为随机地板
+					if (continuityArr.indexOf(e) == -1) {
+						continuityNum = undefined;
+						continuityArr = [];
+					}
+					continuity();
 					floorArr.push(IsE);//写入地板坐标
 					floor_name.push(otherSign);//写入物品编号
 					if (Season == "winter") {//判断季节对应地板状态
@@ -580,12 +697,13 @@ Farm.addEventListener("click",function(e){
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 					FarmNumB[e].firstChild.src = "imges/other/" + floor_Season + "/15/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
 					Timg = FarmNumB[e].firstChild.src;//校准移出时贴图
+					floor();//校准地板状态
 				}
-				Prohibit()
+				Prohibit();
 				break;
 				case 4://菜单序号为树木
-				var treeUp = Position.indexOf(e - 80);//定义"上"坐标
-				var treeDown = Position.indexOf(e + 80);//定义"下"坐标
+				var treeUp = Position.indexOf(e - MapWidth);//定义"上"坐标
+				var treeDown = Position.indexOf(e + MapWidth);//定义"下"坐标
 				var treeLeft = Position.indexOf(e - 1);//定义"左"坐标
 				var treeRight = Position.indexOf(e + 1);//定义"右"坐标
 				var treeUp1 = Position.indexOf(e - 160);//定义"上上"坐标
@@ -593,7 +711,7 @@ Farm.addEventListener("click",function(e){
 				var treeLeft1 = Position.indexOf(e - 2);//定义"左左"坐标
 				var treeRight1 = Position.indexOf(e + 2);//定义"右右"坐标
 				// console.log(GoodsNumber);
-				if (otherSign < 3 || otherSign == 9) {//当前物品为野树
+				if (otherSign < 4 || otherSign == 12) {//当前物品为野树
 					if (Position_Catalog[treeUp] == 4 || Position_Catalog[treeDown] == 4 || Position_Catalog[treeLeft] == 4 || Position_Catalog[treeRight] == 4) {
 					//判断四周是否有其他树
 						if (Position_state[treeUp] == 0 || Position_state[treeDown] == 0 || Position_state[treeLeft] == 0 || Position_state[treeRight] == 0  || Position_state[treeUp] == 1 || Position_state[treeDown] == 1 || Position_state[treeLeft] == 1 || Position_state[treeRight] == 1) {
@@ -605,7 +723,7 @@ Farm.addEventListener("click",function(e){
 					}else {//四周没有其他树则当前状态为成熟状态
 						Is_state = 0
 					}
-				}else if (otherSign > 2 && otherSign < 9) {//当前物品为果树
+				}else if (otherSign > 3 && otherSign < 13) {//当前物品为果树
 					Is_state = 0;
 				}
 				var landNum = floorArr.indexOf(e);//获取当前地块地板信息
@@ -616,7 +734,7 @@ Farm.addEventListener("click",function(e){
 					floor();//校准地板状态
 					FarmNumB[e].firstChild.src = "imges/0.png";//删除地板贴图
 				}
-				if (otherSign == 9) {//判断当前物品是否为蘑菇树
+				if (otherSign == 12) {//判断当前物品是否为蘑菇树
 					FarmNumM[e].firstChild.src = "imges/tree/" + otherSign + "/" + Is_state + ".png";//添加蘑菇树贴图
 				}else{
 					FarmNumM[e].firstChild.src = "imges/tree/" + otherSign + "/" + Season+ "/" + Is_state + ".png";//添加非蘑菇树贴图
@@ -624,12 +742,11 @@ Farm.addEventListener("click",function(e){
 				Timg = FarmNumM[e].firstChild.src;//校准移出时贴图
 				window.Is_state = Is_state;//校准树木当前状态
 				IsAdd();//将物品信息写入数据库
-				if (otherSign > 2 && otherSign < 9) {//如果当前物品为果树
+				if (otherSign > 3 && otherSign < 13) {//如果当前物品为果树
 					fruiter();//校准果树禁用范围
-				}else{
-					for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
-						FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
-					}
+				}
+				for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
+					FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
 				}
 				FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 				Prohibit()
@@ -655,7 +772,7 @@ Farm.addEventListener("click",function(e){
 							Is_state = 0;
 							Position_state.splice(crops,1,0);//更新数据库内状态记录
 						}
-						if (Position_name[crops] == 37) {//当前农作物为茶苗
+						if (Position_name[crops] > 38) {//当前农作物为茶苗
 							FarmNumM[e].firstChild.src = "imges/crops/" + Position_name[crops] + "/" + Season + "/" + Is_state + ".png";
 						}else{//当前农作物非茶苗
 							FarmNumM[e].firstChild.src = "imges/crops/" + Position_name[crops] + "/" + Is_state + ".png";
@@ -675,8 +792,8 @@ Farm.addEventListener("click",function(e){
 					// console.log("序号" + Position_name[tree]);
 					// console.log("数量" + Position_Number[tree]);
 					// console.log("当前" + Position_state[tree]);
-					var treeUp = Position.indexOf(e - 80);//定义"上"坐标
-					var treeDown = Position.indexOf(e + 80);//定义"下"坐标
+					var treeUp = Position.indexOf(e - MapWidth);//定义"上"坐标
+					var treeDown = Position.indexOf(e + MapWidth);//定义"下"坐标
 					var treeLeft = Position.indexOf(e - 1);//定义"左"坐标
 					var treeRight = Position.indexOf(e + 1);//定义"右"坐标
 					if (Position_Catalog[treeUp] == 4 || Position_Catalog[treeDown] == 4 || Position_Catalog[treeLeft] == 4 || Position_Catalog[treeRight] == 4) {
@@ -712,17 +829,17 @@ Farm.addEventListener("click",function(e){
 							var Is_state = 0;
 						}
 					}
-					if (Position_name[tree] < 3) {//当前物品为野树
+					if (Position_name[tree] < 4) {//当前物品为野树
 						FarmNumM[e].firstChild.src = "imges/tree/" + Position_name[tree] + "/" + Season+ "/" + Is_state + ".png";//添加对应状态贴图
-					}else if (Position_name[tree] == 9) {//当前物品为蘑菇树
+					}else if (Position_name[tree] == 12) {//当前物品为蘑菇树
 						if (Season == "winter") {//如果当前季节为冬天
-							if (Is_state > 1) {//蘑菇树不会拥有成熟状态贴图
+							if (Is_state > 2) {//蘑菇树不会拥有成熟状态贴图
 								FarmNumM[e].firstChild.src = "imges/tree/" + Position_name[tree] + "/" + Is_state + ".png";
 							}
 						}else{//如果当前季节非冬天
 							FarmNumM[e].firstChild.src = "imges/tree/" + Position_name[tree] + "/" + Is_state + ".png";//蘑菇树正常添加贴图
 						}
-					}else{//当前物品非蘑菇树
+					}else{//当前物品果树
 						if (Is_state == 0) {
 							FarmNumM[e].firstChild.src = "imges/tree/" + Position_name[tree] + "/" + Season+ "/" + Is_state + ".png";
 						}else{
@@ -736,6 +853,10 @@ Farm.addEventListener("click",function(e){
 				var Del_floorArr = floorArr.indexOf(e);//获取地板坐标位置
 				var Del_fenceArr = fenceArr.indexOf(e);//获取栅栏坐标位置
 				var Del_doorArr = doorArr.indexOf(e);//获取门坐标位置
+				if (Position_Catalog[Del_Position] == 0 && Position_name[Del_Position] == 3) {
+					// Greenhouse_status = 1;
+					verification_Greenhouse(1);
+				}
 				if (Del_Position != -1) {//如果当前坐标物品不为空
 					Position.splice(Del_Position,1);//删除坐标
 					Position_Catalog.splice(Del_Position,1);//删除目录序号
@@ -776,6 +897,7 @@ Farm.addEventListener("click",function(e){
 				fence();//校准栅栏状态
 				floor();//校准地板状态
 				MapDel();
+				Prohibit();
 				break;
 				case "dyeing"://当前状态为染色剂
 				var dyeing_Position = Position.indexOf(e);//获取物品坐标位置
@@ -805,6 +927,8 @@ Farm.addEventListener("click",function(e){
 menuBody.addEventListener("click",function(e){
 	if (e.target.nodeName == "IMG") {//判断被点击目标的是否为img
 		otherSign = e.target.index;//获取物品序号
+		continuityNum = undefined;
+		continuityArr = [];
 		console.log(otherSign);
 		var ImgName = ["Architecture/" + otherSign,"crops/" + otherSign + "/" + 0,"tool/" + otherSign,"other/" + otherSign,"tree/" + otherSign + "/" + Season + "/" + 0];//目录序号对应路径
 		if (otherSign != undefined) {//当前有选中的物品
@@ -820,10 +944,11 @@ menuBody.addEventListener("click",function(e){
 			break;
 			case 2:FarmNumM[1339].firstChild.src = "imges/Architecture/House-L.png";
 			break;
-			case 3:FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-1.png";
+			case 3:
+			if (Greenhouse_status == 2) {
+				Del_Greenhouse();
+			}
 			break;
-			case 4:FarmNumM[1225].firstChild.src = "imges/Architecture/greenhouse-2.png";
-		    break;
 		 	}
 		 	if (e.target.id != "body-btn") {
 		 		Write();//点击按钮非滚动条时执行写入数据
@@ -850,12 +975,23 @@ menuBody.addEventListener("click",function(e){
 		 	}
 		}else if (menuBodySign == 4 && otherSign != undefined) {//当前菜单为树木
 			NAME = treeNum[otherSign];
-			if (otherSign == 9) {
+			fruiter();
+			if (otherSign == 12) {
 				IMG = "imges/tree/" + otherSign + "/" + "0.png";
 			}
 			if (e.target.id != "body-btn") {
 		 		Write();
 		 	}
+		}else if (menuBodySign == 5 && otherSign != undefined) {//当前菜单为npc
+			IMG = "imges/0.png";//刷新移入是贴图
+			Position_name.splice(Position_Catalog.indexOf(5),1,otherSign)
+			FarmNumM[549].firstChild.src = "imges/NPC/" + otherSign + "/" + Season+ ".png";
+			name_txt = NPC_Arr[otherSign][11];//获取当前物品名称文本
+			describe_text = NPC_Arr[otherSign][12];//获取当前物品介绍文本
+			name_text_1.innerHTML = name_txt;//写入名称栏
+			name_text_2.innerHTML = name_txt;//写入名称栏
+			describe_1.innerHTML = describe_text;//写入内容栏
+			describe_2.innerHTML = describe_text;//写入内容栏
 		}
 		Menu_status = true;//标记菜单状态
 		Initialization();
@@ -863,19 +999,20 @@ menuBody.addEventListener("click",function(e){
 		signMapX();
 		signMap();
 		door();
-		if (otherSign > 2 && otherSign < 9) {
-				fruiter();
-			}
+		// if (otherSign > 2 && otherSign < 9) {
+		// 		fruiter();
+		// 	}
 		if (menuBodySign == 0) {
 			signMapY();
 		}
 		if (menuBodySign == 4) {
-			if (otherSign > 2 && otherSign < 9) {
-				// fruiter();
+			for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
+				FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
+			}
+			if (otherSign > 3 && otherSign < 9) {
+				fruiter();
 			}else{
-				for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
-					FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
-				}
+				
 			}
 		}
 		
@@ -936,6 +1073,10 @@ function fence() {//校准栅栏状态
 			var Is_state = 7;
 		}
 		FarmNumM[fenceArr[i]].firstChild.src = "imges/other/" + fence_name[i] + "/" + Is_state + ".png";//更新贴图
+		FarmNumM[fenceArr[i]].firstChild.style.top = "-1em";
+		FarmNumM[fenceArr[i]].firstChild.style.left = "0em";
+		FarmNumM[fenceArr[i]].firstChild.style.width = "1em";
+		FarmNumM[fenceArr[i]].firstChild.style.height = "2em";
 		Timg = FarmNumM[fenceArr[i]].firstChild.src;
 		FarmNumB[fenceArr[i]].style.pointerEvents = "none";//设置当前地块禁用
 	}
@@ -967,11 +1108,13 @@ function door() {//校准门状态
 			FarmNumM[doorArr[i]].firstChild.style.height = "3em";
 		}else if (up == undefined && down == undefined && left != undefined && right == undefined) {
 			var Is_state = 3;
+			FarmNumM[doorArr[i]].firstChild.style.top = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.left = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.width = "2em";
 			FarmNumM[doorArr[i]].firstChild.style.height = "2em";
 		}else if (up == undefined && down == undefined && left == undefined && right != undefined) {
 			var Is_state = 4;
+			FarmNumM[doorArr[i]].firstChild.style.top = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.left = "0em";
 			FarmNumM[doorArr[i]].firstChild.style.width = "2em";
 			FarmNumM[doorArr[i]].firstChild.style.height = "2em";
@@ -982,6 +1125,7 @@ function door() {//校准门状态
 			FarmNumM[doorArr[i]].firstChild.style.height = "3em";
 		}else if (up == undefined && down == undefined && left != undefined && right != undefined) {
 			var Is_state = 2;
+			FarmNumM[doorArr[i]].firstChild.style.top = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.left = "-1em";
 			FarmNumM[doorArr[i]].firstChild.style.width = "3em";
 			FarmNumM[doorArr[i]].firstChild.style.height = "2em";
@@ -1026,8 +1170,10 @@ function IsAdd() {//将物品信息写入数据库
 }
 function fruiter() {//当前物品为果树时禁用所有树木周围两圈地块
 	console.log("fruiter");
+	for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
+		FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
+	}
 	for (var i = 0; i < Position.length; i++) {
-		console.log(Position.length);
 		if (Position_Catalog[i] == 4 && Position_name[i] != 10) {
 			var y = Position[i]
 			for (var x = -2; x < 3; x++) {
@@ -1110,7 +1256,24 @@ function signMapY() {
 				FarmNumB[sign+MapWidth*y].style.pointerEvents = "none";
 			}
 		}
-	}	
+	}
+	// 温室专用标记计算
+	if (menuBodySign == 0 && otherSign == 3) {
+		for (var i = 0; i < sign_X.length; i++) {
+			if (sign_X[i] != 0) {
+				for (var x = 0; x < sign_X[i]; x++) {
+					if (i+x-MapWidth*(2+sign_Y[i]) > 0) {
+						FarmNumB[i+x-MapWidth*sign_Y[i]-2].style.pointerEvents = "none";
+						FarmNumB[i+x-MapWidth*(1+sign_Y[i])-2].style.pointerEvents = "none";
+						FarmNumB[i+x-MapWidth*sign_Y[i]-3].style.pointerEvents = "none";
+						FarmNumB[i+x-MapWidth*(1+sign_Y[i])-3].style.pointerEvents = "none";
+						FarmNumB[i+x-MapWidth*sign_Y[i]-4].style.pointerEvents = "none";
+						FarmNumB[i+x-MapWidth*(1+sign_Y[i])-4].style.pointerEvents = "none";
+					}
+				}
+			}
+		}
+	}
 }
 
 function Write() {//获取当前物品数据
@@ -1155,10 +1318,10 @@ function MapDel() {//解锁全部非初始地块
 			
 	}
 }
-var menuBody0Num = [12,14,26,6,4];//菜单页内按钮行数
-var menuBody0Num1 = [34,42,77,15,9];//菜单页内按钮数量
-var menuBody0Name = ["Architecture","crops","tool","other","tree"];//菜单页内按钮路径
-var menuBody0Class = ["other-icon","other-icon","other-icon","other-icon","other-icon"];//菜单页内按钮class
+var menuBody0Num = [12,15,31,6,5,5];//菜单页内按钮行数
+var menuBody0Num1 = [33,45,91,15,12,12];//菜单页内按钮数量
+var menuBody0Name = ["Architecture","crops","tool","other","tree","NPC"];//菜单页内按钮路径
+var menuBody0Class = ["other-icon","other-icon","other-icon","other-icon","other-icon","other-icon"];//菜单页内按钮class
 for (var i = 0 ; i < menuBodyNum.length; i++) {//生成按钮
 	var N = menuBodyNum[i];
 	var M = menuBody0Num1[i];
@@ -1177,7 +1340,7 @@ for (var i = 0 ; i < menuBodyNum.length; i++) {//生成按钮
 Farm.onmouseover = function(e){//鼠标移入地块
 	switch (state){
 	case "common":if (e.target.index != undefined) {
-		if ( menuBodySign== 3 && otherSign > 4) {
+		if ( menuBodySign == 3 && otherSign > 4) {
 			var Z = FarmNumB;
 		}else{
 			var Z = FarmNumM;
@@ -1188,6 +1351,48 @@ Farm.onmouseover = function(e){//鼠标移入地块
 		Z[e.target.index].firstChild.style.left = IMG_L;
 		Z[e.target.index].firstChild.style.width = IMG_W;
 		Z[e.target.index].firstChild.style.height = IMG_H;
+		}
+		if (continuityArr.indexOf(e.target.index) != -1){
+			var h = continuityNum - e.target.index;
+			if (h > 0) {
+				if (h >= MapWidth) {
+					for (var i = 1; i < h/MapWidth; i++) {
+						Z[continuityNum - i*MapWidth].firstChild.src = IMG;
+						Z[continuityNum - i*MapWidth].firstChild.style.top = IMG_T;
+						Z[continuityNum - i*MapWidth].firstChild.style.left = IMG_L;
+						Z[continuityNum - i*MapWidth].firstChild.style.width = IMG_W;
+						Z[continuityNum - i*MapWidth].firstChild.style.height = IMG_H;
+					}
+				}else{
+					for (var i = 1; i < h; i++) {
+						Z[continuityNum - i].firstChild.src = IMG;
+						Z[continuityNum - i].firstChild.style.top = IMG_T;
+						Z[continuityNum - i].firstChild.style.left = IMG_L;
+						Z[continuityNum - i].firstChild.style.width = IMG_W;
+						Z[continuityNum - i].firstChild.style.height = IMG_H;
+					}
+				}
+			}else{
+				if (h <= (-MapWidth)) {
+					for (var i = 1; i < -(h/MapWidth); i++) {
+						Z[continuityNum + i*MapWidth].firstChild.src = IMG;
+						Z[continuityNum + i*MapWidth].firstChild.style.top = IMG_T;
+						Z[continuityNum + i*MapWidth].firstChild.style.left = IMG_L;
+						Z[continuityNum + i*MapWidth].firstChild.style.width = IMG_W;
+						Z[continuityNum + i*MapWidth].firstChild.style.height = IMG_H;
+					}
+				}else{
+					for (var i = 1; i < -h; i++) {
+						Z[continuityNum + i].firstChild.src = IMG;
+						Z[continuityNum + i].firstChild.style.top = IMG_T;
+						Z[continuityNum + i].firstChild.style.left = IMG_L;
+						Z[continuityNum + i].firstChild.style.width = IMG_W;
+						Z[continuityNum + i].firstChild.style.height = IMG_H;
+					}
+				}
+			}
+		}else{
+
 		}
 	break;
 	// case "Kettle":console.log(state);
@@ -1203,12 +1408,23 @@ Farm.onmouseover = function(e){//鼠标移入地块
 Farm.onmouseout = function(e){//鼠标移出地块
 	switch (state){
 	case "common":if (e.target.index != undefined) {
-		if ( menuBodySign== 3 && otherSign > 4) {
+		if (menuBodySign == 3 && otherSign > 4) {
 			FarmNumB[e.target.index].firstChild.src = Timg;
+			if (continuityNum != undefined){
+				for (var i = 0; i < continuityArr.length; i++) {
+					FarmNumB[continuityArr[i]].firstChild.src = "imges/0.png";
+				}
+			}
 		}else{
 			FarmNumM[e.target.index].firstChild.src = Timg;
+			if (continuityNum != undefined){
+				for (var i = 0; i < continuityArr.length; i++) {
+					FarmNumM[continuityArr[i]].firstChild.src = "imges/0.png";
+				}
+			}
 		}
 	}
+	
 	break;
 	// case "Kettle":console.log(state);
 	// break;
@@ -1254,6 +1470,7 @@ function floorSign() {//校准地板禁用状态
 function floor() {//校准地板状态
 	console.log("floor");
 	for (var i = 0 ; i < floorArr.length; i++) {
+		// console.log(floorArr[i]+1);
 		var up = floor_name[floorArr.indexOf(floorArr[i] - MapWidth)];
 		var down = floor_name[floorArr.indexOf(floorArr[i] + MapWidth)];
 		var left = floor_name[floorArr.indexOf(floorArr[i] - 1)];
@@ -1273,6 +1490,7 @@ function floor() {//校准地板状态
 		if (name != 15) {
 			if (up != name && down != name && left != name && right != name) {
 				var Is_state = 1;
+
 			}else if (up == name && down != name && left != name && right != name) {
 				var Is_state = 2;
 			}else if (up != name && down == name && left != name && right != name) {
@@ -1429,10 +1647,11 @@ function floor() {//校准地板状态
 
 			}
 			FarmNumB[floorArr[i]].firstChild.src = "imges/other/" + floor_Season + "/" + name + "/" + Is_state + ".png";
+			
+		}
+		if (state != "Pickaxe") {
 			Timg = FarmNumB[floorArr[i]].firstChild.src;
-			if (state != "Pickaxe") {
-				FarmNumB[floorArr[i]].style.pointerEvents = "none";
-			}
+			FarmNumB[floorArr[i]].style.pointerEvents = "none";
 		}
 	}
 }
@@ -1533,7 +1752,7 @@ function Range() {//开启祝尼魔和稻草人范围标记
 				FarmNumT[Position[i]].firstChild.style.width = "1em";
 				FarmNumT[Position[i]].firstChild.style.height = "1em";
 				FarmNumT[Position[i]].firstChild.style.zIndex = 1;
-			}else if (Position_Catalog[i] == 0 && Position_name[i] == 29) {
+			}else if (Position_Catalog[i] == 0 && Position_name[i] == 28) {
 				FarmNumT[Position[i]].firstChild.src = "imges/t.png"
 				FarmNumT[Position[i]].firstChild.style.top = "0em";
 				FarmNumT[Position[i]].firstChild.style.left = "0em";
@@ -1563,7 +1782,7 @@ function Range_fun() {//刷新祝尼魔和稻草人范围标记
 				FarmNumT[Position[i]].firstChild.style.width = "33em";
 				FarmNumT[Position[i]].firstChild.style.height = "33em";
 				FarmNumT[Position[i]].firstChild.style.zIndex = 20;
-			}else if (Position_Catalog[i] == 0 && Position_name[i] == 29) {
+			}else if (Position_Catalog[i] == 0 && Position_name[i] == 28) {
 				FarmNumT[Position[i]].firstChild.src = "imges/Junimos.png"
 				FarmNumT[Position[i]].firstChild.style.top = "-8em";
 				FarmNumT[Position[i]].firstChild.style.left = "-7em";
@@ -1588,10 +1807,10 @@ function screenshot(){//开始生成图片
 }
 function huanchong(){//将Frame生成图片
 	html2canvas(Frame).then(function(canvas) {
-    preview1.appendChild(canvas);
-    var oCavans = document.getElementsByTagName("canvas")[0];
-    var strDataURI1 = oCavans.toDataURL();
-    downLoadFn(strDataURI1);
+	preview1.appendChild(canvas);
+	var oCavans = document.getElementsByTagName("canvas")[0];
+	var strDataURI1 = oCavans.toDataURL();
+	downLoadFn(strDataURI1);
 	});
 };
  //判断浏览器类型
@@ -1599,19 +1818,19 @@ function myBrowser() {
 	var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
 	var isdivera = userAgent.indexOf("divera") > -1;
 	if(isdivera) {
-    	return "divera"
+		return "divera"
 	}; //判断是否divera浏览器
 	if(userAgent.indexOf("Firefox") > -1) {
-    	return "FF";
+		return "FF";
 	} //判断是否Firefox浏览器
 	if(userAgent.indexOf("Chrome") > -1) {
-    	return "Chrome";
+		return "Chrome";
 	}
 	if(userAgent.indexOf("Safari") > -1) {
-    	return "Safari";
+		return "Safari";
 	} //判断是否Safari浏览器
 	if(userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isdivera) {
-    	return "IE";
+		return "IE";
 	}; //判断是否IE浏览器
 	if(userAgent.indexOf("Trident") > -1) {
    	 return "Edge";
@@ -1620,40 +1839,40 @@ function myBrowser() {
 myBrowser();
 //IE浏览器图片保存本地
 function SaveAs5(imgURL) {
-    var divdiv = window.diven(imgURL, "", "width=1, height=1, top=5000, left=5000");
-    for(; divdiv.document.readyState != "complete";) {
-        if(divdiv.document.readyState == "complete") break;
-    }
-    divdiv.document.execCommand("SaveAs");
-    divdiv.close();
+	var divdiv = window.diven(imgURL, "", "width=1, height=1, top=5000, left=5000");
+	for(; divdiv.document.readyState != "complete";) {
+		if(divdiv.document.readyState == "complete") break;
+	}
+	divdiv.document.execCommand("SaveAs");
+	divdiv.close();
 }
 function download(strDataURI1) {
-    var link = document.getElementById("IsA");
-    // link.innerHTML = "download_canvas_image";
-    var name = document.getElementById("name-tenx").value;
-    link.download = name + "农场";
-    link.addEventListener("click", function(ev) {
-    link.href = strDataURI1;
-    }, false);
-    document.getElementById("load").style.display = "none";
-    document.getElementById("save").style.display = "block";
-    document.getElementById("cancel").style.display = "block";
-    // document.body.appendChild(link);
+	var link = document.getElementById("IsA");
+	// link.innerHTML = "download_canvas_image";
+	var name = document.getElementById("name-tenx").value;
+	link.download = name + "农场";
+	link.addEventListener("click", function(ev) {
+	link.href = strDataURI1;
+	}, false);
+	document.getElementById("load").style.display = "none";
+	document.getElementById("save").style.display = "block";
+	document.getElementById("cancel").style.display = "block";
+	// document.body.appendChild(link);
 };
 function downLoadFn(url) {
-    if(myBrowser() === "IE" || myBrowser() === "Edge") {
-        SaveAs5(url);
-    } else {
-        download(url);
-    }
+	if(myBrowser() === "IE" || myBrowser() === "Edge") {
+		SaveAs5(url);
+	} else {
+		download(url);
+	}
 }
 function cancel() {//关闭下载弹窗并删除图片预览
 	var oCavans = document.getElementsByTagName("canvas")[0];
 	preview1.removeChild(oCavans);
 	preview.style.display = "none";
 	document.getElementById("load").style.display = "block";
-    document.getElementById("save").style.display = "none";
-    document.getElementById("cancel").style.display = "none";
+	document.getElementById("save").style.display = "none";
+	document.getElementById("cancel").style.display = "none";
 }
 function Farm_name() {//开启命名弹窗
 	document.getElementById("name-box").style.display = "block";
@@ -1694,10 +1913,10 @@ function Course_prev() {//说明书上一页
 function Course_next() {//说明书下一页
 	var Course_arr = document.getElementById("Course_content");
 	var ARR = Course_arr.getElementsByClassName("Course_content");
-	if (Course_Num < 2) {
+	if (Course_Num < 3) {
 		Course_Num = Course_Num + 1;	
-	}else if (Course_Num == 2) {
-		Course_Num = 2;
+	}else if (Course_Num == 3) {
+		Course_Num = 3;
 	}
 	ARR[Course_Num].style.display = "block";
 	ARR[Course_Num-1].style.display = "none";
@@ -1705,9 +1924,11 @@ function Course_next() {//说明书下一页
 function Course_yes() {//开启说明
 	document.getElementById("Course_content").style.display = "block";
 	document.getElementById("Course").style.display = "none";
+	localStorage.Explain_save = 0;
 }
 function Course_no() {//拒绝开启说明
 	document.getElementById("Course").style.display = "none";
+	localStorage.Explain_save = 0;
 }
 function House() {//跳转到装修模拟器
 	window.open("http://bishengming.gitee.io/stardewvalley/")
@@ -1789,6 +2010,7 @@ function Statistics() {
 		switch (Position_Catalog[i]){
 			case 0:
 			var n1 = Position_name[i];
+			if (n1 != 99) {}
 			var n2 = ArchitectureNum[n1];
 			var n3 = n2[11];
 			Statistics_0.push(n3)
@@ -1905,19 +2127,24 @@ function Choice() {
 
 window.onload = function() {
 	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-	    document.getElementById("f11").style.display = "none"
+		console.log("手机");
+		document.getElementById("f11").style.display = "none"
 	} else {
-	    if (screen.height < 800) {
-	    	document.getElementById("f11").style.display = "block"
-	    	document.getElementById("Choice-1").style.display = "none"
-	    }
+		console.log("电脑");
+		if (screen.height < 800) {
+			document.getElementById("f11").style.display = "block"
+			document.getElementById("Choice-1").style.display = "none"
+		}
+		if (window.screen.width < window.screen.height) {
+			document.getElementById("f11").style.display = "none"
+		}
 	}
 }
 document.onkeydown=function(event){
 	var e = event || window.event || arguments.callee.caller.arguments[0];
 	if(e && e.keyCode==122){ 
 		document.getElementById("f11").style.display = "none"
-	    document.getElementById("Choice-1").style.display = "block"
+		document.getElementById("Choice-1").style.display = "block"
 	}
 }; 
 function nuannuan() {
@@ -1925,4 +2152,628 @@ function nuannuan() {
 }
 function nuannuan_X() {//关闭作者联系方式
 	document.getElementById("nuannuan").style.display = "none";
+}
+function add_Greenhouse() {
+	FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/99.png";
+	Position.push(Greenhouse_position);//写入坐标
+	Position_Catalog.push(0);//写入目录序号
+	Position_name.push(3);//写入物品序号
+	Position_Season_spring.push("none");//写入春季
+	Position_Season_summer.push("none");//写入夏季
+	Position_Season_autumn.push("none");//写入秋季
+	Position_Season_winter.push("none");//写入冬季
+	Position_Number.push(1);//写入变化状态数量
+	Position_state.push(0);//写入当前状态
+	sign_X.splice(Greenhouse_position,1,7);//写入物品宽度
+	sign_Y.splice(Greenhouse_position,1,6);//写入物品高度
+	FarmNumM[Greenhouse_position].firstChild.style.top = "-9em";//设置纵向偏移
+	FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//设置横向偏移
+	FarmNumM[Greenhouse_position].firstChild.style.width = "7em";//设置物品宽度
+	FarmNumM[Greenhouse_position].firstChild.style.height = "10em";//设置物品高度
+	Greenhouse_Disable = [Greenhouse_position+MapWidth+2,Greenhouse_position+MapWidth+3,Greenhouse_position+MapWidth+4,Greenhouse_position+MapWidth*2+2,Greenhouse_position+MapWidth*2+3,Greenhouse_position+MapWidth*2+4,Greenhouse_position-1,Greenhouse_position-MapWidth-1,Greenhouse_position-MapWidth*2-1,Greenhouse_position-MapWidth*3-1,Greenhouse_position-MapWidth*4-1,Greenhouse_position-MapWidth*5-1,Greenhouse_position+MapWidth-1,Greenhouse_position+MapWidth,Greenhouse_position+MapWidth+1,Greenhouse_position+MapWidth+5,Greenhouse_position+MapWidth+6,Greenhouse_position+MapWidth*2+1,Greenhouse_position+MapWidth*2+5,Greenhouse_position+7,Greenhouse_position+8,Greenhouse_position-MapWidth+7,Greenhouse_position-MapWidth+8,Greenhouse_position-MapWidth*2+7,Greenhouse_position-MapWidth*2+8,Greenhouse_position-MapWidth*3+7,Greenhouse_position-MapWidth*3+8,Greenhouse_position-MapWidth*4+7,Greenhouse_position-MapWidth*4+8,Greenhouse_position-MapWidth*5+7,Greenhouse_position-MapWidth*5+8];
+		
+		FarmNumB[Greenhouse_position].firstChild.style.width = "10em";//设置物品宽度
+		FarmNumB[Greenhouse_position].firstChild.style.height = "9em";//设置物品高度
+		FarmNumB[Greenhouse_position].firstChild.style.top = "-5em";//设置纵向偏移
+		FarmNumB[Greenhouse_position].firstChild.style.left = "-1em";//设置横向偏移
+		FarmNumB[Greenhouse_position].firstChild.style.zIndex = "-999"
+	if (map_state == 0 || map_state == 3 || map_state == 4 || map_state == 5) {
+		Greenhouse_name = 97;
+		FarmNumB[Greenhouse_position].firstChild.src = "imges/Architecture/97.png";
+	}else{
+		FarmNumB[Greenhouse_position].firstChild.src = "imges/Architecture/98.png";
+		Greenhouse_name = 98;
+		for (var i = 0; i < 12; i++) {
+			Greenhouse_Disable.pop();
+		}
+	}
+	for (var i = 0; i < Greenhouse_Disable.length; i++) {
+		var x = Greenhouse_Disable[i];
+		if (i < 6) {
+			fruiter_sign.push(x);
+			Architecture_sign.push(x);
+		}
+		Cultivation_sign.push(x);
+	}
+};
+function Del_Greenhouse() {
+	var GP = Position.indexOf(Greenhouse_position);
+	Position.splice(GP,1);//删除坐标
+	Position_Catalog.splice(GP,1);//删除目录序号
+	Position_name.splice(GP,1);//删除物品序号
+	Position_Season_spring.splice(GP,1);//删除春季标记
+	Position_Season_summer.splice(GP,1);//删除夏季标记
+	Position_Season_autumn.splice(GP,1);//删除秋季标记
+	Position_Season_winter.splice(GP,1);//删除冬季标记
+	Position_Number.splice(GP,1);//删除状态数量信息
+	Position_state.splice(GP,1);//删除当前状态信息
+	sign_X.splice(GP,1,0);//删除宽度标记
+	sign_Y.splice(GP,1,0);//删除高度标记
+	FarmNumM[Greenhouse_position].firstChild.style.top = "0em";//清除纵向偏移
+	FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//清除横向偏移
+	FarmNumM[Greenhouse_position].firstChild.style.width = "1em";//初始化地块宽度
+	FarmNumM[Greenhouse_position].firstChild.style.height = "1em";//初始化地块高度
+	FarmNumM[Greenhouse_position].firstChild.src = "imges/0.png"//初始化地块物品层贴图
+	for (var i = 0; i < Greenhouse_Disable.length; i++) {
+		Cultivation_sign.pop();
+		if (i < 6) {
+			fruiter_sign.pop();
+			Architecture_sign.pop();
+		}
+	}
+	FarmNumB[Greenhouse_position].firstChild.src = "imges/0.png";
+	FarmNumB[Greenhouse_position].firstChild.style.width = "1em";//设置物品宽度
+	FarmNumB[Greenhouse_position].firstChild.style.height = "1em";//设置物品高度
+	FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0"
+	Greenhouse_status = 1;
+	Greenhouse_name = 98;
+	console.log(Position);
+};
+function verification_Greenhouse(e) {
+	Greenhouse_Disable = [Greenhouse_position+MapWidth+2,Greenhouse_position+MapWidth+3,Greenhouse_position+MapWidth+4,Greenhouse_position+MapWidth*2+2,Greenhouse_position+MapWidth*2+3,Greenhouse_position+MapWidth*2+4,Greenhouse_position-1,Greenhouse_position-MapWidth-1,Greenhouse_position-MapWidth*2-1,Greenhouse_position-MapWidth*3-1,Greenhouse_position-MapWidth*4-1,Greenhouse_position-MapWidth*5-1,Greenhouse_position+MapWidth-1,Greenhouse_position+MapWidth,Greenhouse_position+MapWidth+1,Greenhouse_position+MapWidth+5,Greenhouse_position+MapWidth+6,Greenhouse_position+MapWidth*2+1,Greenhouse_position+MapWidth*2+5];
+	FarmNumB[Greenhouse_position].firstChild.style.width = "10em";//设置物品宽度
+	FarmNumB[Greenhouse_position].firstChild.style.height = "9em";//设置物品高度
+	FarmNumB[Greenhouse_position].firstChild.style.top = "-5em";//设置纵向偏移
+	FarmNumB[Greenhouse_position].firstChild.style.left = "-1em";//设置横向偏移
+	FarmNumB[Greenhouse_position].firstChild.style.zIndex = "-999"
+	FarmNumB[Greenhouse_position].firstChild.src = "imges/Architecture/98.png";
+	if (e == 0) {
+		menuBodyNum[0].getElementsByClassName("other-icon")[3].src = "imges/icon/Architecture/99.png";
+		menuBodyNum[0].getElementsByClassName("other-icon")[3].style.pointerEvents = "none";
+		for (var i = 0; i < Greenhouse_Disable.length; i++) {
+			var x = Greenhouse_Disable[i];
+			if (i < 6) {
+				fruiter_sign.push(x);
+				Architecture_sign.push(x);
+			}
+			Cultivation_sign.push(x);
+		}
+	}else if (e == 1) {
+		console.log(Greenhouse_status);
+		menuBodyNum[0].getElementsByClassName("other-icon")[3].src = "imges/icon/Architecture/3.png";
+		menuBodyNum[0].getElementsByClassName("other-icon")[3].style.pointerEvents = "auto";
+		for (var i = 0; i < Greenhouse_Disable.length; i++) {
+			var x = Greenhouse_Disable[i];
+			if (i < 6) {
+				fruiter_sign.pop();
+				Architecture_sign.pop();
+			}
+			Cultivation_sign.pop();
+		}
+	}
+};
+function supplement(x) {
+	if (x == 1) {
+		var supplement_sign = [855,628];
+		var supplement_goods = [10,5];
+	}
+	if (x == 2) {
+		var supplement_sign = [429,580,1536,1694,1770,1771,3699,3772,3777,3923,4084];
+		var supplement_goods = [4,9,4,9,5,9,7,0,4,6,5];
+	}else if (x == 3) {
+		var supplement_sign = [766,966,971,1123,1709,1714,1740,1747,3578,3579,3586,3613,3619,3700];
+		var supplement_goods = [5,5,5,6,4,8,6,8,4,8,4,4,4,4];
+		FarmNumM[2960].firstChild.src = "imges/map/3/spring-2.png";//地图遮罩
+		FarmNumM[2960].firstChild.style.top = "-15em";
+		// FarmNumM[2960].firstChild.style.left = MapHeight + "em";
+		FarmNumM[2960].firstChild.style.width = MapWidth + "em";
+		FarmNumM[2960].firstChild.style.height = "16em";
+	}else if (x == 4) {
+		var supplement_sign = [3272,3351,4388,4462,4541,4616,4673,4831,4925,4929];
+		var supplement_goods = [6,5,7,8,5,8,0,6,4,8];
+	}
+	for (var i = 0; i < supplement_sign.length; i++) {
+		var a = supplement_goods[i];
+		var b = supplement_data[a]
+		// console.log(a);
+		// console.log(supplement_data[a]);
+		Position.push(supplement_sign[i]);//写入坐标
+		Position_Catalog.push(0);//写入目录序号
+		Position_name.push(b[0]);//写入物品序号
+		FarmNumM[supplement_sign[i]].firstChild.src = "imges/Architecture/" + b[0] + "/spring.png";
+		FarmNumM[supplement_sign[i]].firstChild.style.top = b[1];//设置纵向偏移
+		FarmNumM[supplement_sign[i]].firstChild.style.left = b[2];//设置横向偏移
+		FarmNumM[supplement_sign[i]].firstChild.style.width = b[3];//设置物品宽度
+		FarmNumM[supplement_sign[i]].firstChild.style.height = b[4];//设置物品高度
+		sign_X.splice(supplement_sign[i],1,b[5]);//写入物品宽度
+		sign_Y.splice(supplement_sign[i],1,b[6]);//写入物品高度
+		Position_Season_spring.push(b[7]);//写入春季
+		Position_Season_summer.push(b[8]);//写入夏季
+		Position_Season_autumn.push(b[9]);//写入秋季
+		Position_Season_winter.push(b[10]);//写入冬季
+		Position_Number.push(b[11]);//写入变化状态数量
+		Position_state.push(0);//写入当前状态
+	}
+}
+function continuity() {
+	console.log("continuity");
+	if (continuityNum == undefined) {
+		for (var i = 1 ; i < Math.ceil(IsE/MapWidth); i++) {
+			if (FarmNumB[IsE - i*MapWidth].style.pointerEvents == "auto") {
+				continuityArr.push(IsE - i*MapWidth);
+			}else{
+				break;
+			}
+		}
+		for (var i = 1 ; i < MapWidth - Math.ceil(IsE/MapWidth); i++) {
+			if (FarmNumB[IsE + i*MapWidth].style.pointerEvents == "auto") {
+				continuityArr.push(IsE + i*MapWidth);
+			}else{
+				break;
+			}
+		}
+		for (var i = 1 ; i < IsE%MapWidth; i++) {
+			if (FarmNumB[IsE - i].style.pointerEvents == "auto") {
+				continuityArr.push(IsE - i);
+			}else{
+				break;
+			}
+		}
+		for (var i = 1 ; i < MapWidth - (IsE%MapWidth); i++) {
+			if (FarmNumB[IsE + i].style.pointerEvents == "auto") {
+				continuityArr.push(IsE + i);
+			}else{
+				break;
+			}
+		}
+		// for (var i = 0; i < Frame_Num; i++) {
+		// 	FarmNumB[i].style.pointerEvents = "none";
+		// }
+		// for (var i = 0; i < continuityArr.length; i++) {
+		// 	FarmNumB[continuityArr[i]].style.pointerEvents = "auto";
+		// }
+		continuityNum = IsE;
+		// console.log(continuityArr);
+	}else{
+		var h = continuityNum - IsE;
+		var distance;
+		var distanceNum;
+		if (h > 0) {
+			if (h >= MapWidth) {
+				console.log(h/MapWidth);
+				distance = h/MapWidth;
+			}else{
+				console.log(h);
+				distance = h;
+			}
+		}else{
+			if (h <= (-MapWidth)) {
+				console.log(-(h/MapWidth));
+				distance = -(h/MapWidth);
+			}else{
+				console.log(-h);
+				distance = -h;
+			}
+		}
+		for (var i = 1; i < distance; i++) {
+			if (h > 0) {
+				if (h >= MapWidth) {
+					distanceNum = continuityNum - i*MapWidth;
+				}else{
+					distanceNum = continuityNum - i
+				}
+			}else{
+				if (h <= (-MapWidth)) {
+					distanceNum = continuityNum + i*MapWidth;
+				}else{
+					distanceNum = continuityNum + i;
+				}
+			}
+			if (otherSign < 4 && menuBodySign == 3) {//当前物品为栅栏
+				sign_X.splice(distanceNum,1,signX);//向数据库写入宽度
+				sign_Y.splice(distanceNum,1,signY);//向数据库写入高度
+				fenceArr.push(distanceNum);//写入栅栏坐标
+				fence_name.push(otherSign);//写入物品编号
+				FarmNumB[distanceNum].style.pointerEvents = "none";//禁用当前地块
+			}
+			if (otherSign > 4 && menuBodySign == 3) {
+				floorArr.push(distanceNum);//写入地板坐标
+				floor_name.push(otherSign);//写入物品编号
+				if (otherSign == 15) {
+					if (Season == "winter") {//判断季节对应地板状态
+						floor_Season = "winter";
+					}else{
+						floor_Season = "notwinter";
+					}
+					FarmNumB[distanceNum].firstChild.src = "imges/other/" + floor_Season + "/15/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
+				}
+				FarmNumB[distanceNum].style.pointerEvents = "none";//禁用当前地块
+			}
+			if (menuBodySign == 1) {
+				Position.push(distanceNum);//写入坐标
+				Position_Catalog.push(menuBodySign);//写入目录序号
+				Position_name.push(otherSign);//写入物品序号
+				Position_Season_spring.push(Season_spring);//写入春季
+				Position_Season_summer.push(Season_summer);//写入夏季
+				Position_Season_autumn.push(Season_autumn);//写入秋季
+				Position_Season_winter.push(Season_winter);//写入冬季
+				Position_Number.push(GoodsNumber);//写入变化状态数量
+				Position_state.push(Is_state);//写入当前状态
+				sign_X.splice(distanceNum,1,signX);//写入物品宽度
+				sign_Y.splice(distanceNum,1,signY);//写入物品高度
+				FarmNumM[distanceNum].firstChild.style.top = IMG_T;//设置纵向偏移
+				FarmNumM[distanceNum].firstChild.style.left = IMG_L;//设置横向偏移
+				FarmNumM[distanceNum].firstChild.style.width = IMG_W;//设置物品宽度
+				FarmNumM[distanceNum].firstChild.style.height = IMG_H;//设置物品高度
+				var land = floor_name[floorArr.indexOf(distanceNum)];
+				var landNum = floorArr.indexOf(distanceNum);//查找当前地块是否被开垦
+				if (land == undefined && otherSign < 40) {//当前地块未被开垦则在下方添加被开垦土地
+					floorArr.push(distanceNum);
+					floor_name.push(16);
+				}
+				if (Season_spring == Season || Season_summer == Season || Season_autumn == Season || Season_winter == Season) {//判断当前季节是否适合选取农作物生长
+					if (otherSign == 39 || otherSign == 40) {//当前物品为茶苗和纤维种子
+						FarmNumM[distanceNum].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/0.png";//添加对应季节贴图
+					}else if (otherSign == 41) {//当前物品为牧草
+						FarmNumM[distanceNum].firstChild.src = "imges/crops/" + otherSign + "/" + Season+ "/" + Math.ceil(Math.random()*4) +".png";//添加随机对应季节贴图
+					}else{
+						FarmNumM[distanceNum].firstChild.src = "imges/crops/" + otherSign + "/0.png";//普通农作物成熟贴图
+					}
+				}else{//当前作物生长季节不适应当前季节
+					FarmNumM[distanceNum].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png";//添加随机枯萎作物贴图
+				}
+			}
+		}
+		// for (var i = 0; i < continuityArr.length; i++) {
+		// 	if (floorArr.indexOf(continuityArr[i]) == -1) {
+		// 		FarmNumB[continuityArr[i]].firstChild.src = "imges/0.png";
+		// 		// console.log(floorArr.indexOf(continuityArr[i]));
+		// 	}
+			
+			
+		// }
+		continuityNum = undefined;
+		continuityArr = [];
+		Initialization();
+		signMap();
+	}
+}
+function save_Btn() {
+	if(typeof(Storage) !== "undefined") {
+		if (map_state == 0) {
+			localStorage.save_0 = "true";
+			localStorage.fenceArr_0 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_0 = fence_name;//存储栅栏序号
+			localStorage.doorArr_0 = doorArr;//存储门坐标
+			localStorage.door_name_0 = door_name;//存储门序号
+			localStorage.floorArr_0 = floorArr;//存储地板坐标
+			localStorage.floor_name_0 = floor_name;//存储地板序号
+			localStorage.Position_0 = Position;//存储物品坐标
+			localStorage.Position_Catalog_0 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_0 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_0 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_0 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_0 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_0 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_0 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_0 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_0 = sign_X;
+			localStorage.Position_sign_Y_0 = sign_Y;
+			console.log("已保存到一号存档!");
+		}
+		if (map_state == 1) {
+			localStorage.save_1 = "true";
+			localStorage.fenceArr_1 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_1 = fence_name;//存储栅栏序号
+			localStorage.doorArr_1 = doorArr;//存储门坐标
+			localStorage.door_name_1 = door_name;//存储门序号
+			localStorage.floorArr_1 = floorArr;//存储地板坐标
+			localStorage.floor_name_1 = floor_name;//存储地板序号
+			localStorage.Position_1 = Position;//存储物品坐标
+			localStorage.Position_Catalog_1 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_1 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_1 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_1 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_1 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_1 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_1 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_1 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_1 = sign_X;
+			localStorage.Position_sign_Y_1 = sign_Y;
+			console.log("已保存到二号存档!");
+		}
+		if (map_state == 2) {
+			localStorage.save_2 = "true";
+			localStorage.fenceArr_2 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_2 = fence_name;//存储栅栏序号
+			localStorage.doorArr_2 = doorArr;//存储门坐标
+			localStorage.door_name_2 = door_name;//存储门序号
+			localStorage.floorArr_2 = floorArr;//存储地板坐标
+			localStorage.floor_name_2 = floor_name;//存储地板序号
+			localStorage.Position_2 = Position;//存储物品坐标
+			localStorage.Position_Catalog_2 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_2 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_2 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_2 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_2 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_2 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_2 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_2 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_2 = sign_X;
+			localStorage.Position_sign_Y_2 = sign_Y;
+			console.log("已保存到三号存档!");
+		}
+		if (map_state == 3) {
+			localStorage.save_3 = "true";
+			localStorage.fenceArr_3 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_3 = fence_name;//存储栅栏序号
+			localStorage.doorArr_3 = doorArr;//存储门坐标
+			localStorage.door_name_3 = door_name;//存储门序号
+			localStorage.floorArr_3 = floorArr;//存储地板坐标
+			localStorage.floor_name_3 = floor_name;//存储地板序号
+			localStorage.Position_3 = Position;//存储物品坐标
+			localStorage.Position_Catalog_3 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_3 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_3 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_3 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_3 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_3 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_3 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_3 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_3 = sign_X;
+			localStorage.Position_sign_Y_3 = sign_Y;
+			console.log("已保存到四号存档!");
+		}
+		if (map_state == 4) {
+			localStorage.save_4 = "true";
+			localStorage.fenceArr_4 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_4 = fence_name;//存储栅栏序号
+			localStorage.doorArr_4 = doorArr;//存储门坐标
+			localStorage.door_name_4 = door_name;//存储门序号
+			localStorage.floorArr_4 = floorArr;//存储地板坐标
+			localStorage.floor_name_4 = floor_name;//存储地板序号
+			localStorage.Position_4 = Position;//存储物品坐标
+			localStorage.Position_Catalog_4 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_4 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_4 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_4 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_4 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_4 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_4 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_4 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_4 = sign_X;
+			localStorage.Position_sign_Y_4 = sign_Y;
+			console.log("已保存到五号存档!");
+		}
+		if (map_state == 5) {
+			localStorage.save_5 = "true";
+			localStorage.fenceArr_5 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_5 = fence_name;//存储栅栏序号
+			localStorage.doorArr_5 = doorArr;//存储门坐标
+			localStorage.door_name_5 = door_name;//存储门序号
+			localStorage.floorArr_5 = floorArr;//存储地板坐标
+			localStorage.floor_name_5 = floor_name;//存储地板序号
+			localStorage.Position_5 = Position;//存储物品坐标
+			localStorage.Position_Catalog_5 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_5 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_5 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_5 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_5 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_5 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_5 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_5 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_5 = sign_X;
+			localStorage.Position_sign_Y_5 = sign_Y;
+			console.log("已保存到六号存档!");
+		}
+	} else {
+		alert("此浏览器可能不支持存档功能");
+	}
+}
+function save_load() {
+	if (localStorage.save_0 == "true" && map_state == 0) {
+		console.log("加载一号存档");
+		var load_arr = [localStorage.fenceArr_0.split(','),localStorage.fence_name_0.split(','),localStorage.doorArr_0.split(','),localStorage.door_name_0.split(','),localStorage.floorArr_0.split(','),localStorage.floor_name_0.split(','),localStorage.Position_0.split(','),localStorage.Position_Catalog_0.split(','),localStorage.Position_name_0,localStorage.Position_Season_spring_0.split(','),localStorage.Position_Season_summer_0.split(','),localStorage.Position_Season_autumn_0.split(','),localStorage.Position_Season_winter_0.split(','),localStorage.Position_Number_0.split(','),localStorage.Position_state_0.split(','),localStorage.Position_sign_X_0.split(','),localStorage.Position_sign_Y_0.split(',')];
+	}else if (localStorage.save_1 == "true" && map_state == 1) {
+		console.log("加载二号存档");
+		var load_arr = [localStorage.fenceArr_1.split(','),localStorage.fence_name_1.split(','),localStorage.doorArr_1.split(','),localStorage.door_name_1.split(','),localStorage.floorArr_1.split(','),localStorage.floor_name_1.split(','),localStorage.Position_1.split(','),localStorage.Position_Catalog_1.split(','),localStorage.Position_name_1,localStorage.Position_Season_spring_1.split(','),localStorage.Position_Season_summer_1.split(','),localStorage.Position_Season_autumn_1.split(','),localStorage.Position_Season_winter_1.split(','),localStorage.Position_Number_1.split(','),localStorage.Position_state_1.split(','),localStorage.Position_sign_X_1.split(','),localStorage.Position_sign_Y_1.split(',')];
+	}else if (localStorage.save_2 == "true" && map_state == 2) {
+		console.log("加载三号存档");
+		var load_arr = [localStorage.fenceArr_2.split(','),localStorage.fence_name_2.split(','),localStorage.doorArr_2.split(','),localStorage.door_name_2.split(','),localStorage.floorArr_2.split(','),localStorage.floor_name_2.split(','),localStorage.Position_2.split(','),localStorage.Position_Catalog_2.split(','),localStorage.Position_name_2,localStorage.Position_Season_spring_2.split(','),localStorage.Position_Season_summer_2.split(','),localStorage.Position_Season_autumn_2.split(','),localStorage.Position_Season_winter_2.split(','),localStorage.Position_Number_2.split(','),localStorage.Position_state_2.split(','),localStorage.Position_sign_X_2.split(','),localStorage.Position_sign_Y_2.split(',')];
+	}else if (localStorage.save_3 == "true" && map_state == 3) {
+		console.log("加载四号存档");
+		var load_arr = [localStorage.fenceArr_3.split(','),localStorage.fence_name_3.split(','),localStorage.doorArr_3.split(','),localStorage.door_name_3.split(','),localStorage.floorArr_3.split(','),localStorage.floor_name_3.split(','),localStorage.Position_3.split(','),localStorage.Position_Catalog_3.split(','),localStorage.Position_name_3,localStorage.Position_Season_spring_3.split(','),localStorage.Position_Season_summer_3.split(','),localStorage.Position_Season_autumn_3.split(','),localStorage.Position_Season_winter_3.split(','),localStorage.Position_Number_3.split(','),localStorage.Position_state_3.split(','),localStorage.Position_sign_X_3.split(','),localStorage.Position_sign_Y_3.split(',')];
+	}else if (localStorage.save_4 == "true" && map_state == 4) {
+		console.log("加载五号存档");
+		var load_arr = [localStorage.fenceArr_4.split(','),localStorage.fence_name_4.split(','),localStorage.doorArr_4.split(','),localStorage.door_name_4.split(','),localStorage.floorArr_4.split(','),localStorage.floor_name_4.split(','),localStorage.Position_4.split(','),localStorage.Position_Catalog_4.split(','),localStorage.Position_name_4,localStorage.Position_Season_spring_4.split(','),localStorage.Position_Season_summer_4.split(','),localStorage.Position_Season_autumn_4.split(','),localStorage.Position_Season_winter_4.split(','),localStorage.Position_Number_4.split(','),localStorage.Position_state_4.split(','),localStorage.Position_sign_X_4.split(','),localStorage.Position_sign_Y_4.split(',')];
+	}else if (localStorage.save_5 == "true" && map_state == 5) {
+		console.log("加载六号存档");
+		var load_arr = [localStorage.fenceArr_5.split(','),localStorage.fence_name_5.split(','),localStorage.doorArr_5.split(','),localStorage.door_name_5.split(','),localStorage.floorArr_5.split(','),localStorage.floor_name_5.split(','),localStorage.Position_5.split(','),localStorage.Position_Catalog_5.split(','),localStorage.Position_name_5,localStorage.Position_Season_spring_5.split(','),localStorage.Position_Season_summer_5.split(','),localStorage.Position_Season_autumn_5.split(','),localStorage.Position_Season_winter_5.split(','),localStorage.Position_Number_5.split(','),localStorage.Position_state_5.split(','),localStorage.Position_sign_X_5.split(','),localStorage.Position_sign_Y_5.split(',')];
+	}else{
+		console.log("没有检测到存档!");
+		return;
+	}
+	var save_arr = [fenceArr,fence_name,doorArr,door_name,floorArr,floor_name,Position,Position_Catalog,Position_name,Position_Season_spring,Position_Season_summer,Position_Season_autumn,Position_Season_winter,Position_Number,Position_state,sign_X,sign_Y];
+	for (var i = 0; i < save_arr.length; i++) {
+		if (load_arr[i] != "") {
+			save_arr[i] = load_arr[i];
+		}
+	}
+	fenceArr = JSON.parse("[" + save_arr[0] + "]");
+	fence_name = JSON.parse("[" + save_arr[1] + "]");
+	doorArr = JSON.parse("[" + save_arr[2] + "]");
+	door_name = JSON.parse("[" + save_arr[3] + "]");
+	floorArr = JSON.parse("[" + save_arr[4] + "]");
+	floor_name = JSON.parse("[" + save_arr[5] + "]");
+	Position = JSON.parse("[" + save_arr[6] + "]");
+	Position_Catalog = JSON.parse("[" + save_arr[7] + "]");
+	Position_name = JSON.parse("[" + save_arr[8] + "]");
+	Position_Season_spring = save_arr[9];
+	Position_Season_summer = save_arr[10];
+	Position_Season_autumn = save_arr[11];
+	Position_Season_winter = save_arr[12];
+	Position_Number = JSON.parse("[" + save_arr[13] + "]");
+	Position_state = JSON.parse("[" + save_arr[14] + "]");
+	sign_X = JSON.parse("[" + save_arr[15] + "]");
+	sign_Y = JSON.parse("[" + save_arr[16] + "]");
+	door();//校准门状态
+	fence();//校准栅栏状态
+	floor();//校准地板状态
+	var CatalogArr = ["Architecture/","crops/","tool/","other/","tree/","NPC/"];//贴图路径
+	FarmNumM[1191].firstChild.src = "imges/0.png";
+	sign_X.splice(1191,1,0);//写入物品宽度
+	sign_Y.splice(1191,1,0);//写入物品高度
+	FarmNumM[1191].firstChild.style.top = "0em";//设置纵向偏移
+	FarmNumM[1191].firstChild.style.left = "0em";//设置横向偏移
+	FarmNumM[1191].firstChild.style.width = "1em";//设置物品宽度
+	FarmNumM[1191].firstChild.style.height = "1em";//设置物品高度
+	for (var i = 0; i < Position.length; i++) {
+		var Catalog = CatalogArr[Position_Catalog[i]];//当前贴图路径
+		console.log(Position);
+		if (Position_Catalog[i] == 0) {
+			if (Position_name[i] == 3 && Position[i] != Greenhouse_position) {
+				if (Greenhouse_status == 2) {
+					FarmNumM[Greenhouse_position].firstChild.style.top = "0em";//清除纵向偏移
+					FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//清除横向偏移
+					FarmNumM[Greenhouse_position].firstChild.style.width = "1em";//初始化地块宽度
+					FarmNumM[Greenhouse_position].firstChild.style.height = "1em";//初始化地块高度
+					FarmNumM[Greenhouse_position].firstChild.src = "imges/0.png"//初始化地块物品层贴图
+					for (var n = 0; n < Greenhouse_Disable.length; n++) {
+						Cultivation_sign.pop();
+						if (n < 6) {
+							fruiter_sign.pop();
+							Architecture_sign.pop();
+						}
+					}
+					FarmNumB[Greenhouse_position].firstChild.src = "imges/0.png";
+					FarmNumB[Greenhouse_position].firstChild.style.width = "1em";//设置物品宽度
+					FarmNumB[Greenhouse_position].firstChild.style.height = "1em";//设置物品高度
+					FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0"
+					sign_X.splice(Greenhouse_position,1,0);//删除宽度标记
+					sign_Y.splice(Greenhouse_position,1,0);//删除高度标记
+					Greenhouse_status = 1;
+					Greenhouse_name = 98;
+				}
+				Greenhouse_position = Position[i];
+				verification_Greenhouse(0);
+			}else{
+				FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/99.png";
+			}
+			// if (Position_name[i] == 4) {
+			// 	console.log(Position.indexOf(1191));
+				
+			// }
+			if (Position_name[i] == 28) {//祝尼魔小屋和固定植物
+				FarmNumM[Position[i]].firstChild.src = "imges/" + Catalog + Position_name[i] +"/" + Season + ".png";
+				console.log(Catalog);
+			}else if (Position_name[i] < 28) {
+				FarmNumM[Position[i]].firstChild.src = "imges/" + Catalog + Position_name[i] + ".png";
+			}
+		}else if (Position_Catalog[i] == 1) {
+			if (Position_Season_spring[i] == Season || Position_Season_summer[i] == Season || Position_Season_autumn[i] == Season || Position_Season_winter[i] == Season) {//判断当前季节是否适合选取农作物生长
+				if (Position_name[i] == 39 || Position_name[i] == 40) {//当前物品为茶苗和纤维种子
+					FarmNumM[Position[i]].firstChild.src = "imges/crops/" + Position_name[i] + "/" + Season + "/" + Position_state[i] + ".png";//添加对应季节贴图
+				}else if (Position_name[i] == 41) {//当前物品为牧草
+					FarmNumM[Position[i]].firstChild.src = "imges/crops/" + Position_name[i] + "/" + Season + "/" + Math.ceil(Math.random()*4) +".png";//添加随机对应季节贴图
+				}else{
+					FarmNumM[Position[i]].firstChild.src = "imges/crops/" + Position_name[i] + "/" + Position_state[i] + ".png"//普通农作物成熟贴图
+				}
+			}else{//当前作物生长季节不适应当前季节
+				FarmNumM[Position[i]].firstChild.src = "imges/crops/" + Math.ceil(Math.random()*4) +".png";//添加随机枯萎作物贴图
+			}
+		}else if (Position_Catalog[i] == 2) {
+			if (Position_Season_spring[i] == Season || Position_Season_summer[i] == Season || Position_Season_autumn[i] == Season || Position_Season_winter[i] == Season) {//判读是否为受季节影响物品
+				FarmNumM[Position[i]].firstChild.src = "imges/tool/" + Position_name[i] + "/" + Season + ".png";//添加对应季节贴图
+			}else{
+				FarmNumM[Position[i]].firstChild.src = "imges/tool/" + Position_name[i] + ".png";//添加常规贴图
+			}
+			if (Position_name[i] == 0) {
+				FarmNumM[Position[i]].firstChild.src = "imges/tool/" + Position_name[i] + "/" + Position_state[i] + ".png";//添加常规贴图
+			}
+			
+		}else if (Position_Catalog[i] == 4) {
+			if (Position_name[i] == 12) {//判断当前物品是否为蘑菇树
+				FarmNumM[Position[i]].firstChild.src = "imges/tree/" + Position_name[i] + "/" + Position_state[i] + ".png";//添加蘑菇树贴图
+			}else{
+				FarmNumM[Position[i]].firstChild.src = "imges/tree/" + Position_name[i] + "/" + Season+ "/" + Position_state[i] + ".png";//添加非蘑菇树贴图
+				if (Position_state[i] != 0 && Position_name[i] > 3) {
+					FarmNumM[Position[i]].firstChild.src = "imges/tree/" + Position_name[i] + "/" + Position_state[i] + ".png";
+				}else{
+					FarmNumM[Position[i]].firstChild.src = "imges/tree/" + Position_name[i] + "/" + Season + "/" + Position_state[i] + ".png";	
+				}
+			}
+		}else if (Position_Catalog[i] == 5) {
+			FarmNumM[549].firstChild.src = "imges/NPC/" + Position_name[i] + "/" + Season+ ".png";
+		}
+		// var a1 = Position_Catalog[5];
+		// var a2 = Position_name[5]
+		// console.log(i);
+		// console.log(Position_Catalog[i]);
+		// console.log(Position_name[i]);
+		// console.log(Catalog_data[Position_Catalog[i]][Position_name[i]]);
+		if (Position_Catalog[i] == 0) {
+			if (Position_name[i] < 50) {
+				FarmNumM[Position[i]].firstChild.style.top = Catalog_data[Position_Catalog[i]][Position_name[i]][0];//设置纵向偏移
+				FarmNumM[Position[i]].firstChild.style.left = Catalog_data[Position_Catalog[i]][Position_name[i]][1];//设置横向偏移
+				FarmNumM[Position[i]].firstChild.style.width = Catalog_data[Position_Catalog[i]][Position_name[i]][2];//设置物品宽度
+				FarmNumM[Position[i]].firstChild.style.height = Catalog_data[Position_Catalog[i]][Position_name[i]][3];//设置物品高度
+			}
+			
+		}else{
+			FarmNumM[Position[i]].firstChild.style.top = Catalog_data[Position_Catalog[i]][Position_name[i]][0];//设置纵向偏移
+			FarmNumM[Position[i]].firstChild.style.left = Catalog_data[Position_Catalog[i]][Position_name[i]][1];//设置横向偏移
+			FarmNumM[Position[i]].firstChild.style.width = Catalog_data[Position_Catalog[i]][Position_name[i]][2];//设置物品宽度
+			FarmNumM[Position[i]].firstChild.style.height = Catalog_data[Position_Catalog[i]][Position_name[i]][3];//设置物品高度
+		}
+
+		}
+		Initialization();
+		Cultivation();
+		signMapX();
+		signMap();
+		signMapY();
+	// console.log(localStorage.save_Position);
+	// var stringResult = localStorage.save_Position.split(',');
+	// console.log(stringResult[2]);
+}
+function save_del() {
+	if (localStorage.save_0 == "true" && map_state == 0) {
+		console.log("删除一号存档");
+		var del_save_arr = ["save_0","fenceArr_0","fence_name_0","doorArr_0","door_name_0","floorArr_0","floor_name_0","Position_0","Position_Catalog_0","Position_name_0","Position_Season_spring_0","Position_Season_summer_0","Position_Season_autumn_0","Position_Season_winter_0","Position_Number_0","Position_Season_winter_0","Position_Number_0","Position_state_0","Position_sign_X_0","Position_sign_Y_0"];
+	}else if (localStorage.save_1 == "true" && map_state == 1) {
+		console.log("删除二号存档");
+		var del_save_arr = ["save_1","fenceArr_1","fence_name_1","doorArr_1","door_name_1","floorArr_1","floor_name_1","Position_1","Position_Catalog_1","Position_name_1","Position_Season_spring_1","Position_Season_summer_1","Position_Season_autumn_1","Position_Season_winter_1","Position_Number_1","Position_Season_winter_1","Position_Number_1","Position_state_1","Position_sign_X_1","Position_sign_Y_1"];
+	}else if (localStorage.save_2 == "true" && map_state == 2) {
+		console.log("删除三号存档");
+		var del_save_arr = ["save_2","fenceArr_2","fence_name_2","doorArr_2","door_name_2","floorArr_2","floor_name_2","Position_2","Position_Catalog_2","Position_name_2","Position_Season_spring_2","Position_Season_summer_2","Position_Season_autumn_2","Position_Season_winter_2","Position_Number_2","Position_Season_winter_2","Position_Number_2","Position_state_2","Position_sign_X_2","Position_sign_Y_2"];
+	}else if (localStorage.save_3 == "true" && map_state == 3) {
+		console.log("删除四号存档");
+		var del_save_arr = ["save_3","fenceArr_3","fence_name_3","doorArr_3","door_name_3","floorArr_3","floor_name_3","Position_3","Position_Catalog_3","Position_name_3","Position_Season_spring_3","Position_Season_summer_3","Position_Season_autumn_3","Position_Season_winter_3","Position_Number_3","Position_Season_winter_3","Position_Number_3","Position_state_3","Position_sign_X_3","Position_sign_Y_3"];
+	}else if (localStorage.save_4 == "true" && map_state == 4) {
+		console.log("删除五号存档");
+		var del_save_arr = ["save_4","fenceArr_4","fence_name_4","doorArr_4","door_name_4","floorArr_4","floor_name_4","Position_4","Position_Catalog_4","Position_name_4","Position_Season_spring_4","Position_Season_summer_4","Position_Season_autumn_4","Position_Season_winter_4","Position_Number_4","Position_Season_winter_4","Position_Number_4","Position_state_4","Position_sign_X_4","Position_sign_Y_4"];
+	}else if (localStorage.save_5 == "true" && map_state == 5) {
+		console.log("删除六号存档");
+		var del_save_arr = ["save_5","fenceArr_5","fence_name_5","doorArr_5","door_name_5","floorArr_5","floor_name_5","Position_5","Position_Catalog_5","Position_name_5","Position_Season_spring_5","Position_Season_summer_5","Position_Season_autumn_5","Position_Season_winter_5","Position_Number_5","Position_Season_winter_5","Position_Number_5","Position_state_5","Position_sign_X_5","Position_sign_Y_5"];
+	}else{
+		console.log("没有检测到存档!");
+		return;
+	}
+	for (var i = 0; i < del_save_arr.length; i++) {
+		localStorage.removeItem(del_save_arr[i]);
+	}
+}
+if (localStorage.Explain_save == 0) {
+	console.log("非首次开启页面，关闭教程提示。");
+	document.getElementById("Course").style.display = "none";
 }
