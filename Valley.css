@@ -2,7 +2,7 @@ body{
 	cursor:url(imges/Pointer.ico),auto;
 	background: #050304;
 	overflow-x: hidden;
-    overflow-y: hidden;
+	overflow-y: hidden;
 	margin: 0;
 	font-family: 阿里巴巴普惠体;
 }
@@ -33,11 +33,11 @@ img{
 }
 .Farm{
 	display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    position: absolute;
-    width: 80em;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	position: absolute;
+	width: 80em;
 	height: 65em;
 }
 .Farm-B{
@@ -76,9 +76,9 @@ img{
 	width: 80em;
 	height: 65em;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 .greenhouse-1{
 	width: 7em !important;
@@ -112,11 +112,11 @@ img{
 	right: 10px;
 	bottom: 0em;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-flex-direction: column;
-    flex-direction: column;
+	display: flex;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-flex-direction: column;
+	flex-direction: column;
 }
 #Btn div{
 	width: 64px;
@@ -205,7 +205,7 @@ img{
 	height: 700px;
 	/*background: #000;*/
 	overflow-x: hidden;
-    overflow-y: hidden;
+	overflow-y: hidden;
 }
 .menu-body{
 	position: relative;
@@ -213,12 +213,12 @@ img{
 /*	background: #fff;*/
 	left: 10px;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-    background:url(imges/menu-body-bj.png) repeat-y center 0px;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	background:url(imges/menu-body-bj.png) repeat-y center 0px;
 }
 .menu-body img{
 	width: 64px;
@@ -408,9 +408,9 @@ img{
 	position: absolute;
 	bottom: 0px;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: space-around;
-    justify-content: space-around;
+	display: flex;
+	-webkit-justify-content: space-around;
+	justify-content: space-around;
 }
 #menu-b{
 	width: 324px;
@@ -451,10 +451,10 @@ img{
 	top: 0px;
 	right: 10px;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
+	display: flex;
+	-webkit-justify-content: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
 }
 #Btn img{
 	margin-top: 20px;
@@ -464,16 +464,16 @@ img{
 	top: 40%;
 	left: 40%;
 	/*margin: 0 auto;*/
-    -webkit-justify-content: space-between;
-    justify-content: center;
+	-webkit-justify-content: space-between;
+	justify-content: center;
 	width: 192px;
 	height: 192px;
 	position: absolute;
 	z-index: 100;
 	display: -webkit-flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    display: none;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	display: none;
 }
 #preview1{
 	position: absolute;
@@ -497,10 +497,10 @@ img{
 	width: 100%;
 	bottom: 0;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    display: none;
+	display: flex;
+	-webkit-justify-content: center;
+	justify-content: center;
+	display: none;
 }
 #name-l img{
 	width: 64px;
@@ -558,8 +558,8 @@ img{
 }
 input:-moz-placeholder,   
 textarea:-moz-placeholder {   
-    color: #221122;  
-    opacity: 0.5;
+	color: #221122;  
+	opacity: 0.5;
 }   
   
 input:-ms-input-placeholder,   
@@ -577,9 +577,9 @@ textarea::-webkit-input-placeholder {
 	width: 320px;
 	height: 64px;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
+	display: flex;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
 }
 #name-btn div{
 	width: 104px;
@@ -695,7 +695,7 @@ textarea::-webkit-input-placeholder {
 	position: relative;
 	margin-top: 64px;
 	display: -webkit-flex;
-    display: flex;
+	display: flex;
 }
 .Title-2-3{
 	width: 1156px;
@@ -703,10 +703,10 @@ textarea::-webkit-input-placeholder {
 	left: 50%;
 	margin-left: -578px;
 	 -webkit-justify-content: space-between;
-    justify-content: space-between;
-    -webkit-align-items: center;
-    align-items: center;
-    background: url(imges/Choice/bj.png);
+	justify-content: space-between;
+	-webkit-align-items: center;
+	align-items: center;
+	background: url(imges/Choice/bj.png);
 }
 .Title-2-2{
 	width: 832px;
@@ -714,10 +714,10 @@ textarea::-webkit-input-placeholder {
 	left: 50%;
 	margin-left: -416px;
 	 -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-align-items: center;
-    align-items: center;
-    background: url(imges/Choice/bj-2.png);
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+	background: url(imges/Choice/bj-2.png);
 }
 #Title-2 img{
 	width: 128px;
@@ -756,11 +756,11 @@ textarea::-webkit-input-placeholder {
 	width: 1152px;
 	height: 480px;
 	display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-justify-content: center;
-    justify-content: center;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: center;
+	justify-content: center;
 }
 #Statistics_table-1{
 	display: flex;
@@ -771,9 +771,19 @@ textarea::-webkit-input-placeholder {
 .Statistics-text{
 	width: 164px;
 	height: 32px;
-	font-size: 24px;
+	font-size: 22px;
 	color: #221122;
-	text-shadow:-1px 2px #dd9454;
+	text-shadow:-1px 1px #dd9454;
+	display: -webkit-flex;
+    display: flex;
+}
+.Statistics-text-1{
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap
+}
+.Statistics-text-2{
+	padding-right: 8px;
 }
 .Title-img-2{
 	margin: 0 auto;

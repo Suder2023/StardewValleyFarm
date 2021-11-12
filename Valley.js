@@ -608,12 +608,15 @@ Farm.addEventListener("click",function(e){
 						continuityArr = [];
 					}
 					continuity();
-					var land = floor_name[floorArr.indexOf(e)];
-					var landNum = floorArr.indexOf(e);//查找当前地块是否被开垦
-					if (land == undefined) {//当前地块未被开垦则在下方添加被开垦土地
-						floorArr.push(IsE);
-						floor_name.push(16);
+					if (otherSign != 41) {
+						var land = floor_name[floorArr.indexOf(e)];
+						var landNum = floorArr.indexOf(e);//查找当前地块是否被开垦
+						if (land == undefined) {//当前地块未被开垦则在下方添加被开垦土地
+							floorArr.push(IsE);
+							floor_name.push(16);
+						}
 					}
+					
 				}else if (otherSign == 42 || otherSign == 43 || otherSign == 44) {//当前物品为巨大作物,禁用拥有地板地块,清理巨大作物下方地板
 					signMapX();
 					signMap();
@@ -2041,6 +2044,7 @@ function Statistics() {
 			break;
 		}
 	}
+	var Statistics_0_name_Num = [];
 	var Statistics_name = [Statistics_0,Statistics_1,Statistics_2,Statistics_3,Statistics_4];
 	var Statistics_name_s = [];
 	for (var x = 0; x < Statistics_name.length; x++) {
@@ -2052,13 +2056,13 @@ function Statistics() {
 					count++;  
 				}
 			}
-			Statistics_name_s.push([(Statistics_name[x])[i], count]);  
+			Statistics_0_name_Num.push([(Statistics_name[x])[i], count]);  
 			i += count;
 		}
-		var Statistics_0_name_Num = [];
-		for (var i = 0; i < Statistics_name_s.length; i++) {
-			Statistics_0_name_Num.push(Statistics_name_s[i][0] + ":" + Statistics_name_s[i][1]);
-		}
+		
+		// for (var i = 0; i < Statistics_name_s.length; i++) {
+		// 	Statistics_0_name_Num.push(Statistics_name_s[i][0] + ":" + Statistics_name_s[i][1]);
+		// }
 	}
 	
 	var other_arr = floor_name.concat(fence_name,door_name,);
@@ -2078,16 +2082,17 @@ function Statistics() {
 				count++;  
 			}  
 		}
-		other_name_arr.push([other_name[i], count]);  
+		Statistics_0_name_Num.push([other_name[i], count]);  
 		i += count;  
 	}
-	for (var i = 0; i < other_name_arr.length; i++) {
-		Statistics_0_name_Num.push(other_name_arr[i][0] + ":" + other_name_arr[i][1]);
-	}
+	// for (var i = 0; i < other_name_arr.length; i++) {
+	// 	Statistics_0_name_Num.push(other_name_arr[i][0] + ":" + other_name_arr[i][1]);
+	// }
 	console.log(Statistics_0_name_Num);
 	for (var i = 0 ; i < Statistics_0_name_Num.length; i++) {
 		if (i < 105) {
-			StatisticsArr[i].innerHTML = "&bull; " + Statistics_0_name_Num[i];
+			StatisticsArr_1[i].innerHTML = "&bull; " + Statistics_0_name_Num[i][0];
+			StatisticsArr_2[i].innerHTML = ":" + Statistics_0_name_Num[i][1];
 			var x = "none";
 		}else{
 			StatisticsArr[i].innerHTML = "&bull; " + Statistics_0_name_Num[i];
@@ -2104,6 +2109,11 @@ for (var i = 0 ; i < 105; i++) {
 	Statistics_add_2();
 }
 var StatisticsArr = Statistics_table.getElementsByClassName("Statistics-text");
+for (var i = 0 ; i < StatisticsArr.length; i++) {
+	Statistics_add_1_add(i);
+}
+var StatisticsArr_1 = Statistics_table.getElementsByClassName("Statistics-text-1");
+var StatisticsArr_2 = Statistics_table.getElementsByClassName("Statistics-text-2");
 function Statistics_add_1(){//统计页1
 	var Statistics_table_1 = document.getElementById("Statistics_table-1");
 	var div = document.createElement("div");
@@ -2113,6 +2123,13 @@ function Statistics_add_2(){//统计页2
 	var Statistics_table_2 = document.getElementById("Statistics_table-2");
 	var div = document.createElement("div");
 	Statistics_table_2.appendChild(div).className = "Statistics-text";
+}
+function Statistics_add_1_add(e){//统计页1
+	var Statistics_text = StatisticsArr[e];
+	var div1 = document.createElement("div");
+	var div2 = document.createElement("div");
+	Statistics_text.appendChild(div1).className = "Statistics-text-1";
+	Statistics_text.appendChild(div2).className = "Statistics-text-2";
 }
 if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 	document.getElementById("warning").style.display = "block"
@@ -2207,8 +2224,8 @@ function Del_Greenhouse() {
 	Position_Season_winter.splice(GP,1);//删除冬季标记
 	Position_Number.splice(GP,1);//删除状态数量信息
 	Position_state.splice(GP,1);//删除当前状态信息
-	sign_X.splice(GP,1,0);//删除宽度标记
-	sign_Y.splice(GP,1,0);//删除高度标记
+	sign_X.splice(Greenhouse_position,1,0);//删除宽度标记
+	sign_Y.splice(Greenhouse_position,1,0);//删除高度标记
 	FarmNumM[Greenhouse_position].firstChild.style.top = "0em";//清除纵向偏移
 	FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//清除横向偏移
 	FarmNumM[Greenhouse_position].firstChild.style.width = "1em";//初始化地块宽度
@@ -2642,45 +2659,39 @@ function save_load() {
 	FarmNumM[1191].firstChild.style.height = "1em";//设置物品高度
 	for (var i = 0; i < Position.length; i++) {
 		var Catalog = CatalogArr[Position_Catalog[i]];//当前贴图路径
-		console.log(Position);
+		// console.log(Position);
 		if (Position_Catalog[i] == 0) {
-			if (Position_name[i] == 3 && Position[i] != Greenhouse_position) {
-				if (Greenhouse_status == 2) {
-					FarmNumM[Greenhouse_position].firstChild.style.top = "0em";//清除纵向偏移
-					FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//清除横向偏移
-					FarmNumM[Greenhouse_position].firstChild.style.width = "1em";//初始化地块宽度
-					FarmNumM[Greenhouse_position].firstChild.style.height = "1em";//初始化地块高度
-					FarmNumM[Greenhouse_position].firstChild.src = "imges/0.png"//初始化地块物品层贴图
-					for (var n = 0; n < Greenhouse_Disable.length; n++) {
-						Cultivation_sign.pop();
-						if (n < 6) {
-							fruiter_sign.pop();
-							Architecture_sign.pop();
-						}
-					}
-					FarmNumB[Greenhouse_position].firstChild.src = "imges/0.png";
-					FarmNumB[Greenhouse_position].firstChild.style.width = "1em";//设置物品宽度
-					FarmNumB[Greenhouse_position].firstChild.style.height = "1em";//设置物品高度
-					FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0"
-					sign_X.splice(Greenhouse_position,1,0);//删除宽度标记
-					sign_Y.splice(Greenhouse_position,1,0);//删除高度标记
-					Greenhouse_status = 1;
-					Greenhouse_name = 98;
-				}
-				Greenhouse_position = Position[i];
-				verification_Greenhouse(0);
-			}else{
-				FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/99.png";
-			}
-			// if (Position_name[i] == 4) {
-			// 	console.log(Position.indexOf(1191));
-				
-			// }
 			if (Position_name[i] == 28) {//祝尼魔小屋和固定植物
 				FarmNumM[Position[i]].firstChild.src = "imges/" + Catalog + Position_name[i] +"/" + Season + ".png";
 				console.log(Catalog);
 			}else if (Position_name[i] < 28) {
 				FarmNumM[Position[i]].firstChild.src = "imges/" + Catalog + Position_name[i] + ".png";
+			}
+			if (Position_name[i] == 3 && Position[i] != Greenhouse_position) {
+				console.log(Position[i]);
+				FarmNumM[Greenhouse_position].firstChild.style.top = "0em";//清除纵向偏移
+				FarmNumM[Greenhouse_position].firstChild.style.left = "0em";//清除横向偏移
+				FarmNumM[Greenhouse_position].firstChild.style.width = "1em";//初始化地块宽度
+				FarmNumM[Greenhouse_position].firstChild.style.height = "1em";//初始化地块高度
+				FarmNumM[Greenhouse_position].firstChild.src = "imges/0.png"//初始化地块物品层贴图
+				for (var n = 0; n < Greenhouse_Disable.length; n++) {
+					Cultivation_sign.pop();
+					if (n < 6) {
+						fruiter_sign.pop();
+						Architecture_sign.pop();
+					}
+				}
+				FarmNumB[Greenhouse_position].firstChild.src = "imges/0.png";
+				FarmNumB[Greenhouse_position].firstChild.style.width = "1em";//设置物品宽度
+				FarmNumB[Greenhouse_position].firstChild.style.height = "1em";//设置物品高度
+				FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0"
+				sign_X.splice(Greenhouse_position,1,0);//删除宽度标记
+				sign_Y.splice(Greenhouse_position,1,0);//删除高度标记
+				Greenhouse_name = 98;
+				Greenhouse_position = Position[i];
+				verification_Greenhouse(0);
+			}else if (Position_name[i] == 3 && Position[i] == Greenhouse_position) {
+				FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/99.png";
 			}
 		}else if (Position_Catalog[i] == 1) {
 			if (Position_Season_spring[i] == Season || Position_Season_summer[i] == Season || Position_Season_autumn[i] == Season || Position_Season_winter[i] == Season) {//判断当前季节是否适合选取农作物生长
