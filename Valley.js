@@ -1944,9 +1944,9 @@ function author_X() {//关闭作者联系方式
 }
 function Statistics_X() {//关闭统计表
 	document.getElementById("Statistics").style.display = "none";
-	var StatisticsArr = Statistics_table.getElementsByClassName("Statistics-text");
-	for (var i = 0 ; i < StatisticsArr.length; i++) {
-		StatisticsArr[i].innerHTML = "";
+	for (var i = 0 ; i < StatisticsArr_1.length; i++) {
+		StatisticsArr_1[i].innerHTML = "";
+		StatisticsArr_2[i].innerHTML = "";
 	}
 	document.getElementById("Statistics_table-1").style.display = "flex";
 	document.getElementById("Statistics_table-2").style.display = "none";
@@ -2059,10 +2059,6 @@ function Statistics() {
 			Statistics_0_name_Num.push([(Statistics_name[x])[i], count]);  
 			i += count;
 		}
-		
-		// for (var i = 0; i < Statistics_name_s.length; i++) {
-		// 	Statistics_0_name_Num.push(Statistics_name_s[i][0] + ":" + Statistics_name_s[i][1]);
-		// }
 	}
 	
 	var other_arr = floor_name.concat(fence_name,door_name,);
@@ -2085,9 +2081,6 @@ function Statistics() {
 		Statistics_0_name_Num.push([other_name[i], count]);  
 		i += count;  
 	}
-	// for (var i = 0; i < other_name_arr.length; i++) {
-	// 	Statistics_0_name_Num.push(other_name_arr[i][0] + ":" + other_name_arr[i][1]);
-	// }
 	console.log(Statistics_0_name_Num);
 	for (var i = 0 ; i < Statistics_0_name_Num.length; i++) {
 		if (i < 105) {
