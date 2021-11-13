@@ -810,7 +810,7 @@ Farm.addEventListener("click",function(e){
 								Position_state.splice(tree,1,Is_state);
 								Is_state = Is_state;
 							}else if (Is_state == Position_Number[tree]) {//下一阶段为成熟则跳过成熟阶段
-								Is_state = 2;
+								Is_state = 3;
 								console.log(Is_state);
 								Position_state.splice(tree,1,Is_state);
 							}
@@ -2131,10 +2131,12 @@ if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 }
 function Choice() {
 	if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
-	window.location.href="http://bishengming.gitee.io/pixel/";
+		window.location.href="http://bishengming.gitee.io/pixel/";
 	}
 }
-
+function Choice_pc() {
+	window.open("http://bishengming.gitee.io/pixel/")
+}
 window.onload = function() {
 	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 		console.log("手机");
@@ -2592,6 +2594,9 @@ function save_Btn() {
 	} else {
 		alert("此浏览器可能不支持存档功能");
 	}
+	document.getElementById("save-Tips").style.display = "block";
+	document.getElementById("save-Tips").src = "imges/Choice/save.png";
+	setTimeout(function() {document.getElementById("save-Tips").style.display = "none";}, 1000);
 }
 function save_load() {
 	if (localStorage.save_0 == "true" && map_state == 0) {
@@ -2677,7 +2682,7 @@ function save_load() {
 				FarmNumB[Greenhouse_position].firstChild.src = "imges/0.png";
 				FarmNumB[Greenhouse_position].firstChild.style.width = "1em";//设置物品宽度
 				FarmNumB[Greenhouse_position].firstChild.style.height = "1em";//设置物品高度
-				FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0"
+				FarmNumB[Greenhouse_position].firstChild.style.zIndex = "0";
 				sign_X.splice(Greenhouse_position,1,0);//删除宽度标记
 				sign_Y.splice(Greenhouse_position,1,0);//删除高度标记
 				Greenhouse_name = 98;
@@ -2704,7 +2709,7 @@ function save_load() {
 			}else{
 				FarmNumM[Position[i]].firstChild.src = "imges/tool/" + Position_name[i] + ".png";//添加常规贴图
 			}
-			if (Position_name[i] == 0) {
+			if (Position_name[i] == 0 || Position_name[i] == 89) {
 				FarmNumM[Position[i]].firstChild.src = "imges/tool/" + Position_name[i] + "/" + Position_state[i] + ".png";//添加常规贴图
 			}
 			
@@ -2774,8 +2779,14 @@ function save_del() {
 		var del_save_arr = ["save_5","fenceArr_5","fence_name_5","doorArr_5","door_name_5","floorArr_5","floor_name_5","Position_5","Position_Catalog_5","Position_name_5","Position_Season_spring_5","Position_Season_summer_5","Position_Season_autumn_5","Position_Season_winter_5","Position_Number_5","Position_Season_winter_5","Position_Number_5","Position_state_5","Position_sign_X_5","Position_sign_Y_5"];
 	}else{
 		console.log("没有检测到存档!");
+		document.getElementById("save-Tips").style.display = "block";
+		document.getElementById("save-Tips").src = "imges/Choice/none.png";
+		setTimeout(function() {document.getElementById("save-Tips").style.display = "none";}, 1000);
 		return;
 	}
+	document.getElementById("save-Tips").style.display = "block";
+	document.getElementById("save-Tips").src = "imges/Choice/del.png";
+	setTimeout(function() {document.getElementById("save-Tips").style.display = "none";}, 1000);
 	for (var i = 0; i < del_save_arr.length; i++) {
 		localStorage.removeItem(del_save_arr[i]);
 	}
