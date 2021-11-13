@@ -291,11 +291,16 @@ img{
 	top: 34px;
 	color: #dd9454;
 	left: -2px;
-	
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap
 }
 #name-text-2{
 	top: 30px;
 	color: #221122;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap
 }
 #tool-Title{
 	position: absolute;

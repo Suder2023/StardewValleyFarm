@@ -218,10 +218,10 @@ menuBtn.addEventListener("click",function(e){
 			menuBodyNum[i].style.display = "none";
 			menuBodyNum[i].style.bottom = 0;
 			if (i == 5) {
-				name_text_1.innerHTML = "NPC";//写入名称栏
-				name_text_2.innerHTML = "NPC";//写入名称栏
-				describe_1.innerHTML = "此功能施工中";//写入内容栏
-				describe_2.innerHTML = "此功能施工中";//写入内容栏
+				name_text_1.innerHTML = "独居生活";//写入名称栏
+				name_text_2.innerHTML = "独居生活";//写入名称栏
+				describe_1.innerHTML = "……";//写入内容栏
+				describe_2.innerHTML = "……";//写入内容栏
 			}
 			if (menu.style.left == "-320px" || menu.style.left == 0) {//初始化菜单位置
 				menu.style.left = "0";
@@ -906,14 +906,14 @@ Farm.addEventListener("click",function(e){
 				var dyeing_Position = Position.indexOf(e);//获取物品坐标位置
 				var dyeing_Catalog = Position_Catalog[dyeing_Position];//获取物品目录序号
 				var dyeing_name = Position_name[dyeing_Position];//获取物品序号
-				if (dyeing_Catalog == 2 && dyeing_name == 0) {//如果地块内物品为宝箱
+				if (dyeing_Catalog == 2 && Position_Number[dyeing_Position] != 1) {//如果地块内物品为宝箱
 					if (Position_state[dyeing_Position] == Position_Number[dyeing_Position]) {
 						var Num = 0;
 					}else{
 						var Num = Position_state[dyeing_Position] + 1;
 					}//宝箱颜色状态循环
 					Position_state.splice(dyeing_Position,1,Num);//更新宝箱当前状态
-					FarmNumM[e].firstChild.src = "imges/tool/0/" + Num +".png"//更新宝箱贴图
+					FarmNumM[e].firstChild.src = "imges/tool/" + dyeing_name + "/" + Num +".png"//更新宝箱贴图
 				}else{//当前物品非宝箱
 					console.log("不是宝箱");
 				}
@@ -2651,8 +2651,8 @@ function save_load() {
 	floor();//校准地板状态
 	var CatalogArr = ["Architecture/","crops/","tool/","other/","tree/","NPC/"];//贴图路径
 	FarmNumM[1191].firstChild.src = "imges/0.png";
-	sign_X.splice(1191,1,0);//写入物品宽度
-	sign_Y.splice(1191,1,0);//写入物品高度
+	sign_X.splice(1191,1,2);//写入物品宽度
+	sign_Y.splice(1191,1,1);//写入物品高度
 	FarmNumM[1191].firstChild.style.top = "0em";//设置纵向偏移
 	FarmNumM[1191].firstChild.style.left = "0em";//设置横向偏移
 	FarmNumM[1191].firstChild.style.width = "1em";//设置物品宽度
