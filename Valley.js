@@ -745,7 +745,7 @@ Farm.addEventListener("click",function(e){
 				Timg = FarmNumM[e].firstChild.src;//校准移出时贴图
 				window.Is_state = Is_state;//校准树木当前状态
 				IsAdd();//将物品信息写入数据库
-				if (otherSign > 3 && otherSign < 13) {//如果当前物品为果树
+				if (otherSign > 3 && otherSign < 12) {//如果当前物品为果树
 					fruiter();//校准果树禁用范围
 				}
 				for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
@@ -978,7 +978,6 @@ menuBody.addEventListener("click",function(e){
 		 	}
 		}else if (menuBodySign == 4 && otherSign != undefined) {//当前菜单为树木
 			NAME = treeNum[otherSign];
-			fruiter();
 			if (otherSign == 12) {
 				IMG = "imges/tree/" + otherSign + "/" + "0.png";
 			}
@@ -1002,9 +1001,6 @@ menuBody.addEventListener("click",function(e){
 		signMapX();
 		signMap();
 		door();
-		// if (otherSign > 2 && otherSign < 9) {
-		// 		fruiter();
-		// 	}
 		if (menuBodySign == 0) {
 			signMapY();
 		}
@@ -1012,7 +1008,7 @@ menuBody.addEventListener("click",function(e){
 			for (var i = 0; i < fruiter_sign.length; i++) {//禁用不能种树地块
 				FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
 			}
-			if (otherSign > 3 && otherSign < 9) {
+			if (otherSign > 3 && otherSign < 12) {
 				fruiter();
 			}else{
 				
@@ -1177,7 +1173,7 @@ function fruiter() {//当前物品为果树时禁用所有树木周围两圈地�
 		FarmNumB[fruiter_sign[i]].style.pointerEvents = "none";
 	}
 	for (var i = 0; i < Position.length; i++) {
-		if (Position_Catalog[i] == 4 && Position_name[i] != 10) {
+		if (Position_Catalog[i] == 4) {
 			var y = Position[i]
 			for (var x = -2; x < 3; x++) {
 				for (var z = -2; z < 3; z++) {
