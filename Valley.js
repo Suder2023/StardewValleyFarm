@@ -1664,6 +1664,12 @@ function Kettle() {//开启水壶状态
 function Hoe() {//开启锄头状态
 	state = "Hoe";
 	gif_state = 1;
+	IMG_T = 0;//获取当前物品向上偏移量
+	IMG_L = 0;//获取当前物品向左偏移量
+	IMG_W = 1;//获取当前物品宽度
+	IMG_H = 1;//获取当前物品高度
+	signX = 1;//获取当前物品占地宽度
+	signY = 1;//获取当前物品占地高度
 	GIF();//切换GIF演示
 	console.log(state);
 }
