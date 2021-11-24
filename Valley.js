@@ -77,6 +77,10 @@ if (screen_H < 800) {
 }
 function Farm_1(x,y,w,h,g){//生成标准农场
 	console.log(x,y,w,h,g);
+	name_text_1.innerHTML = fence_text[x][0];//写入名称栏
+	name_text_2.innerHTML = fence_text[x][0];//写入名称栏
+	describe_1.innerHTML = fence_text[x][1];//写入内容栏
+	describe_2.innerHTML = fence_text[x][1];//写入内容栏
 	Greenhouse_position = g;
 	map_state = x;
 	Frame_Num = y;
@@ -217,12 +221,10 @@ menuBtn.addEventListener("click",function(e){
 			menuNum[i].style.left = "0";
 			menuBodyNum[i].style.display = "none";
 			menuBodyNum[i].style.bottom = 0;
-			if (i == 5) {
-				name_text_1.innerHTML = "独居生活";//写入名称栏
-				name_text_2.innerHTML = "独居生活";//写入名称栏
-				describe_1.innerHTML = "……";//写入内容栏
-				describe_2.innerHTML = "……";//写入内容栏
-			}
+			name_text_1.innerHTML = " ";//写入名称栏
+			name_text_2.innerHTML = " ";//写入名称栏
+			describe_1.innerHTML = " ";//写入内容栏
+			describe_2.innerHTML = " ";//写入内容栏
 			if (menu.style.left == "-320px" || menu.style.left == 0) {//初始化菜单位置
 				menu.style.left = "0";
 				menuNum[7].src = "imges/button/arrow-2.png";
