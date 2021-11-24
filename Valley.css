@@ -451,7 +451,8 @@ img{
 }
 #Btn{
 	width: 64px;
-	height: 500px;
+	/*height: 500px;*/
+	height: 90%;
 	position: absolute;
 	top: 0px;
 	right: 10px;
@@ -462,7 +463,12 @@ img{
 	flex-direction: column;
 }
 #Btn img{
-	margin-top: 20px;
+	margin-top: 1.5vh;
+	width: 8vh;
+	max-width: 64px;
+	height: 8vh;
+	max-height: 64px;
+
 }
 
 #preview{
