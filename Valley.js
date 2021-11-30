@@ -2128,7 +2128,7 @@ function Statistics_add_1_add(e){//统计页1
 	Statistics_text.appendChild(div1).className = "Statistics-text-1";
 	Statistics_text.appendChild(div2).className = "Statistics-text-2";
 }
-if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 	document.getElementById("warning").style.display = "block"
 	document.getElementById("Choice-1").style.display = "none"
 
@@ -2798,4 +2798,18 @@ function save_del() {
 if (localStorage.Explain_save == 0) {
 	console.log("非首次开启页面，关闭教程提示。");
 	document.getElementById("Course").style.display = "none";
+}
+function open_video() {
+	window.open("https://www.bilibili.com/video/BV1Pf4y1T7hx/")
+}
+function open_tieba() {
+	window.open("https://tieba.baidu.com/p/7632638263?pid=142277181706&cid=0&red_tag=0896232900#142277181706")
+}
+function copy_mail() {
+	var e = document.getElementById("mail");
+	e.select(); // 选择对象
+	document.execCommand("Copy"); // 执行浏览器复制命令
+	document.getElementById("save-Tips").style.display = "block";
+	document.getElementById("save-Tips").src = "imges/Choice/copy.png";
+	setTimeout(function() {document.getElementById("save-Tips").style.display = "none";}, 1000);
 }

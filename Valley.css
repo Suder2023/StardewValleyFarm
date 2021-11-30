@@ -844,3 +844,26 @@ textarea::-webkit-input-placeholder {
 	pointer-events: none;
 	display: none;
 }
+#tab{
+	width: 672px;
+	height: 304px;
+	position: absolute;
+	left: calc(50% - 336px);
+	top: 30%;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+}
+.tab-w{
+	width: 672px;
+	height: 68px;
+
+}
+#mail{
+	position: absolute;
+	left: -100vw;
+	opacity: 0;
+}
