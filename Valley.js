@@ -65,7 +65,8 @@ var Greenhouse_name;
 var NPC;
 var continuityNum = undefined;
 var continuityArr = [];
-
+var supplement_sign;
+var supplement_goods;
 
 
 if (screen_H < 800) {
@@ -150,12 +151,12 @@ function Farm_1(x,y,w,h,g){//生成标准农场
 	FarmNumM[549].firstChild.style.left = "0em";//设置横向偏移
 	FarmNumM[549].firstChild.style.width = "4em";//设置物品宽度
 	FarmNumM[549].firstChild.style.height = "4em";//设置物品高度		
-	// FarmNumM[Greenhouse_position].firstChild.src = "imges/Architecture/greenhouse-2.png";//添加温室
-	// FarmNumM[Greenhouse_position].firstChild.className = "greenhouse-2";
+	console.log(Position_Catalog);
 	add_Greenhouse();
 	if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5) {
 		supplement(x);
 	}
+	console.log(Position_Catalog);
 	FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png";//添加房子
 	FarmNumM[1339].firstChild.className = "House-L";
 	FarmNumM[1348].firstChild.src = "imges/Architecture/mailbox.png";//添加信箱
@@ -168,6 +169,7 @@ function Farm_1(x,y,w,h,g){//生成标准农场
 	// Grid()
 	
 }
+
 var FarmNumT = Farm.getElementsByClassName("Farm-T");//获取网格层集合
 var FarmNumM = Farm.getElementsByClassName("Farm-M");//获取物品层集合
 var FarmNumB = Farm.getElementsByClassName("Farm-B");//获取地板层集合
@@ -534,6 +536,11 @@ function GetSeason() {//切换季节时校准对应贴图
 		var x = floorArr[i];
 		var B = FarmNumB[x].firstChild.src;
 		FarmNumB[x].firstChild.src = B.replace(GNot,NNot) 
+	}
+	for (var i = 0 ; i < supplement_sign.length; i++) {//栅栏与地板季节校准
+		var a = supplement_goods[i];
+		var b = supplement_data[a];
+		FarmNumM[supplement_sign[i]].firstChild.src = "imges/Architecture/" + b[0] + "/" + Season + ".png";
 	}
 	Prev_Season = Season;//将当前季节记录为上一个季节
 }
@@ -2008,6 +2015,8 @@ function Prohibit() {
 	Range_fun();
 }
 function Statistics() {
+	console.log(supplement_sign);
+	
 	var Statistics_0 = [];
 	var Statistics_1 = [];
 	var Statistics_2 = [];
@@ -2280,35 +2289,30 @@ function verification_Greenhouse(e) {
 };
 function supplement(x) {
 	if (x == 1) {
-		var supplement_sign = [855,628];
-		var supplement_goods = [10,5];
+		supplement_sign = [855,628];
+		supplement_goods = [10,5];
 	}
 	if (x == 2) {
-		var supplement_sign = [429,580,1536,1694,1770,1771,3699,3772,3777,3923,4084];
-		var supplement_goods = [4,9,4,9,5,9,7,0,4,6,5];
+		supplement_sign = [429,580,1536,1694,1770,1771,3699,3772,3777,3923,4084];
+		supplement_goods = [4,9,4,9,5,9,7,0,4,6,5];
 	}else if (x == 3) {
-		var supplement_sign = [766,966,971,1123,1709,1714,1740,1747,3578,3579,3586,3613,3619,3700];
-		var supplement_goods = [5,5,5,6,4,8,6,8,4,8,4,4,4,4];
+		supplement_sign = [766,966,971,1123,1709,1714,1740,1747,3578,3579,3586,3613,3619,3700];
+		supplement_goods = [5,5,5,6,4,8,6,8,4,8,4,4,4,4];
 		FarmNumM[2960].firstChild.src = "imges/map/3/spring-2.png";//地图遮罩
 		FarmNumM[2960].firstChild.style.top = "-15em";
 		// FarmNumM[2960].firstChild.style.left = MapHeight + "em";
 		FarmNumM[2960].firstChild.style.width = MapWidth + "em";
 		FarmNumM[2960].firstChild.style.height = "16em";
 	}else if (x == 4) {
-		var supplement_sign = [3272,3351,4388,4462,4541,4616,4673,4831,4925,4929];
-		var supplement_goods = [6,5,7,8,5,8,0,6,4,8];
+		supplement_sign = [3272,3351,4388,4462,4541,4616,4673,4831,4925,4929];
+		supplement_goods = [6,5,7,8,5,8,0,6,4,8];
 	}else if (x == 5) {
-		var supplement_sign = [4277,4363,4517,4838,4922];
-		var supplement_goods = [4,5,11,8,6];
+		supplement_sign = [4277,4363,4517,4838,4922];
+		supplement_goods = [4,5,11,8,6];
 	}
 	for (var i = 0; i < supplement_sign.length; i++) {
 		var a = supplement_goods[i];
 		var b = supplement_data[a]
-		// console.log(a);
-		// console.log(supplement_data[a]);
-		Position.push(supplement_sign[i]);//写入坐标
-		Position_Catalog.push(0);//写入目录序号
-		Position_name.push(b[0]);//写入物品序号
 		FarmNumM[supplement_sign[i]].firstChild.src = "imges/Architecture/" + b[0] + "/spring.png";
 		FarmNumM[supplement_sign[i]].firstChild.style.top = b[1];//设置纵向偏移
 		FarmNumM[supplement_sign[i]].firstChild.style.left = b[2];//设置横向偏移
@@ -2316,12 +2320,6 @@ function supplement(x) {
 		FarmNumM[supplement_sign[i]].firstChild.style.height = b[4];//设置物品高度
 		sign_X.splice(supplement_sign[i],1,b[5]);//写入物品宽度
 		sign_Y.splice(supplement_sign[i],1,b[6]);//写入物品高度
-		Position_Season_spring.push(b[7]);//写入春季
-		Position_Season_summer.push(b[8]);//写入夏季
-		Position_Season_autumn.push(b[9]);//写入秋季
-		Position_Season_winter.push(b[10]);//写入冬季
-		Position_Number.push(b[11]);//写入变化状态数量
-		Position_state.push(0);//写入当前状态
 	}
 }
 function continuity() {
