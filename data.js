@@ -585,6 +585,7 @@ var toolNum = [
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"草坪火烈鸟","农场的装饰件。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"装饰干草捆","农场的装饰件。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"圆木段","农场的装饰件。"],
+["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"普通圆木","农场的装饰件。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"船标","农场的装饰件。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"装甲","农场的装饰件。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"墓石","农场的装饰件。"],
@@ -631,6 +632,7 @@ var toolNum = [
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",20,"石箱","可以储存你的物品。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"电话","可以用来了解商店的营业时间和库存。"],
 ["-1em","0em","1em","2em",1,1,"none","none","none","none",1,"缝纫机","用来在家中方便地量身定做衣服！"],
+["0em","0em","1em","1em",1,1,"none","none","none","none",1,"南瓜灯","秋天的怪异装饰品。"],
 ];//打造名单
 
 

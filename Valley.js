@@ -153,9 +153,7 @@ function Farm_1(x,y,w,h,g){//生成标准农场
 	FarmNumM[549].firstChild.style.height = "4em";//设置物品高度		
 	console.log(Position_Catalog);
 	add_Greenhouse();
-	if (x == 1 || x == 2 || x == 3 || x == 4 || x == 5) {
-		supplement(x);
-	}
+	supplement(x);
 	console.log(Position_Catalog);
 	FarmNumM[1339].firstChild.src = "imges/Architecture/House-S.png";//添加房子
 	FarmNumM[1339].firstChild.className = "House-L";
@@ -625,7 +623,12 @@ Farm.addEventListener("click",function(e){
 							floor_name.push(16);
 						}
 					}
-					
+					if (otherSign != 40 && otherSign != 41) {
+				 		Cultivation();//标记农作物禁用地块
+				 	}
+				 	if (otherSign == 40) {
+				 		fruiter();
+				 	}
 				}else if (otherSign == 42 || otherSign == 43 || otherSign == 44) {//当前物品为巨大作物,禁用拥有地板地块,清理巨大作物下方地板
 					signMapX();
 					signMap();
@@ -970,6 +973,8 @@ menuBody.addEventListener("click",function(e){
 		 	if (e.target.id != "body-btn") {
 		 		Write();
 		 	}
+		 	
+		 	
 		}else if (menuBodySign == 2 && otherSign != undefined) {//当前菜单为工艺与装饰
 			NAME = toolNum[otherSign];
 			if (e.target.id != "body-btn") {
@@ -1006,10 +1011,17 @@ menuBody.addEventListener("click",function(e){
 		}
 		Menu_status = true;//标记菜单状态
 		Initialization();
-		Cultivation();//标记农作物禁用地块
 		signMapX();
 		signMap();
 		door();
+		if (menuBodySign == 1 && otherSign != undefined) {
+			if (otherSign != 40 && otherSign != 41) {
+		 		Cultivation();//标记农作物禁用地块
+		 	}
+		 	if (otherSign == 40) {
+		 		fruiter();
+		 	}
+		}
 		if (menuBodySign == 0) {
 			signMapY();
 		}
@@ -1326,8 +1338,8 @@ function MapDel() {//解锁全部非初始地块
 			
 	}
 }
-var menuBody0Num = [12,15,31,6,5,5];//菜单页内按钮行数
-var menuBody0Num1 = [33,45,91,15,12,12];//菜单页内按钮数量
+var menuBody0Num = [12,15,32,6,5,5];//菜单页内按钮行数
+var menuBody0Num1 = [33,45,93,15,12,12];//菜单页内按钮数量
 var menuBody0Name = ["Architecture","crops","tool","other","tree","NPC"];//菜单页内按钮路径
 var menuBody0Class = ["other-icon","other-icon","other-icon","other-icon","other-icon","other-icon"];//菜单页内按钮class
 for (var i = 0 ; i < menuBodyNum.length; i++) {//生成按钮
@@ -2288,6 +2300,10 @@ function verification_Greenhouse(e) {
 	}
 };
 function supplement(x) {
+	if (x == 0) {
+		supplement_sign = [];
+		supplement_goods = [];
+	}
 	if (x == 1) {
 		supplement_sign = [855,628];
 		supplement_goods = [10,5];
