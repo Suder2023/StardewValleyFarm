@@ -620,7 +620,7 @@ Farm.addEventListener("click",function(e){
 						var landNum = floorArr.indexOf(e);//查找当前地块是否被开垦
 						if (land == undefined) {//当前地块未被开垦则在下方添加被开垦土地
 							floorArr.push(IsE);
-							floor_name.push(16);
+							floor_name.push(18);
 						}
 					}
 					if (otherSign != 40 && otherSign != 41) {
@@ -686,7 +686,7 @@ Farm.addEventListener("click",function(e){
 					door_name.push(otherSign);//写入物品编号
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 					door();//校准门状态
-				}else if (otherSign > 4 && otherSign < 15) {//当前物品为普通地板
+				}else if (otherSign > 4 && otherSign < 17) {//当前物品为普通地板
 					if (continuityArr.indexOf(e) == -1) {
 						continuityNum = undefined;
 						continuityArr = [];
@@ -696,7 +696,7 @@ Farm.addEventListener("click",function(e){
 					floor_name.push(otherSign);//写入物品编号
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
 					floor();//校准地板状态
-				}else if (otherSign == 15) {//当前物品为随机地板
+				}else if (otherSign == 17) {//当前物品为随机地板
 					if (continuityArr.indexOf(e) == -1) {
 						continuityNum = undefined;
 						continuityArr = [];
@@ -710,7 +710,7 @@ Farm.addEventListener("click",function(e){
 						floor_Season = "notwinter";
 					}
 					FarmNumB[e].style.pointerEvents = "none";//禁用当前地块
-					FarmNumB[e].firstChild.src = "imges/other/" + floor_Season + "/15/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
+					FarmNumB[e].firstChild.src = "imges/other/" + floor_Season + "/17/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
 					Timg = FarmNumB[e].firstChild.src;//校准移出时贴图
 					floor();//校准地板状态
 				}
@@ -743,7 +743,7 @@ Farm.addEventListener("click",function(e){
 				}
 				var landNum = floorArr.indexOf(e);//获取当前地块地板信息
 				var land = floor_name[floorArr.indexOf(e)];//获取当前地块地板编号
-				if (land == 16) {//如果地板属性为"耕地"则删除地板
+				if (land == 18) {//如果地板属性为"耕地"则删除地板
 					floorArr.splice(landNum,1);//删除数据库内该坐标地板信息
 					floor_name.splice(landNum,1);//删除数据库内该坐标地板编号
 					floor();//校准地板状态
@@ -796,8 +796,9 @@ Farm.addEventListener("click",function(e){
 				}
 				break;
 				case "Hoe"://当前状态为"锄头"
+				continuity();
 				floorArr.push(IsE);//写入坐标
-				floor_name.push(16);//写入编号
+				floor_name.push(18);//写入编号
 				FarmNumB[e].style.pointerEvents = "none";//禁用地块
 				floor();//校准地板状态
 				break;
@@ -1339,7 +1340,7 @@ function MapDel() {//解锁全部非初始地块
 	}
 }
 var menuBody0Num = [12,15,32,6,5,5];//菜单页内按钮行数
-var menuBody0Num1 = [33,45,93,15,12,12];//菜单页内按钮数量
+var menuBody0Num1 = [33,45,93,18,12,12];//菜单页内按钮数量
 var menuBody0Name = ["Architecture","crops","tool","other","tree","NPC"];//菜单页内按钮路径
 var menuBody0Class = ["other-icon","other-icon","other-icon","other-icon","other-icon","other-icon"];//菜单页内按钮class
 for (var i = 0 ; i < menuBodyNum.length; i++) {//生成按钮
@@ -1507,10 +1508,10 @@ function floor() {//校准地板状态
 		}else{
 			floor_Season = "notwinter";
 		}
-		if (name != 15) {
+		if (name != 17) {
+
 			if (up != name && down != name && left != name && right != name) {
 				var Is_state = 1;
-
 			}else if (up == name && down != name && left != name && right != name) {
 				var Is_state = 2;
 			}else if (up != name && down == name && left != name && right != name) {
@@ -1524,7 +1525,7 @@ function floor() {//校准地板状态
 			}else if (up != name && down != name && left == name && right == name) {
 				var Is_state = 7;
 			}else if (up == name && down == name && left == name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_up == name && L_down == name && R_up == name && R_down == name) {
 						var Is_state = 12;
 					}else if (L_up != name && L_down != name && R_up != name && R_down != name) {
@@ -1563,7 +1564,7 @@ function floor() {//校准地板状态
 				}
 				
 			}else if (up != name && down == name && left != name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (R_down == name) {
 						var Is_state = 8;
 					}else if (R_down != name) {
@@ -1574,7 +1575,7 @@ function floor() {//校准地板状态
 				}
 
 			}else if (up != name && down == name && left == name && right != name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_down == name) {
 						var Is_state = 10;
 					}else if (L_down != name) {
@@ -1585,7 +1586,7 @@ function floor() {//校准地板状态
 				}
 
 			}else if (up == name && down != name && left != name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (R_up == name) {
 						var Is_state = 14;
 					}else if (R_up != name) {
@@ -1595,7 +1596,7 @@ function floor() {//校准地板状态
 					var Is_state = 14;
 				}
 			}else if (up == name && down != name && left == name && right != name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_up == name) {
 						var Is_state = 16;
 					}else if (L_up != name) {
@@ -1606,7 +1607,7 @@ function floor() {//校准地板状态
 				}
 				
 			}else if (up != name && down == name && left == name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_down != name && R_down != name) {
 						var Is_state = 36;
 					}else if (L_down != name && R_down == name) {
@@ -1621,7 +1622,7 @@ function floor() {//校准地板状态
 				}
 				
 			}else if (up == name && down != name && left == name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_up != name && R_up != name) {
 						var Is_state = 45;
 					}else if (L_up != name && R_up == name) {
@@ -1636,7 +1637,7 @@ function floor() {//校准地板状态
 				}
 
 			}else if (up == name && down == name && left != name && right == name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (R_up != name && R_down != name) {
 						var Is_state = 39;
 					}else if (R_up != name && R_down == name) {
@@ -1651,7 +1652,7 @@ function floor() {//校准地板状态
 				}
 
 			}else if (up == name && down == name && left == name && right != name) {
-				if (name > 4 && name < 11) {
+				if (name > 4 && name < 12) {
 					if (L_up != name && L_down != name) {
 						var Is_state = 42;
 					}else if (L_up != name && L_down == name) {
@@ -2349,11 +2350,14 @@ function continuity() {
 			}
 		}
 		for (var i = 1 ; i < MapWidth - Math.ceil(IsE/MapWidth); i++) {
-			if (FarmNumB[IsE + i*MapWidth].style.pointerEvents == "auto") {
-				continuityArr.push(IsE + i*MapWidth);
-			}else{
-				break;
-			}
+			if ([IsE + i*MapWidth] < 5200) {
+				if (FarmNumB[IsE + i*MapWidth].style.pointerEvents == "auto") {
+					continuityArr.push(IsE + i*MapWidth);
+				}else{
+					break;
+				}
+			}			
+			
 		}
 		for (var i = 1 ; i < IsE%MapWidth; i++) {
 			if (FarmNumB[IsE - i].style.pointerEvents == "auto") {
@@ -2422,14 +2426,19 @@ function continuity() {
 			if (otherSign > 4 && menuBodySign == 3) {
 				floorArr.push(distanceNum);//写入地板坐标
 				floor_name.push(otherSign);//写入物品编号
-				if (otherSign == 15) {
+				if (otherSign == 17) {
 					if (Season == "winter") {//判断季节对应地板状态
 						floor_Season = "winter";
 					}else{
 						floor_Season = "notwinter";
 					}
-					FarmNumB[distanceNum].firstChild.src = "imges/other/" + floor_Season + "/15/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
+					FarmNumB[distanceNum].firstChild.src = "imges/other/" + floor_Season + "/17/" + Math.ceil(Math.random()*16) + ".png";//添加随机地板贴图
 				}
+				FarmNumB[distanceNum].style.pointerEvents = "none";//禁用当前地块
+			}
+			if (menuBodySign == 6) {
+				floorArr.push(distanceNum);//写入地板坐标
+				floor_name.push(18);//写入物品编号
 				FarmNumB[distanceNum].style.pointerEvents = "none";//禁用当前地块
 			}
 			if (menuBodySign == 1) {
@@ -2452,7 +2461,7 @@ function continuity() {
 				var landNum = floorArr.indexOf(distanceNum);//查找当前地块是否被开垦
 				if (land == undefined && otherSign < 40) {//当前地块未被开垦则在下方添加被开垦土地
 					floorArr.push(distanceNum);
-					floor_name.push(16);
+					floor_name.push(18);
 				}
 				if (Season_spring == Season || Season_summer == Season || Season_autumn == Season || Season_winter == Season) {//判断当前季节是否适合选取农作物生长
 					if (otherSign == 39 || otherSign == 40) {//当前物品为茶苗和纤维种子
