@@ -101,6 +101,7 @@ function Farm_1(x,y,w,h,g){//生成标准农场
 		sign_X.push(map[i]);
 		sign_Y.push(map[i]);
 	};
+	console.log(Cultivation);
 	for (var i = 0; i < Cultivation.length; i++) {
 		Cultivation_sign.push(Cultivation[i]);
 	}
@@ -2326,6 +2327,10 @@ function supplement(x) {
 	}else if (x == 5) {
 		supplement_sign = [4277,4363,4517,4838,4922];
 		supplement_goods = [4,5,11,8,6];
+	}
+	else if (x == 6) {
+		supplement_sign = [];
+		supplement_goods = [];
 	}
 	for (var i = 0; i < supplement_sign.length; i++) {
 		var a = supplement_goods[i];
