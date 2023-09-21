@@ -1341,7 +1341,7 @@ function MapDel() {//解锁全部非初始地块
 	}
 }
 var menuBody0Num = [12,15,32,6,5,5];//菜单页内按钮行数
-var menuBody0Num1 = [33,45,93,18,12,12];//菜单页内按钮数量
+var menuBody0Num1 = [34,45,93,18,12,12];//菜单页内按钮数量
 var menuBody0Name = ["Architecture","crops","tool","other","tree","NPC"];//菜单页内按钮路径
 var menuBody0Class = ["other-icon","other-icon","other-icon","other-icon","other-icon","other-icon"];//菜单页内按钮class
 for (var i = 0 ; i < menuBodyNum.length; i++) {//生成按钮
@@ -2623,6 +2623,27 @@ function save_Btn() {
 			localStorage.Position_sign_Y_5 = sign_Y;
 			console.log("已保存到六号存档!");
 		}
+		if (map_state == 5) {
+			localStorage.save_6 = "true";
+			localStorage.fenceArr_6 = fenceArr;//存储栅栏坐标
+			localStorage.fence_name_6 = fence_name;//存储栅栏序号
+			localStorage.doorArr_6 = doorArr;//存储门坐标
+			localStorage.door_name_6 = door_name;//存储门序号
+			localStorage.floorArr_6 = floorArr;//存储地板坐标
+			localStorage.floor_name_6 = floor_name;//存储地板序号
+			localStorage.Position_6 = Position;//存储物品坐标
+			localStorage.Position_Catalog_6 = Position_Catalog;//存储物品目录序号
+			localStorage.Position_name_6 = Position_name;//存储物品序号
+			localStorage.Position_Season_spring_6 = Position_Season_spring;//存储春季状态
+			localStorage.Position_Season_summer_6 = Position_Season_summer;//存储夏季状态
+			localStorage.Position_Season_autumn_6 = Position_Season_autumn;//存储秋季状态
+			localStorage.Position_Season_winter_6 = Position_Season_winter;//存储冬季状态
+			localStorage.Position_Number_6 = Position_Number;//存储状态变化数量
+			localStorage.Position_state_6 = Position_state;//存储当前状态
+			localStorage.Position_sign_X_6 = sign_X;
+			localStorage.Position_sign_Y_6 = sign_Y;
+			console.log("已保存到七号存档!");
+		}
 	} else {
 		alert("此浏览器可能不支持存档功能");
 	}
@@ -2649,6 +2670,9 @@ function save_load() {
 	}else if (localStorage.save_5 == "true" && map_state == 5) {
 		console.log("加载六号存档");
 		var load_arr = [localStorage.fenceArr_5.split(','),localStorage.fence_name_5.split(','),localStorage.doorArr_5.split(','),localStorage.door_name_5.split(','),localStorage.floorArr_5.split(','),localStorage.floor_name_5.split(','),localStorage.Position_5.split(','),localStorage.Position_Catalog_5.split(','),localStorage.Position_name_5,localStorage.Position_Season_spring_5.split(','),localStorage.Position_Season_summer_5.split(','),localStorage.Position_Season_autumn_5.split(','),localStorage.Position_Season_winter_5.split(','),localStorage.Position_Number_5.split(','),localStorage.Position_state_5.split(','),localStorage.Position_sign_X_5.split(','),localStorage.Position_sign_Y_5.split(',')];
+	}else if (localStorage.save_5 == "true" && map_state == 6) {
+		console.log("加载七号存档");
+		var load_arr = [localStorage.fenceArr_5.split(','),localStorage.fence_name_6.split(','),localStorage.doorArr_6.split(','),localStorage.door_name_6.split(','),localStorage.floorArr_6.split(','),localStorage.floor_name_6.split(','),localStorage.Position_6.split(','),localStorage.Position_Catalog_6.split(','),localStorage.Position_name_6,localStorage.Position_Season_spring_6.split(','),localStorage.Position_Season_summer_6.split(','),localStorage.Position_Season_autumn_6.split(','),localStorage.Position_Season_winter_6.split(','),localStorage.Position_Number_6.split(','),localStorage.Position_state_6.split(','),localStorage.Position_sign_X_6.split(','),localStorage.Position_sign_Y_6.split(',')];
 	}else{
 		console.log("没有检测到存档!");
 		return;
@@ -2809,6 +2833,9 @@ function save_del() {
 	}else if (localStorage.save_5 == "true" && map_state == 5) {
 		console.log("删除六号存档");
 		var del_save_arr = ["save_5","fenceArr_5","fence_name_5","doorArr_5","door_name_5","floorArr_5","floor_name_5","Position_5","Position_Catalog_5","Position_name_5","Position_Season_spring_5","Position_Season_summer_5","Position_Season_autumn_5","Position_Season_winter_5","Position_Number_5","Position_Season_winter_5","Position_Number_5","Position_state_5","Position_sign_X_5","Position_sign_Y_5"];
+	}else if (localStorage.save_5 == "true" && map_state == 5) {
+		console.log("删除七号存档");
+		var del_save_arr = ["save_6","fenceArr_6","fence_name_6","doorArr_6","door_name_6","floorArr_6","floor_name_6","Position_6","Position_Catalog_6","Position_name_6","Position_Season_spring_6","Position_Season_summer_6","Position_Season_autumn_6","Position_Season_winter_6","Position_Number_6","Position_Season_winter_6","Position_Number_6","Position_state_6","Position_sign_X_6","Position_sign_Y_6"];
 	}else{
 		console.log("没有检测到存档!");
 		document.getElementById("save-Tips").style.display = "block";
