@@ -1959,7 +1959,7 @@ function Course_no() {//拒绝开启说明
 	localStorage.Explain_save = 0;
 }
 function House() {//跳转到装修模拟器
-	window.open("http://bishengming.gitee.io/stardewvalley/")
+	window.open("https://xlg-zx.netlify.app/")
 }
 function author() {//显示联系作者联系方式
 	document.getElementById("author").style.display = "block";
