@@ -2158,11 +2158,11 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 }
 function Choice() {
 	if (/(iPhone|iPod|iOS|Android)/i.test(navigator.userAgent)) {
-		window.location.href="http://bishengming.gitee.io/pixel/";
+		window.location.href="https://xlg-nn.netlify.app/";
 	}
 }
 function Choice_pc() {
-	window.open("http://bishengming.gitee.io/pixel/")
+	window.open("https://xlg-nn.netlify.app/")
 }
 window.onload = function() {
 	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
